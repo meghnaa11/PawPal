@@ -1,2 +1,2 @@
-# StevensSwapMart
+# PawPal
 Web Dev Project

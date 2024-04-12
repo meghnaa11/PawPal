@@ -14,4 +14,6 @@ const getCollectionFn = (collection) => {
 };
 
 // Note: You will need to change the code below!
-// export const products = getCollectionFn("products");
+export const institution = getCollectionFn("institution");
+export const appointments = getCollectionFn("appointments");
+export const user = getCollectionFn("user");

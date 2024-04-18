@@ -19,3 +19,4 @@ export const appointments = getCollectionFn("appointments");
 export const user = getCollectionFn("user");
 export const posts = getCollectionFn("posts");
 export const comments = getCollectionFn("comments");
+export const pet = getCollectionFn("pets");

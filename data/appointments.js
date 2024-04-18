@@ -3,33 +3,30 @@ import { user } from "../config/mongoCollections.js";
 import { institution } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 
-export const create = async (category, time, address, desc, institutionID, userID, petID) => {
- if (!category || !time || !address || !desc || !institutionID || !userID || !petID) {
+export const create = async (category, time, desc, institutionID, userID, petID) => {
+ if (!category || !time || !desc || !institutionID || !userID || !petID) {
   throw 'All fields need to be supplied';
  }
- if (typeof category !== 'string' || typeof address !== 'string' || typeof desc !== 'string' || typeof institutionID !== 'string' || typeof userID !== 'string' || typeof petID !== 'string') {
-  throw 'input not strings'
- }
- category = category.trim();
- address = address.trim();
+ // if (typeof desc !== 'string' || typeof institutionID !== 'string' || typeof userID !== 'string' || typeof petID !== 'string') {
+ //  throw 'input not strings'
+ // }
+
  desc = desc.trim();
- institutionID = institutionID.trim();
 
 
- if (category.length === 0 || address.length === 0 || desc.length === 0 || institutionID.length === 0 || userID.length === 0 || petID.length === 0) {
+ if (desc.length === 0 || institutionID.length === 0 || userID.length === 0 || petID.length === 0) {
   throw 'input cannot be empty'
  }
 
- if (typeof institutionID !== 'string' || !ObjectId.isValid(institutionID)) throw 'Invalid institutionID';
- if (typeof userID !== 'string' || !ObjectId.isValid(userID)) throw 'Invalid userID';
- if (typeof petID !== 'string' || !ObjectId.isValid(petID)) throw 'Invalid petID';
+ // if (typeof institutionID !== 'string' || !ObjectId.isValid(institutionID)) throw 'Invalid institutionID';
+ // if (typeof userID !== 'string' || !ObjectId.isValid(userID)) throw 'Invalid userID';
+ // if (typeof petID !== 'string' || !ObjectId.isValid(petID)) throw 'Invalid petID';
 
 
  const appointmentCollection = await appointments();
  const newAppointment = {
   category: category,
-  appointment_time: time,
-  address: address,
+  appointment_time: new Date(time),
   description: desc,
   institutionID,
   userID,
@@ -108,3 +105,4 @@ export const get = async (id) => {
 }
 
 
+// await create('category', '2021-12-12T12:12:12', 'desc', '6618b67df5dd79f2b81e698b', '6618ae9f3cb1bc6706814588', '61f7b3b3b3b3b3b3b3b3b3');

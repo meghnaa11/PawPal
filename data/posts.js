@@ -8,6 +8,7 @@ import { postHelpers, getCurrentDateTime, validators } from "../helper.js";
 // Check Contact Info for now it is just a string.
 
 export const createPost = async (postObj) => {
+  if (postObj?.userID === undefined) throw `Need User ID.`;
   postObj.userID = postHelpers.isuserIDValid(postObj.userID);
   if (postObj?.title === undefined) throw `Title needs to be Provided.`;
   if (postObj?.content === undefined) throw `Content needs to be Provided.`;
@@ -51,9 +52,23 @@ export const createPost = async (postObj) => {
   return newId;
 };
 
-export const getAllPosts = async () => {
+export const getAllGeneralPosts = async () => {
   const postsCollection = await posts();
-  let postList = await postsCollection.find({}).toArray();
+  let postList = await postsCollection.find({ type: "general" }).toArray();
+  if (!postList) throw `Could not get all Posts`;
+  if (postList.length === 0) return postList;
+  postList = postList.map((element) => {
+    element._id = element._id.toString();
+    return element;
+  });
+  return postList;
+};
+
+export const getAllLFPosts = async () => {
+  const postsCollection = await posts();
+  let postList = await postsCollection
+    .find({ type: { $in: ["lost", "found"] } })
+    .toArray();
   if (!postList) throw `Could not get all Posts`;
   if (postList.length === 0) return postList;
   postList = postList.map((element) => {

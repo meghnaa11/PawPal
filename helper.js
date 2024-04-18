@@ -67,9 +67,11 @@ export const postHelpers = {
   istypeValid: (type) => {
     type = validators.checkString(type, "Type");
     if (
-      !type.toLowerCase() === "general" ||
-      !type.toLowerCase() === "lost" ||
-      !type.toLowerCase() === "found"
+      !(
+        type.toLowerCase() === "general" ||
+        type.toLowerCase() === "lost" ||
+        type.toLowerCase() === "found"
+      )
     )
       throw `Type must be either General OR Lost OR Found`;
     return type.toLowerCase();

@@ -1,3 +1,39 @@
-<h1>
-  Welcome to the home page!
-</h1>
+<div class='p-5 mb-4 bg-light rounded-3 text-center'>
+  <div class='container-fluid py-5'>
+    <h1 class='display-5 fw-bold'>PawPal — Redefining Pet Care</h1>
+    <p class='col-md-8 fs-4 mx-auto'>At PawPal, we are committed to revolutionizing pet care with innovation and compassion. Our mission is clear yet ambitious: to simplify and elevate the pet care experience for modern pet owners like never before. Join us as we unveil a comprehensive suite of features designed to cover every aspect of pet care, from easy appointment scheduling to fostering a vibrant community of pet enthusiasts. Discover the future of pet care with PawPal!</p>
+    <button class='btn btn-primary btn-lg' type='button'>Learn more</button>
+  </div>
+</div>
+<hr />
+<div>
+  <h2 class='text-center mb-3'>Service Providers</h2>
+
+  <div class='container'>
+    <div class='row row-cols-auto gy-4'>
+      {{#each institutions}}
+      
+      <div class='col col-md-3'>
+        <div class='card'>
+          <img src={{this.img}} class='card-img-top' alt='...' />
+          <div class='card-body'>
+            <h5 class='card-title'>{{this.name}}</h5>
+            {{!-- <p class='card-text'>Description</p> --}}
+            <a href='/institution/{{this._id}}' class='btn btn-primary'>Go to the institution</a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      
+    
+      
+      
+      
+  </div>
+</div>
+<div class='row'>
+        <div class='col text-center mt-4'>
+            <a href="/institution" class='btn btn-outline-primary'>Show More</a>
+        </div>
+    </div>
+<hr />

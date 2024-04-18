@@ -3,6 +3,7 @@ const app = express();
 import configRoutesFunction from "./routes/index.js";
 import exphbs from 'express-handlebars';
 import session from 'express-session';
+import cors from 'cors';
 
 // const rewriteUnsupportedBrowserMethods = (req, res, next) => {
 //   // If the user posts to the server with a property called _method, rewrite the request's method
@@ -16,6 +17,7 @@ import session from 'express-session';
 //   // let the next middleware run:
 //   next();
 // };
+app.use(cors());
 app.use(
   session({
     secret: "key",

@@ -1,0 +1,26 @@
+<h3 class='text-center'>Institution List</h3>
+<div class='container mt-4'>
+  <div class='row'>
+    <div class='col-md-12'>
+      {{#each institutions}}
+        <div class='card'>
+          <div class='card-body'>
+            <h5 class='card-title'>{{this.name}}</h5>
+            <h6 class='card-subtitle mb-2 text-muted'>{{this.address}},
+              {{this.city}},
+              {{this.state}}</h6>
+            <p class='card-text'>Services Provided:
+              {{this.service_provided}}</p>
+            {{! <ul class='list-group list-group-flush'>
+              <li class='list-group-item'>Grooming</li>
+              <li class='list-group-item'>Veterinary Doctor</li>
+            </ul> }}
+            <a href='/institution/{{this._id}}' class='card-link'>View Details</a>
+
+          </div>
+        </div>
+      {{/each}}
+
+    </div>
+  </div>
+</div>

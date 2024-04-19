@@ -1,0 +1,18 @@
+<h1>Welcome to the User Dashboard, {{user.firstName}}!</h1>
+
+<p>You are logged in as {{user.email}}.</p>
+
+<h2>Your Details:</h2>
+<ul>
+  <li>First Name: {{user.firstName}}</li>
+  <li>Last Name: {{user.lastName}}</li>
+  <li>Email: {{user.email}}</li>
+</ul>
+
+<form action="/users/update/{{user._id}}" method="get">
+  <input type="submit" value="Update Profile" />
+</form>
+<br />
+<form action="/logout" method="get">
+  <input type="submit" value="Logout" />
+</form>

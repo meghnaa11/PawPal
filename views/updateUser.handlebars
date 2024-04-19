@@ -1,0 +1,44 @@
+<h1>Update User</h1>
+<form action="/users/update/{{user._id}}" method="post">
+  <label for="firstName">First Name:</label><br />
+  <input
+    type="text"
+    id="firstName"
+    name="firstName"
+    value="{{user.firstName}}"
+  /><br />
+  <label for="lastName">Last Name:</label><br />
+  <input
+    type="text"
+    id="lastName"
+    name="lastName"
+    value="{{user.lastName}}"
+  /><br />
+  <label for="email">Email:</label><br />
+  <input
+    type="email"
+    id="email"
+    name="email"
+    value="{{user.email}}"
+    readonly
+  /><br />
+  <label for="gender">Gender:</label><br />
+  <input type="text" id="gender" name="gender" value="{{user.gender}}" /><br />
+  <label for="city">City:</label><br />
+  <input type="text" id="city" name="city" value="{{user.city}}" /><br />
+  <label for="state">State:</label><br />
+  <input type="text" id="state" name="state" value="{{user.state}}" /><br />
+  <label for="age">Age:</label><br />
+  <input type="number" id="age" name="age" value="{{user.age}}" /><br />
+  <label for="password">Password:</label><br />
+  <input
+    type="password"
+    id="password"
+    name="password"
+    value="{{user.password}}"
+  /><br />
+  <br />
+  <form action="/users/update/{{user._id}}" method="post">
+    <input type="submit" value="Update" />
+  </form>
+</form>

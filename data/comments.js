@@ -107,8 +107,28 @@ const editComment = async (commentObj) => {
     return updatedCommentInfo.value._id;
 }
 
+const deleteUserComments = async (userId) => {
+    if(!userId) throw "User ID needs to be provided";
+    userId = validators.checkId(userId);
+
+    const commentCollection = await comments();
+    const deletedCommentsInfo = await commentCollection.deleteMany({userId: new ObjectId(userId)});
+    if(deletedCommentsInfo.deletedCount === 0) throw `No comments found with user ID: ${userId}`;
+
+    return deletedCommentsInfo.deletedCount;
+}
+
+const deletePostComments = async (postId) => {
+    if(!postId) throw "Post ID needs to be provided";
+    postId = validators.checkId(postId);
+
+    const commentCollection = await comments();
+    const deletedCommentsInfo = await commentCollection.deleteMany({postId: new ObjectId(postId)});
+    if(deletedCommentsInfo.deletedCount === 0) throw `No comments found with post ID: ${postId}`;
+
+    return deletedCommentsInfo.deletedCount;
+
+}
 
 
-// TODO: delete all comments if user, product deleted
-
-export {createComment, getCommentById, getAllComments, deleteComment, editComment};
+export {createComment, getCommentById, getAllComments, deleteComment, editComment, deletePostComments, deleteUserComments};

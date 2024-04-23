@@ -37,14 +37,6 @@ Once the server is running, navigate to `http://localhost:3000` in your web brow
 - Session Management: The application maintains user sessions, ensuring a seamless user experience.
 - Error Handling: The application handles errors effectively, ensuring that users are informed when an error occurs (e.g., error retrieving pets).
 
-## Contributing
-
-We welcome contributions from the community. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
 ## Acknowledgments
 
 - This project was developed as part of Group 39 of CS546 at Stevens Institute of Technology.

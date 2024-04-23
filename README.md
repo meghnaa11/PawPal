@@ -8,8 +8,21 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js: Our server is built on Node.js. You can download it [here](https://nodejs.org/en/download/).
-- MongoDB: We use MongoDB as our database. You can download it [here](https://www.mongodb.com/try/download/community).
+To set up and run PawPal, ensure you have the following dependencies installed:
+
+- [Node.js](https://nodejs.org/): Required for running the server-side JavaScript environment.
+- [MongoDB](https://www.mongodb.com/): Used as the database for storing application data.
+
+Additionally, the following Node.js packages are required for the project:
+
+- **bcrypt**: Used for hashing and securing passwords.
+- **bcryptjs**: An alternative library for password hashing; used in case of compatibility issues with `bcrypt`.
+- **express**: The primary framework for building web applications in Node.js.
+- **express-handlebars**: A templating engine used to render views in Express.
+- **express-session**: Enables session management, allowing you to maintain user sessions between HTTP requests.
+- **mongodb**: Provides the MongoDB client for interacting with the MongoDB database.
+
+Make sure these packages are installed as part of your setup process. You can use `npm install` to install all the required dependencies as defined in the project's `package.json`.
 
 ### Installation
 

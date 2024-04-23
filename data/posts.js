@@ -87,6 +87,21 @@ export const getPostsbyID = async (id) => {
   return postbyID;
 };
 
+export const getmyPosts = async (id) => {
+  validators.checkId(id);
+  const postsCollection = await posts();
+  let postList = await postsCollection
+    .find({ userID: new ObjectId(id) })
+    .toArray();
+  if (!postList) throw `Could not get My Posts`;
+  if (postList.length === 0) return postList;
+  postList = postList.map((element) => {
+    element._id = element._id.toString();
+    return element;
+  });
+  return postList;
+};
+
 // try {
 //   const newPost = {
 //     title: "New Post Title",

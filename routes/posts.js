@@ -6,10 +6,19 @@ import * as helpers from "../helper.js";
 
 // need to seperate routes for get post by generalid and lostfound id.
 
+router.route("/myposts").get(async (req, res) => {
+  try {
+    const postbyID = await postData.getmyPosts("65d69f9de5cf3db66f90a055");
+    res.render("posts/viewmyPosts", { posts: postbyID });
+  } catch (error) {
+    return res.status(400).json({ message: error });
+  }
+});
+
 router.route("/general/:id").get(async (req, res) => {
   try {
     const postbyID = await postData.getPostsbyID(req.params.id);
-    res.json(postbyID);
+    res.render("posts/viewPost", { post: postbyID });
   } catch (error) {
     return res.status(400).json({ message: error });
   }
@@ -18,7 +27,7 @@ router.route("/general/:id").get(async (req, res) => {
 router.route("/general/").get(async (req, res) => {
   try {
     const posts = await postData.getAllGeneralPosts();
-    res.json(posts);
+    res.render("posts/general", { posts: posts });
   } catch (error) {
     return res.status(400).json({ message: error });
   }
@@ -71,7 +80,7 @@ router.route("/general/add").post(async (req, res) => {
 router.route("/lostfound/").get(async (req, res) => {
   try {
     const posts = await postData.getAllLFPosts();
-    res.json(posts);
+    res.render("posts/lostfound", { posts: posts });
   } catch (error) {
     return res.status(400).json({ message: error });
   }

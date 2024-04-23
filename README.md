@@ -26,7 +26,7 @@ Make sure these packages are installed as part of your setup process. You can us
 
 ### Installation
 
-1. Clone the repository: Use `git clone [https://github.com/your-repo-url](https://github.com/Akshat2634/PawPal.git)` to clone the repository to your local machine.
+1. Clone the repository: Use `git clone https://github.com/Akshat2634/PawPal.git` to clone the repository to your local machine.
 2. Install dependencies: Navigate to the project directory and use `npm install` to install the necessary packages for the project.
 3. Start the server: Use `npm start` to start the server.
 

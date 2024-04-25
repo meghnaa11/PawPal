@@ -1,0 +1,27 @@
+
+<div class="container">
+  <header class="header">
+     <form
+      action="/institution_register/update/{{institution._id}}"
+      method="GET" class="mt-3">
+
+      <input type="submit" value="Update Profile" class="btn btn-primary" />
+    </form>
+  </header>
+
+  <main class="main mt-4">
+    <div class="dashboard-data">
+      <h1>Dashboard Data: </h1>
+      <p><strong>Name:</strong> {{institution.name}} </p>
+      <p><strong>Services Provided:</strong> {{institution.services}} </p>
+      <p><strong>Address:</strong> {{institution.address}} </p>
+      <p><strong>City:</strong> {{institution.city}} </p>
+      <p><strong>State:</strong> {{institution.state}} </p>
+    </div>
+      <img src="{{institution.profileImage.path}}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;">
+<br><br>
+    <form action="/logout" method="get" class="mt-3">
+      <input type="submit" value="Logout" class="btn btn-secondary" />
+    </form>
+  </main>
+</div>

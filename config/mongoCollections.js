@@ -13,7 +13,7 @@ const getCollectionFn = (collection) => {
   };
 };
 
-// Note: You will need to change the code below!
-// export const products = getCollectionFn("products");
+// Export collections
 export const users = getCollectionFn("users");
 export const institutions = getCollectionFn("institutions");
+export const pets = getCollectionFn("pets");

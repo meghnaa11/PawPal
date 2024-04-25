@@ -1,13 +1,21 @@
-<h1>Welcome to PawPal!</h1>
+<div class="container mt-5">
+  <h1 class="text-center">Welcome to PawPal!</h1>
 
-<h2>What is PawPal?</h2>
+  <h2 class="mt-4">What is PawPal?</h2>
 
-<p>PawPal is a revolutionary pet care app focused on making pet ownership
-  simpler and more enjoyable.</p>
+  <p>PawPal is a revolutionary pet care app focused on making pet ownership
+    simpler and more enjoyable.</p>
 
-<h2>Login As:</h2>
+  <h2 class="mt-4">Login As:</h2>
 
-<button onclick="location.href='/userLogin'">Login as User</button>
-<button onclick="location.href='/institutionLogin'">
-  Login as Institution
-</button>
+  <div class="d-flex justify-content-between mt-3">
+    <button
+      onclick="location.href='/userLogin'"
+      class="btn btn-primary btn-lg"
+    >Login as User</button>
+    <button
+      onclick="location.href='/institutionLogin'"
+      class="btn btn-secondary btn-lg"
+    >Login as Institution</button>
+  </div>
+</div>

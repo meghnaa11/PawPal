@@ -1,0 +1,23 @@
+
+<form action="/pets/update/{{petID}}" method="POST" name="pet_form" id="pet_form">
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value = "{{pet_current_data.name}}" ><br><br>
+
+        <label for="species">Species:</label><br>
+        <input type="text" id="species" name="species" value = "{{pet_current_data.species}}" ><br><br>
+
+        <label for="breed">Breed:</label><br>
+        <input type="text" id="breed" name="breed"value = "{{pet_current_data.breed}}" ><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"required>{{pet_current_data.description}}</textarea><br><br>
+
+<div id="error_pet">
+
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+
+        <script src="/public/js/client_validation.js"></script>

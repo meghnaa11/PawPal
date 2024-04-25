@@ -8,7 +8,7 @@ const exportedMethods = {
     const user = await userData.findOne({ email: email });
     console.log(user);
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && (await bcrypt.compare(password, user.hashedPassword))) {
       return user;
     } else {
       console.log("Incorrect password or user not found");
@@ -21,7 +21,10 @@ const exportedMethods = {
     const institution = await institutionData.findOne({ email: email });
     console.log(institution);
 
-    if (institution && (await bcrypt.compare(password, institution.password))) {
+    if (
+      institution &&
+      (await bcrypt.compare(password, institution.hashedPassword))
+    ) {
       return institution;
     } else {
       console.log("Incorrect password or institution not found");

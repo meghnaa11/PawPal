@@ -1,4 +1,4 @@
-<!-- Add Post Modal -->
+{{!-- <!-- Add Post Modal -->
 <div
   class="modal fade"
   id="addPostModal"
@@ -22,7 +22,12 @@
       </div>
       <div class="modal-body">
         <!-- Add your form elements here -->
-        <form>
+
+    </div>
+  </div>
+</div> --}}
+
+        <form id="add-post" method="POST" action="/posts/add">
           <div class="form-group">
             <label for="type">Type:</label>
             <select id="type" name="type">
@@ -114,7 +119,6 @@
               />
             </div>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button
@@ -122,12 +126,9 @@
           class="btn btn-secondary"
           data-dismiss="modal"
         >Close</button>
-        <button type="button" class="btn btn-primary" id="savePostBtn">Save
-          changes</button>
+        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
       </div>
-    </div>
-  </div>
-</div>
+      </form>
 
 <!-- Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

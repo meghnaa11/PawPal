@@ -24,15 +24,19 @@
         </div>
         <strong>Community</strong>
         <div class="btn-group" role="group" aria-label="Post Actions">
-          <a class="btn btn-secondary btn-group" href="/posts/myposts" role="button" aria-disabled="true">My Posts</a>
-          <button
-            type="button"
-            class="btn btn-secondary"
+          <a
+            class="btn btn-secondary btn-group"
+            href="/posts/myposts"
+            role="button"
+            aria-disabled="true"
+          >My Posts</a>
+          <a
+            class="btn btn-secondary btn-group"
+            href="/posts/add"
+            role="button"
+            aria-disabled="true"
             style="margin-left: 5px"
-            id="addPostBtn"
-            data-toggle="modal"
-            data-target="#addPostModal"
-          >Add post </button>
+          >Add Post</a>
           <button
             type="button"
             class="btn btn-secondary"
@@ -54,14 +58,10 @@
             </div>
             <p class="mb-1">{{content}}</p>
             <p class="mb-1">Type : {{type}}</p>
-            
+
           </a>
         </div>
       {{/each}}
     </div>
   </div>
 </div>
-
-
-
-{{>addPostmodal}}

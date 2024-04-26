@@ -1,0 +1,43 @@
+{{!-- <h1>Institution Login</h1>
+<form action="/institution" method="POST"name="institute_login" id="institute_login">
+  <label for="email">Email:</label><br />
+  <input type="email" id="email" name="email"  /><br />
+  <label for="password">Password:</label><br />
+  <input type="password" id="password" name="password"  /><br />
+  <a href="/institution_register">New Institution?</a><br />
+  <div id="error_institution">
+    
+  </div>
+  <input type="submit" value="Login" />
+</form> --}}
+
+<h1>Institution Login</h1>
+<form action="/institution" method="POST"name="institute_login" id="institute_login">
+  <div class="form-floating mb-3">
+    <input
+      type="email"
+      class="form-control input-box"
+      id="email"
+      name="email"
+      placeholder="name@example.com"
+    />
+    <label for="floatingInput">Email address</label>
+  </div>
+  <div class="form-floating">
+    <input
+      type="password"
+      class="form-control input-box"
+      id="password"
+      name="password"
+      placeholder="Password"
+    />
+    <label for="floatingPassword">Password</label>
+  </div>
+  <a href="/institution_register">New Institution?</a><br />
+  <div id="error_institution">
+    
+  </div>
+  <input type="submit" value="Login" />
+</form>
+
+<script src="/public/js/client_validation.js"></script>

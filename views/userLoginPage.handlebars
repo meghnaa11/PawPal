@@ -1,0 +1,31 @@
+
+<h1>User Login</h1>
+<form action="/user" method="POST" name="user_login" id="user_login">
+  <div class="form-floating mb-3">
+    <input
+      type="email"
+      class="form-control input-box"
+      id="email"
+      name="email"
+      placeholder="name@example.com"
+    />
+    <label for="floatingInput">Email address</label>
+  </div>
+  <div class="form-floating">
+    <input
+      type="password"
+      class="form-control input-box"
+      id="password"
+      name="password"
+      placeholder="Password"
+    />
+    <label for="floatingPassword">Password</label>
+  </div>
+  <a href="/users">New User?</a><br />
+   <div id="error_userlogin">
+    
+  </div> <br>
+  <input type="submit" value="Login" />
+</form>
+<script src="/public/js/client_validation.js"></script>
+

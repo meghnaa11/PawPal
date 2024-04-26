@@ -1,5 +1,5 @@
 import { comments, posts } from "../config/mongoCollections.js";
-import { user } from "../config/mongoCollections.js";
+import { users } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import { postHelpers, getCurrentDateTime, validators } from "../helper.js";
 

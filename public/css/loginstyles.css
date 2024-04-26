@@ -1,0 +1,171 @@
+/* General Styles */
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background-color: #f4f4f4; /* Light background color for readability */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensure the content is vertically centered */
+  position: relative; /* Needed for the pseudo-element to be positioned correctly */
+}
+
+/* Pseudo-element for the overlay */
+body::before {
+  content: "";
+  position: absolute; /* Position it absolutely to cover the entire body */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/public/assets/paw.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; /* Adjust opacity to achieve desired effect */
+  z-index: -1; /* Keep it behind other content */
+}
+
+/* Header Styles */
+h1,
+h2 {
+  text-align: center; /* Center-align the headings */
+  color: #333; /* Dark color for good contrast */
+  margin-top: 0; /* No extra space above the first header */
+}
+
+h1 {
+  font-size: 2.5em; /* Larger font for main header */
+}
+
+h2 {
+  font-size: 1.8em; /* Smaller than h1 but still prominent */
+  margin-top: 20px; /* Spacing between sections */
+  margin-bottom: 15px; /* Spacing below */
+}
+
+#institution-user {
+  width: 700px;
+}
+
+/* Container Styles */
+.container,
+#institute_login,
+#user_login {
+  max-width: 800px; /* Limit the content width */
+  width: 500px;
+  padding: 30px; /* Ensure sufficient padding */
+  background-color: #fff; /* White background for better contrast */
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  border-radius: 10px; /* Rounded corners for a softer look */
+  margin: auto; /* Center the content */
+}
+
+/* Form and Input Styles */
+.form-floating,
+.form-group {
+  margin-bottom: 15px; /* Spacing between form elements */
+}
+
+p {
+  font-size: 1.5em;
+}
+.input-box,
+input,
+select {
+  width: 100%; /* Full width for inputs */
+  padding: 10px; /* Padding for easier interaction */
+  border: 1px solid #ddd; /* Light border for inputs */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 0.9em; /* Consistent font size for inputs */
+}
+
+/* Button Styles */
+input[type="submit"],
+.btn {
+  display: block; /* Buttons should take full width */
+  width: 100%; /* Ensures they stretch across the container */
+  background-color: #1a52a5; /* Dark blue */
+  color: white; /* White text for contrast */
+  padding: 10px 20px; /* Increased padding */
+  border: none; /* No border for cleaner look */
+  border-radius: 5px; /* Soft corners */
+  cursor: pointer; /* Change cursor on hover */
+  font-size: 1em; /* Consistent font size */
+  margin-top: 20px; /* Spacing above buttons */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth hover effects */
+}
+
+input[type="submit"]:hover,
+.btn:hover {
+  background-color: #1e447e; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+/* Error Message Styles */
+#error {
+  color: red; /* Red for error messages */
+  margin-top: 10px; /* Spacing above error text */
+  font-size: 0.9em; /* Slightly smaller font for errors */
+}
+
+/* Flexbox Styles */
+.d-flex {
+  display: flex; /* Use flexbox for alignment */
+  justify-content: space-between; /* Ensure space between elements */
+  align-items: center; /* Center-align vertically */
+  flex-wrap: wrap; /* Allow content to wrap for smaller screens */
+}
+
+.d-flex > .btn {
+  flex: 1; /* Ensure buttons take equal space */
+  margin: 10px; /* Spacing around buttons */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container,
+  #signin-form {
+    padding: 15px;
+  }
+
+  .d-flex {
+    flex-direction: column;
+  }
+
+  .d-flex > .btn {
+    margin-bottom: 15px;
+  }
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #007bff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-data {
+  margin-top: 30px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-data h1 {
+  text-align: center;
+  color: #007bff;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.dashboard-data p {
+  color: #333;
+  line-height: 1.8;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}

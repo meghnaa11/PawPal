@@ -1,0 +1,49 @@
+
+
+{{!-- start --}}
+<div class="container">
+  <h1 class="mt-4">Welcome to the User Dashboard, {{user.firstName}}!</h1>
+
+  <p>You are logged in as {{user.email}}.</p>
+
+  <h2 class="mt-4">Your Details:</h2>
+  <ul class="list-group mb-4">
+    <li class="list-group-item">First Name: {{user.firstName}}</li>
+    <li class="list-group-item">Last Name: {{user.lastName}}</li>
+    <li class="list-group-item">Email: {{user.email}}</li>
+  </ul>
+<img src="{{user.profileImage.path}}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;">
+
+  <form action="/users/update/{{user._id}}" method="get" class="mb-3">
+    <input type="submit" value="Update Profile" class="btn btn-primary" />
+  </form>
+  <form action="/logout" method="get" class="mb-3">
+    <input type="submit" value="Logout" class="btn btn-secondary" />
+  </form>
+  <form action="/pets" method="get" class="mb-3">
+    <input type="submit" value="Add Pet" class="btn btn-success" />
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Pet Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each pet_names_array}}
+        <tr>
+          <td><a href="/pets/view_pets/{{this._id}}">{{this.name}}</a></td>
+          <td><a
+              href="/pets/update/{{this._id}}"
+              class="btn btn-warning btn-sm"
+            >Update</a></td>
+          <td><a
+              href="/pets/delete/{{this._id}}"
+              class="btn btn-danger btn-sm"
+            >Delete</a></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

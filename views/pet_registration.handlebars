@@ -1,0 +1,26 @@
+
+<form action="/pets" method="POST" name="pet_form" id="pet_form" enctype="multipart/form-data">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="species">Species:</label><br>
+        <input type="text" id="species" name="species"><br><br>
+
+        <label for="breed">Breed:</label><br>
+        <input type="text" id="breed" name="breed"><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+        <label for="petImage">Profile Image:</label>
+         <input type="file" id="petImage" name="petImage" accept="image/*"><br /><br />
+
+        <input type="hidden" id="userID" name="userID" value="123456"> 
+        <div id="error_pet">
+
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script src="/public/js/client_validation.js"></script>

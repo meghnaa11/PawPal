@@ -1,17 +1,24 @@
+import exphbs from "express-handlebars";
+import userRoutes from "./users.js";
 import institutionRoutes from "./institutions.js";
+import petRoutes from "./pets.js";
+import loginRoutes from "./login.js";
 import appointmentRoutes from "./appointments.js";
 import postRoutes from "./posts.js";
-import * as institutionData from "../data/institutions.js";
 
 const constructorMethod = (app) => {
-  app.use("/institution", institutionRoutes);
+  // app.use("/register", userRoutes);
+  app.use("/institution_register", institutionRoutes);
+  app.use("/pets", petRoutes);
   app.use("/getapp", appointmentRoutes);
   app.use("/posts", postRoutes);
+  app.use("/", loginRoutes);
+  app.use("/users", userRoutes);
 
-  app.get("/", async (req, res) => {
-    const institutions = await institutionData.getAll();
-    console.log(institutions);
-    res.render("home/index", { institutions: institutions });
+  app.get("/home", async (req, res) => {
+    // const institutions = await institutionData.getAll();
+    // console.log(institutions);
+    res.render("home/index");
   });
 
   // app.use("*", (req, res) => {

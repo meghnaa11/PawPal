@@ -19,9 +19,9 @@
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li><a class="dropdown-item" href="/posts/general">General</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="/posts/lostfound">Lost</a></li>
+            <li><a class="dropdown-item" href="/posts/lost">Lost</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="/posts/lostfound">Found</a></li>
+            <li><a class="dropdown-item" href="/posts/found">Found</a></li>
           </ul>
         </div>
         <strong>Community</strong>
@@ -51,15 +51,16 @@
       {{#each posts}}
         <div class="list-group">
           <a
-            href="/posts/general/{{_id}}"
+            href="/posts/postbyID/{{_id}}"
             class="list-group-item list-group-item-action"
           >
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">{{title}}</h5>
               <small>{{updatedtime}}</small>
             </div>
-            <p class="mb-1">{{content}}</p>
-            <small>{{_id}}</small>
+            <p class="mb-1 mt-2">{{content}}</p>
+            <img src="../../public/assets/posts/{{image.filename}}" style="max-width: 200px; max-height: 200px;"><br></br>
+            <cite>~{{_id}}</cite>
           </a>
         </div>
       {{/each}}

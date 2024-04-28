@@ -1,6 +1,6 @@
     {{> nav}}
 
-<form id="add-post" method="POST" action="/posts/add">
+<form id="add-post" method="POST" action="/posts/add" enctype="multipart/form-data">
   <label for="type">Type:</label>
   <select id="type" name="type">
     <option value="general">General</option>
@@ -13,7 +13,7 @@
   <label for="content">Content</label>
   <textarea class="form-control" id="content" name="content"></textarea>
   <label for="image">Upload Image</label>
-  <input type="file" class="form-control-file" id="image" />
+  <input type="file" class="form-control-file" name="image" id="image" accept="image/*"/>
   <div id="additionalFields" style="display: none;">
     <label for="details_date">Date</label>
     <input

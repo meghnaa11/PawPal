@@ -59,7 +59,7 @@ const seedDatabase = async () => {
 
   await institutionsCollection.insertMany(institutions);
 
-  await usersCollection.insertMany(users);
+  //  await usersCollection.insertMany(users);
 
   console.log("Database seeded!");
   await closeConnection();

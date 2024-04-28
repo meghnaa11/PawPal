@@ -3,7 +3,8 @@ const app = express();
 import configRoutesFunction from "./routes/index.js";
 import exphbs from "express-handlebars";
 import session from "express-session";
-import cors from 'cors';
+import cors from "cors";
+import { postMiddleware } from "./postsmiddleware.js";
 
 const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   if (req.body && req.body._method) {
@@ -59,8 +60,12 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);
+app.use("/posts", postMiddleware);
 
-app.engine("handlebars", exphbs.engine({ defaultLayout: "main",partialsDir: ['views/partials/'] }));
+app.engine(
+  "handlebars",
+  exphbs.engine({ defaultLayout: "main", partialsDir: ["views/partials/"] })
+);
 app.set("view engine", "handlebars");
 
 configRoutesFunction(app);

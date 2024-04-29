@@ -12,7 +12,19 @@
     <li class="list-group-item">Last Name: {{user.lastName}}</li>
     <li class="list-group-item">Email: {{user.email}}</li>
   </ul>
-<img src="{{user.profileImage.path}}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;">
+  <img src="{{user.profileImage.path}}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;" id="user_image">
+  <div id="update-image-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h1>Update Profile Pic</h1>
+    <form action="/users/update/image/{{user._id}}" method="POST" enctype="multipart/form-data"> 
+      <label for="updated_profile_pic">Update Profile Image:</label>
+      <input type="file" id="updated_profile_pic" name="updated_profile_pic" accept="image/*">
+      <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+  </div>
+</div>
+
 
   <form action="/users/update/{{user._id}}" method="get" class="mb-3">
     <input type="submit" value="Update Profile" class="btn btn-primary" />
@@ -47,3 +59,28 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  var modal = document.getElementById("update-image-modal");
+
+  var btn = document.getElementById("user_image");
+
+  btn.onclick = function() {
+    modal.style.display = "block"; 
+  }
+
+  var span = document.getElementsByClassName("close")[0];
+
+  span.onclick = function() {
+    modal.style.display = "none"; 
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none"; 
+    }
+  }
+});
+
+</script>

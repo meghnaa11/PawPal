@@ -172,7 +172,13 @@ router.route("/add").post(upload, async (req, res) => {
       }
     }
   } catch (e) {
-    return res.status(400).json({ error: e });
+    let errors = [];
+    errors.push(e);
+    return res.status(400).render("posts/addPosts", {
+      hasErrors: true,
+      errors: errors,
+      postFields: postFields,
+    });
   }
 
   try {

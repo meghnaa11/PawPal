@@ -3,10 +3,6 @@ import { user } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import { postHelpers, getCurrentDateTime, validators } from "../helper.js";
 
-// Upon creating getUsers check if User exists before adding posts.
-// Check Date for LostFound while creating a new Post.
-// Check Contact Info for now it is just a string.
-
 export const createPost = async (postObj) => {
   if (postObj?.userID === undefined) throw `Need User ID.`;
   postObj.userID = postHelpers.isuserIDValid(postObj.userID);
@@ -85,6 +81,45 @@ export const getPostsbyID = async (id) => {
   if (postbyID === null) throw `No Product Found with given Id`;
   postbyID._id = postbyID._id.toString();
   return postbyID;
+};
+
+export const getmyPosts = async (id) => {
+  validators.checkId(id);
+  const postsCollection = await posts();
+  let postList = await postsCollection
+    .find({ userID: new ObjectId(id) })
+    .toArray();
+  if (!postList) throw `Could not get My Posts`;
+  if (postList.length === 0) return postList;
+  postList = postList.map((element) => {
+    element._id = element._id.toString();
+    return element;
+  });
+  return postList;
+};
+
+export const removePost = async (id) => {
+  validators.checkId(id);
+  const postsCollection = await posts();
+  const deletionInfo = await postsCollection.findOneAndDelete({
+    _id: new ObjectId(id),
+  });
+  if (!deletionInfo) {
+    throw `Could not delete post with id of ${id}`;
+  }
+  return deletionInfo;
+};
+
+export const removePostbyUser = async (id) => {
+  validators.checkId(id);
+  const postsCollection = await posts();
+  const deletionInfo = await postsCollection.deleteMany({
+    userID: new ObjectId(id),
+  });
+  if (!deletionInfo.acknowledged) {
+    throw `Could not delete post from user with id of ${id}`;
+  }
+  return deletionInfo.deletedCount;
 };
 
 // try {

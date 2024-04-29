@@ -1,0 +1,71 @@
+<div>
+  <!-- Post List -->
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <!-- Dropdown Button -->
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Lost Found
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="/posts/general">General</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="/posts/lostfound">Lost</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="/posts/lostfound">Found</a></li>
+          </ul>
+        </div>
+        <strong>Community</strong>
+        <div class="btn-group" role="group" aria-label="Post Actions">
+          <a
+            class="btn btn-secondary btn-group"
+            href="/posts/myposts"
+            role="button"
+            aria-disabled="true"
+          >My Posts</a>
+          <a
+            class="btn btn-secondary btn-group"
+            href="/posts/add"
+            role="button"
+            style="margin-left: 5px"
+            aria-disabled="true"
+          >Add Post</a>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            style="margin-left: 5px"
+          >Search </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      {{#each posts}}
+        <div class="list-group">
+          <a
+            href="/posts/general/{{_id}}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{title}}</h5>
+              <small>{{updatedtime}}</small>
+            </div>
+            <p class="mb-1">{{content}}</p>
+            <p class="mb-1">Location : {{lostfoundDetails.location}}</p>
+            <p class="mb-1">Date : {{lostfoundDetails.date}}</p>
+            <p class="mb-1">Species :
+              {{lostfoundDetails.pet_details.species}}</p>
+            <p class="mb-1">Breed : {{lostfoundDetails.pet_details.breed}}</p>
+            <small>{{_id}}</small>
+          </a>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

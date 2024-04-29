@@ -20,5 +20,6 @@ export const users = getCollectionFn("users");
 export const posts = getCollectionFn("posts");
 export const comments = getCollectionFn("comments");
 export const pets = getCollectionFn("pets");
+export const reviews = getCollectionFn("reviews");
 
 

@@ -1,26 +1,37 @@
+
+{{> appdep}}
+
+<header>
+  {{> nav}}
+</header>
+
 <h3 class='text-center'>Institution List</h3>
-<div class='container mt-4'>
-  <div class='row'>
-    <div class='col-md-12'>
+  <div class='container'>
+    <div class='row row-cols-auto gy-4'>
       {{#each institutions}}
+      
+      <div class='col col-md-3'>
         <div class='card'>
+          <img src={{this.profileImage.path}} class='card-img-top' alt='...' >
           <div class='card-body'>
             <h5 class='card-title'>{{this.name}}</h5>
-            <h6 class='card-subtitle mb-2 text-muted'>{{this.address}},
-              {{this.city}},
-              {{this.state}}</h6>
-            <p class='card-text'>Services Provided:
-              {{this.service_provided}}</p>
-            {{! <ul class='list-group list-group-flush'>
-              <li class='list-group-item'>Grooming</li>
-              <li class='list-group-item'>Veterinary Doctor</li>
-            </ul> }}
-            <a href='/institution/{{this._id}}' class='card-link'>View Details</a>
-
+            <strong>Services:</strong>
+            
+           
+            <p class='card-text'>{{this.services}}</p>
+ 
+            
+            <strong>Address:</strong>
+             {{this.address}} {{this.city}} {{this.state}}
+            <a href='/institutionapp/{{this._id}}' class='btn btn-primary mt-1'>Go to the institution</a>
+            
+          
           </div>
         </div>
+      </div>
       {{/each}}
-
-    </div>
+   
+  </div>
+</div>
   </div>
 </div>

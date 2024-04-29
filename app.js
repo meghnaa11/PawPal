@@ -14,9 +14,9 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   // let the next middleware run:
   next();
 };
-
 app.use("/public", express.static("public"));
 
+app.use("/institutionapp/public", express.static("public"));
 app.use(express.json());
 app.use(cors());
 app.use(
@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);
 
-app.engine("handlebars", exphbs.engine({ defaultLayout: "main",partialsDir: ['views/partials/'] }));
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main", partialsDir: ['views/partials/'] }));
 app.set("view engine", "handlebars");
 
 configRoutesFunction(app);

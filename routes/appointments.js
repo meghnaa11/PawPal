@@ -1,9 +1,9 @@
 import { Router } from 'express';
 const router = Router();
+import { userData } from '../data/index.js';
 
-import * as institutionData from '../data/institutions.js';
 import * as appointmentData from '../data/appointments.js';
-import * as petData from '../data/pets.js';
+
 
 
 router.route('/ins/:id').get(async (req, res) => {
@@ -26,13 +26,16 @@ router.route('/:id').get(async (req, res) => {
  }
 });
 
-router.route('/makeapp/:userid/:insid').post(async (req, res) => {
+router.route('/makeapp/:insid').post(async (req, res) => {
  try {
-  console.log("jinlailema");
+  const userid = req.session.user._id;
+  const insid = req.params.insid;
+  const user = await userData.getUserById(userid);
 
-  const { category, appointmentTime, desc } = req.body;
-  console.log(category, appointmentTime, desc, req.params.insid, req.params.userid);
-  const newAppointment = await appointmentData.create(category, appointmentTime, desc, req.params.insid, req.params.userid, 'petID');
+  const { category, appointmentTime, desc, petid } = req.body;
+  console.log(category, appointmentTime, desc, userid, petid);
+  const newAppointment = await appointmentData.create(category, appointmentTime, desc, insid, userid, petid);
+  appointmentData.sendEmail(user.email, user.firstName, new Date(appointmentTime).toLocaleDateString(), new Date(appointmentTime).toLocaleTimeString(), category);
 
   return res.json(newAppointment);
  } catch (error) {

@@ -10,7 +10,7 @@ const institution_dashboardDataFunctions = {
             throw 'No Institution ID provided'
         }
         const institution = await institutions();
-        const existing_institution = await institution.findOne({_id:institionID})
+        const existing_institution = await institution.findOne({ _id: institutionID })
         if(!existing_institution){
             throw 'Institution Not Found'
         }

@@ -73,7 +73,7 @@ router.post("/user", async (req, res) => {
         email: user.email,
         _id: user._id,
       };
-      return res.redirect("/userDashboard");
+      return res.redirect("/home");
     } else {
       return res.status(401).json({ message: "Invalid email or password" });
     }

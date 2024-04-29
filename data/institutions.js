@@ -129,6 +129,11 @@ const institutionDataFunctions = {
 
     return institution;
   },
+  async getAll() {
+    const institutionCollection = await institutions();
+    const institutionList = await institutionCollection.find({}).toArray();
+    return institutionList;
+  }
 };
 
 export default institutionDataFunctions;

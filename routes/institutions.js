@@ -49,7 +49,7 @@ router
         res.send("Only empty spaces");
       }
       if (institute_info.hashedPassword.length < 8) {
-        res.send("Minimum 8 characters required for password");
+        return res.send("Minimum 8 characters required for password");
       }
       institute_info.hashedPassword = institute_info.hashedPassword.trim();
       if (!/[A-Za-z]/.test(institute_info.hashedPassword)) {

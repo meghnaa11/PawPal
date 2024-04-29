@@ -25,6 +25,11 @@
    <div id="error_userlogin">
     
   </div> <br>
+  <div>
+  {{#if error}}
+  <p>{{error}}</p>
+  {{/if}}
+  </div>
   <input type="submit" value="Login" />
 </form>
 <script src="/public/js/client_validation.js"></script>

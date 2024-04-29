@@ -174,10 +174,8 @@ router.route("/view_pets/:id").get(async (req, res) => {
   if (!display_pet_data) {
     res.send("Pet not found");
   }
-  let img_path = display_pet_data.profileImage.path;
-  console.log(img_path);
-  const normalizedPath = path.normalize(img_path);
-  res.render("view_pets", { petID, display_pet_data, normalizedPath });
+  console.log(display_pet_data)
+  res.render("view_pets", { petID, display_pet_data });
 });
 
 router.route("/delete/:id").get(async (req, res) => {

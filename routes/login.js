@@ -75,7 +75,7 @@ router.post("/user", async (req, res) => {
       };
       return res.redirect("/userDashboard");
     } else {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).render("userLoginPage", { error: "Invalid Email or Password" });
     }
   } catch (e) {
     return res.status(500).json({ message: e });
@@ -101,7 +101,7 @@ router.post("/institution", async (req, res) => {
       };
       return res.redirect("/institutionDashboard");
     } else {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).render("institutionLogin", { error: "Invalid Email or Password" });
     }
   } catch (e) {
     return res.status(500).json({ message: e });

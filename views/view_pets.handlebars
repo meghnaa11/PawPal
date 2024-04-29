@@ -5,7 +5,9 @@
 
       <img
         {{!-- src="{{normalizedPath}}" --}}
-        src="public/assets/pets/1714014389586-img.jpeg"
+        {{!-- src="{{display_pet_data.profileImage.path}}" --}}
+        {{!-- src = "./public/assets/pets/{{display_pet_data.profileImage.filename}}" --}}
+        src = "/public/assets/pets/{{display_pet_data.profileImage.filename}}"
         alt="Profile Picture"
         style="max-width: 200px; max-height: 200px;"
       />

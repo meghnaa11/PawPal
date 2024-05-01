@@ -777,3 +777,95 @@ if (institution_login) {
     }
   });
 }
+
+let forgotPasswordForm = document.getElementById("forgot-password-form");
+let errorForgotPassword = document.getElementById("error-forgot-password");
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener("submit", (event) => {
+    console.log("Form submission fired");
+    event.preventDefault();
+
+    errorForgotPassword.innerHTML = "";
+    let email = document.getElementById("email").value.trim();
+    let isValidForgotPassword = true;
+
+    if (email === "") {
+      let p = document.createElement("p");
+      p.innerHTML = "Email field should not be empty";
+      errorForgotPassword.appendChild(p);
+      isValidForgotPassword = false;
+      event.preventDefault();
+    }
+
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      let p = document.createElement("p");
+      p.innerHTML = "Invalid Email";
+      errorForgotPassword.appendChild(p);
+      isValidForgotPassword = false;
+      event.preventDefault();
+    }
+
+    if (isValidForgotPassword) {
+      event.target.submit();
+    } else {
+      event.preventDefault();
+    }
+  });
+}
+
+let otpForm = document.getElementById("otp-form");
+let errorOtp = document.querySelector(".otp-error");
+
+if (otpForm) {
+  otpForm.addEventListener("submit", function (event) {
+    let otpInput = document.getElementById("otp");
+    let otp = otpInput.value.trim();
+
+    // Clear previous error message
+    errorOtp.innerHTML = "";
+
+    // Check if OTP field is empty
+    if (otp === "") {
+      event.preventDefault(); // Prevent form submission
+      errorOtp.textContent = "OTP field cannot be empty.";
+      return;
+    }
+
+    // Check if OTP is exactly 6 digits
+    if (!/^[a-zA-Z0-9]{6}$/.test(otp)) {
+      event.preventDefault(); // Prevent form submission
+      errorOtp.textContent = "OTP should be exactly 6 digits.";
+      return;
+    }
+  });
+}
+
+let resetPasswordForm = document.getElementById("reset-password-form");
+let errorResetPassword = document.getElementById("error-reset-password");
+
+if (resetPasswordForm) {
+  resetPasswordForm.addEventListener("submit", function (event) {
+    let newPasswordInput = document.getElementById("new-password");
+    let confirmPasswordInput = document.getElementById("confirm-password");
+    let newPassword = newPasswordInput.value.trim();
+    let confirmPassword = confirmPasswordInput.value.trim();
+
+    // Clear previous error message
+    errorResetPassword.innerHTML = "";
+
+    // Check if newPassword and confirmPassword fields are not empty
+    if (newPassword === "" || confirmPassword === "") {
+      event.preventDefault(); // Prevent form submission
+      errorResetPassword.textContent = "Both fields are required.";
+      return;
+    }
+
+    // Check if newPassword and confirmPassword match
+    if (newPassword !== confirmPassword) {
+      event.preventDefault(); // Prevent form submission
+      errorResetPassword.textContent = "Passwords do not match.";
+      return;
+    }
+  });
+}

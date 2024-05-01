@@ -1,4 +1,4 @@
-{{!-- <h1>Institution Login</h1>
+{{! <h1>Institution Login</h1>
 <form action="/institution" method="POST"name="institute_login" id="institute_login">
   <label for="email">Email:</label><br />
   <input type="email" id="email" name="email"  /><br />
@@ -9,11 +9,20 @@
     
   </div>
   <input type="submit" value="Login" />
-</form> --}}
+</form> }}
+<link rel="stylesheet" href="/public/css/loginstyles.css" />
 
-<h1>Institution Login</h1>
-<form action="/institution" method="POST"name="institute_login" id="institute_login">
+<form
+  action="/institution"
+  method="POST"
+  name="institute_login"
+  id="institute_login"
+>
   <div class="form-floating mb-3">
+    <h1>Institution Login</h1>
+
+    <label for="floatingInput">Email address</label>
+
     <input
       type="email"
       class="form-control input-box"
@@ -21,9 +30,10 @@
       name="email"
       placeholder="name@example.com"
     />
-    <label for="floatingInput">Email address</label>
   </div>
   <div class="form-floating">
+    <label for="floatingPassword">Password</label>
+
     <input
       type="password"
       class="form-control input-box"
@@ -31,12 +41,14 @@
       name="password"
       placeholder="Password"
     />
-    <label for="floatingPassword">Password</label>
   </div>
+  <a href="/forgotPassword/institutionReset">Forgot Password?</a><br />
+
   <a href="/institution_register">New Institution?</a><br />
   <div id="error_institution">
-    
+
   </div>
+
   <input type="submit" value="Login" />
 </form>
 

@@ -169,3 +169,10 @@ input[type="submit"]:hover,
   font-size: 1.1em;
   margin-bottom: 10px;
 }
+#error-forgot-password,
+.otp-error,
+#error-reset-password {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}

@@ -1,4 +1,4 @@
-
+{{> appdep}}
     {{> nav}}
     <div>
   <!-- Post List -->
@@ -14,14 +14,14 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Lost Found
+            {{type}}
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li><a class="dropdown-item" href="/posts/general">General</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="/posts/lostfound">Lost</a></li>
+            <li><a class="dropdown-item" href="/posts/lost">Lost</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="/posts/lostfound">Found</a></li>
+            <li><a class="dropdown-item" href="/posts/found">Found</a></li>
           </ul>
         </div>
         <strong>Community</strong>
@@ -39,11 +39,13 @@
             style="margin-left: 5px"
             aria-disabled="true"
           >Add Post</a>
-          <button
-            type="button"
-            class="btn btn-secondary"
+          <a
+            class="btn btn-secondary btn-group"
+            href="/posts/search"
+            role="button"
+            aria-disabled="true"
             style="margin-left: 5px"
-          >Search </button>
+          >Search</a>
         </div>
       </div>
     </div>
@@ -51,7 +53,7 @@
       {{#each posts}}
         <div class="list-group">
           <a
-            href="/posts/general/{{_id}}"
+            href="/posts/postbyID/{{_id}}"
             class="list-group-item list-group-item-action"
           >
             <div class="d-flex w-100 justify-content-between">
@@ -64,7 +66,9 @@
             <p class="mb-1">Species :
               {{lostfoundDetails.pet_details.species}}</p>
             <p class="mb-1">Breed : {{lostfoundDetails.pet_details.breed}}</p>
-            <small>{{_id}}</small>
+            <img src="../../{{image.path}}" style="max-width: 200px; max-height: 200px;" onerror='this.style.display = "none"'>
+            <br></br>
+            <cite>~{{_id}}</cite>
           </a>
         </div>
       {{/each}}

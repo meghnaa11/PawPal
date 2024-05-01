@@ -1,7 +1,4 @@
-
 <link rel="stylesheet" href="/public/css/loginstyles.css" />
-
-{{!-- start --}}
 <div class="container">
   <h1 class="mt-4">Welcome to the User Dashboard, {{user.firstName}}!</h1>
 
@@ -13,7 +10,11 @@
     <li class="list-group-item">Last Name: {{user.lastName}}</li>
     <li class="list-group-item">Email: {{user.email}}</li>
   </ul>
-<img src="{{user.profileImage.path}}" alt="Profile Picture" style="max-width: 200px; max-height: 200px;">
+  <img
+    src="{{user.profileImage.path}}"
+    alt="Profile Picture"
+    style="max-width: 200px; max-height: 200px;"
+  />
 
   <form action="/users/update/{{user._id}}" method="get" class="mb-3">
     <input type="submit" value="Update Profile" class="btn btn-primary" />
@@ -46,5 +47,5 @@
         </tr>
       {{/each}}
     </tbody>
-  </table>
+     </table>
 </div>

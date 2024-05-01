@@ -1,18 +1,39 @@
-    {{> nav}}
+{{> appdep}}
+{{> nav}}
 <div class="container mt-5">
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
       Post Details
-      <div class="btn-group" role="group" aria-label="Post Actions">
-        <button type="button" class="btn btn-primary">Edit</button>
-        <button type="button" class="btn btn-danger">Delete</button>
-      </div>
+      {{#if isUsersPost}}
+        <div class="btn-group" role="group" aria-label="Post Actions">
+        <a
+            class="btn btn-secondary btn-group"
+            href="/posts/postbyID/{{post._id}}/edit"
+            role="button"
+            aria-disabled="true"
+            style="margin-left: 5px"
+          >Edit</a>
+          <form
+            action="/posts/postbyID/{{post._id}}"
+            method="post"
+            onsubmit="return confirm('Are you sure you want to delete this post?')"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      {{/if}}
     </div>
     <div class="card-body">
       <h5 class="card-title">{{post.title}}</h5>
       <p class="card-text">{{post.content}}</p>
-      <p class="card-text">Author: John Doe</p>
-
+      <img
+        src="../../{{post.image.path}}"
+        style="max-width: 200px; max-height: 200px;"
+        onerror='this.style.display = "none"'
+      />
+      <br />
+      <cite class="card-text">~{{post.userID}}</cite>
     </div>
   </div>
   {{#each comment}}

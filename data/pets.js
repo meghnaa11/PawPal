@@ -84,16 +84,18 @@ const petDataFunctions = {
     },
 
     async updatePetDetails(pet_id_pass,updatedFields){
-        console.log("fe")
+        //console.log("fe")
         const pet = await pets()
-        console.log(updatedFields)
+        //console.log(updatedFields)
         if(!updatedFields){
             return;
         }
         const updatedPet = await pet.updateOne(
-        { _id: pet_id_pass },
+        { _id: new ObjectId(pet_id_pass) },
         { $set: updatedFields }
+        
     );
+   
     
     if (updatedPet.modifiedCount!== 1) {
         throw 'Pet Update failed'
@@ -111,6 +113,7 @@ const petDataFunctions = {
             res.send("Pet not found")
         }
         const display_pet_data = {
+            id: pet_id,
             name: view_current_pet.name,
             species: view_current_pet.species,
             breed: view_current_pet.breed,

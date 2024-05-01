@@ -23,7 +23,7 @@ router.get("/userDashboard", async (req, res) => {
       if (!temp) {
         res.send("Error retrieving pets");
       }
-      pet_names_array.push({ _id: temp._id, name: temp.name });
+      pet_names_array.push({ _id: temp._id, name: temp.name , image:temp.profileImage.filename});
     }
   }
 

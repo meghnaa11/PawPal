@@ -22,6 +22,15 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 },
 }).single("petImage");
+
+const upload_pet = multer({    
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, 
+  
+}).single('updated_pet_pic');
+
+
+
 router
   .route("/")
   .get(async (req, res) => {
@@ -118,6 +127,7 @@ router
         species: current_pet.species,
         breed: current_pet.breed,
         description: current_pet.description,
+        profileImage: current_pet.profileImage.filename
       };
       res.render("pet_update", { petID, pet_current_data });
     } catch (error) {
@@ -128,21 +138,22 @@ router
     try {
       const petID = req.params.id;
       const updatedFields = req.body;
+      
       const pet = await pets();
       const current_pet = await pet.findOne({ _id: new ObjectId(petID) });
       if (!current_pet) {
         res.send("Pet not found");
       }
-      const pet_id_pass = new ObjectId(petID);
+      //const pet_id_pass = new ObjectId(petID);
       const updatedPet = await petData.updatePetDetails(
-        pet_id_pass,
+        petID,
         updatedFields
       );
       if (!updatedPet) {
         res.send("Update Failed");
       }
       res.redirect("/userdashboard");
-    } catch {
+    }  catch {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   });
@@ -156,7 +167,7 @@ router.route("/view_pets/:id").get(async (req, res) => {
   if (!petID) {
     res.send("No Pet ID");
   }
-  const isValidObjectpetId = ObjectId.isValid(petID);
+  const isValidObjectpetId = ObjectId.isValid(petID);  
 
   if (!isValidObjectpetId) {
     res.send("Invalid Object ID");
@@ -199,6 +210,64 @@ router.route("/delete/:id").get(async (req, res) => {
   if (!delete_pet) {
     res.send("Couldnot Delete pet");
   }
+  res.redirect("/userDashboard");
+});
+
+
+// router.route("/update/image/:id").post(async (req,res) => {
+//   try {
+//     if (!req.session.user) {
+//       return res.redirect("/userLogin");
+//     }
+//     const id = req.params.id;
+//     const image = req.file;
+//     console.log(image)
+//     const user = await userData.getUserById(id);
+//     if(!user){
+//       res.status(404).json({ error: e.toString() });
+//     }
+//   }catch{
+//     res.status(500).json({ error: e.toString() });
+
+// }
+// }
+// );
+
+router.route("/update/image/:id").post(upload_pet,async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/userLogin");
+  }
+  const petID = req.params.id;
+  const userID = req.session.user._id;
+  const updated_pet_pic = req.file;
+  console.log("here")
+  if (!petID) {
+    res.send("No Pet ID");
+  }
+  const isValidObjectpetId = ObjectId.isValid(petID);  
+
+  if (!isValidObjectpetId) {
+    res.send("Invalid Object ID");
+  }
+  const user = await users();
+  const current_user = await user.findOne({
+    _id: new ObjectId(userID),
+    pets: { $in: [petID] },
+  });
+  if (!current_user) {
+    res.send("Pet not associated with user");
+  }
+  const display_pet_data = await petData.getPetDetails(petID);
+  if (!display_pet_data) {
+    res.send("Pet not found");
+  }
+  const pet = await pets()
+  const updated_image = await pet.updateOne(
+    { _id: new ObjectId(petID) },  
+    { $set: { profileImage: updated_pet_pic } } 
+  );
+  console.log(updated_image)
+  
   res.redirect("/userDashboard");
 });
 

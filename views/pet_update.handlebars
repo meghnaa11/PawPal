@@ -1,8 +1,9 @@
 <form
   action="/pets/update/{{petID}}"
   method="POST"
-  name="pet_form"
-  id="pet_form"
+  name="pet_form_update"
+  id="pet_form_update"
+ 
 >
 
   <label for="name">Name:</label><br />
@@ -35,14 +36,16 @@
     name="description"
     rows="4"
     cols="50"
-    required
+    
   >{{pet_current_data.description}}</textarea><br /><br />
 
-  <div id="error_pet">
+  <div id="error_pet_update">
 
   </div>
 
   <input type="submit" value="Submit" />
+
 </form>
+<a href="/userDashboard" class="button">Back</a>
 
 <script src="/public/js/client_validation.js"></script>

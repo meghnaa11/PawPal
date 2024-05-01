@@ -1,17 +1,15 @@
     {{> nav}}
 
-<form id="add-post" method="POST" action="/posts/add" enctype="multipart/form-data">
+<form id="add-post" method="POST" action="/posts/postbyID/{{postID}}/edit" enctype="multipart/form-data">
   <label for="type">Type:</label>
-  <select id="type" name="type" value="{{postFields.type}}">
-    <option value="general">General</option>
-    <option value="lost">Lost</option>
-    <option value="found">Found</option>
+  <select id="type" name="type">
+    <option value="{{postFields.type}}">{{postFields.type}}</option>
   </select>
   <br />
   <label for="title">Title</label>
   <input type="text" class="form-control" name="title" id="title" value="{{postFields.title}}"/>
   <label for="content">Content</label>
-  <textarea class="form-control" id="content" name="content" value="{{postFields.content}}"></textarea>
+  <textarea class="form-control" id="content" name="content" >{{postFields.content}}</textarea>
   <label for="image">Upload Image</label>
   <input type="file" class="form-control-file" name="image" id="image" accept="image/*"/>
   <div id="additionalFields" style="display: none;">
@@ -37,7 +35,7 @@
       class="form-control"
       id="details_contact"
       name="details_contact"
-      value="{{postFields.lostfoundDetails.contact}}"
+      value="{{postFields.lostfoundDetails.contact_info}}"
     />
     <label for="petdetails_species">Species</label>
     <input
@@ -99,10 +97,10 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" href="../../public/css/posts.css" />
-<script type="module" src="/../../public/js/posts_clientvalidations.js"></script>
+{{!-- <script type="module" src="/public/js/posts_clientvalidations.js"></script> --}}
 <script>
-  $(document).ready(function () { $('select[name=type]').change(function () { if
-  (this.value === 'lost' || this.value === 'found') {
-  $('#additionalFields').show(); } else { $('#additionalFields').hide(); } });
+  $(document).ready(function () { if
+  ( $('select[name=type]').val() === 'lost' ||  $('select[name=type]').val() === 'found') {
+  $('#additionalFields').show(); } else { $('#additionalFields').hide(); };
   });
 </script>

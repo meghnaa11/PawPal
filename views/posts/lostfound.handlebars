@@ -64,7 +64,7 @@
             <p class="mb-1">Species :
               {{lostfoundDetails.pet_details.species}}</p>
             <p class="mb-1">Breed : {{lostfoundDetails.pet_details.breed}}</p>
-            <img src="../../{{image.path}}" style="max-width: 200px; max-height: 200px;">
+            <img src="../../{{image.path}}" style="max-width: 200px; max-height: 200px;" onerror='this.style.display = "none"'>
             <br></br>
             <cite>~{{_id}}</cite>
           </a>

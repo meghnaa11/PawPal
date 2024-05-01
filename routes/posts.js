@@ -5,6 +5,7 @@ import * as postData from "../data/posts.js";
 import * as helpers from "../helper.js";
 import multer from "multer";
 import { userData } from "../data/index.js";
+import { comments, posts } from "../config/mongoCollections.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -26,6 +27,26 @@ router.route("/myposts").get(async (req, res) => {
     res.render("posts/viewmyPosts", { posts: postbyID });
   } catch (error) {
     return res.status(400).json({ message: error });
+  }
+});
+
+router.route("/getsearch").get(async (req, res) => {
+  try {
+    res.render("posts/searchPosts");
+  } catch (error) {
+    return res.status(400).json({ message: error });
+  }
+});
+
+router.route("/search").get(async (req, res) => {
+  const searchTerm = req.query.q;
+  let regex = new RegExp([".*", searchTerm, ".*"].join(""), "gi");
+  try {
+    const items = await postData.searchPosts(searchTerm);
+    res.json(items);
+  } catch (error) {
+    console.error("Error searching items:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -62,17 +83,133 @@ router.route("/postbyID/:id").delete(async (req, res) => {
   }
 });
 
-router.route("/edit/:id").get(async (req, res) => {
+router.route("/postbyID/:id/edit").get(async (req, res) => {
   try {
-    const postbyID = await postData.getPostsbyID(req.params.id);
-    let isUsersPost = false;
-    if (req.session.user._id === postbyID.userID.toString()) isUsersPost = true;
-    res.render("posts/viewPost", {
-      post: postbyID,
-      isUsersPost: isUsersPost,
+    let postbyID = await postData.getPostsbyID(req.params.id);
+    if (!(Object.keys(postbyID.lostfoundDetails).length === 0))
+      postbyID.lostfoundDetails.date = helpers.formatJSDate(
+        postbyID.lostfoundDetails.date
+      );
+    try {
+      if (!(req.session.user._id === postbyID.userID.toString()))
+        throw `403: Unauthorized`;
+    } catch (e) {
+      return res.status(403).json({ message: e });
+    }
+    res.render("posts/editPosts", {
+      postFields: postbyID,
+      postID: req.params.id,
     });
   } catch (error) {
     return res.status(400).json({ message: error });
+  }
+});
+
+router.route("/postbyID/:id/edit").post(upload, async (req, res) => {
+  const postID = req.params.id;
+  const postbyID = await postData.getPostsbyID(req.params.id);
+  try {
+    if (!(req.session.user._id === postbyID.userID.toString()))
+      throw `403: Unauthorized`;
+  } catch (e) {
+    return res.status(403).json({ message: error });
+  }
+  const postFields = {
+    title: req.body.title,
+    content: req.body.content,
+    type: req.body.type,
+    image: req.file ? req.file : null,
+    lostfoundDetails:
+      req.body.type === "general"
+        ? null
+        : {
+            location: req.body.details_location,
+            date: req.body.details_date
+              ? helpers.formatHTMLDate(req.body.details_date)
+              : null,
+            contact_info: req.body.details_contact,
+            pet_details: {
+              species: req.body.petdetails_species,
+              breed: req.body.petdetails_breed,
+              color: req.body.petdetails_color,
+              other_details: req.body.petdetails_other,
+            },
+          },
+  };
+  if (!postFields || Object.keys(postFields).length === 0) {
+    return res
+      .status(400)
+      .json({ error: "There are no fields in the request body" });
+  }
+
+  try {
+    if (postFields?.title === undefined) throw `Title needs to be Provided.`;
+    if (postFields?.content === undefined)
+      throw `Content needs to be Provided.`;
+    if (postFields?.type === undefined) throw `Type needs to be Provided.`;
+
+    postFields.title = helpers.postHelpers.istitleValid(postFields.title);
+    postFields.content = helpers.postHelpers.iscontentValid(postFields.content);
+    postFields.type = helpers.postHelpers.istypeValid(postFields.type);
+
+    if (
+      !(
+        postFields.type === "general" ||
+        postFields.type === "lost" ||
+        postFields.type === "found"
+      )
+    )
+      throw `Type needs to be GENERAL or LOST or FOUND`;
+    else {
+      if (postFields.type === "lost" || postFields.type === "found") {
+        if (!postFields.lostfoundDetails) throw `Must have Lost-Found Details.`;
+        postFields.lostfoundDetails = helpers.postHelpers.islfdetailsValid(
+          postFields.lostfoundDetails
+        );
+        if (postFields.image === null) delete postFields.image;
+      } else {
+        if (postFields.lostfoundDetails)
+          throw `General Post cannot have Lost-Found Details.`;
+      }
+    }
+  } catch (e) {
+    return res.status(400).json({ error: e });
+  }
+
+  try {
+    if (postFields.type === "lost" || postFields.type === "found") {
+      // const postObj = {
+      //   title: postFields.title,
+      //   content: postFields.content,
+      //   image: postFields.image,
+      //   type: postFields.type,
+      //   lostfoundDetails: postFields.lostfoundDetails,
+      //   userID: postFields.userID,
+      // };
+      const post = await postData.updatePost(
+        postFields,
+        req.session.user._id,
+        req.params.id
+      );
+      res.redirect(`/posts/postbyID/${post}`);
+    } else {
+      delete postFields.lostfoundDetails;
+      // const postObj = {
+      //   title: postFields.title,
+      //   content: postFields.content,
+      //   image: postFields.image,
+      //   type: postFields.type,
+      //   userID: postFields.userID,
+      // };
+      const post = await postData.updatePost(
+        postFields,
+        req.session.user._id,
+        req.params.id
+      );
+      res.redirect(`/posts/postbyID/${post}`);
+    }
+  } catch (e) {
+    return res.status(400).json({ error: e });
   }
 });
 

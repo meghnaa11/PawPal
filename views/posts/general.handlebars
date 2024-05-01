@@ -59,7 +59,7 @@
               <small>{{updatedtime}}</small>
             </div>
             <p class="mb-1 mt-2">{{content}}</p>
-            <img src="../../public/assets/posts/{{image.filename}}" style="max-width: 200px; max-height: 200px;"><br></br>
+            <img src="../../public/assets/posts/{{image.filename}}" style="max-width: 200px; max-height: 200px;" onerror='this.style.display = "none"'><br></br>
             <cite>~{{_id}}</cite>
           </a>
         </div>

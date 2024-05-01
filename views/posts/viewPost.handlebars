@@ -5,10 +5,12 @@
       Post Details
       {{#if isUsersPost}}
         <div class="btn-group" role="group" aria-label="Post Actions">
-          <a
-            type="button"
-            href="/posts/edit/{{post._id}}"
-            class="btn btn-primary"
+        <a
+            class="btn btn-secondary btn-group"
+            href="/posts/postbyID/{{post._id}}/edit"
+            role="button"
+            aria-disabled="true"
+            style="margin-left: 5px"
           >Edit</a>
           <form
             action="/posts/postbyID/{{post._id}}"
@@ -27,6 +29,7 @@
       <img
         src="../../{{post.image.path}}"
         style="max-width: 200px; max-height: 200px;"
+        onerror='this.style.display = "none"'
       />
       <br />
       <cite class="card-text">~{{post.userID}}</cite>

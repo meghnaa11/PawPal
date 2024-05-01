@@ -1,5 +1,3 @@
-console.log("heer");
-
 var addpostForm = $("#add-post");
 $("#add-post").submit((event) => {
   event.preventDefault();
@@ -98,7 +96,103 @@ $("#add-post").submit((event) => {
   }
 });
 
-export const validators = {
+var editpostForm = $("#edit-post");
+$("#edit-post").submit((event) => {
+  event.preventDefault();
+  console.log("getting here");
+  $("#error-list-client").hide();
+  $("#error-list-client").empty();
+  var errors = [];
+  var postFields = {
+    title: $("#title").val(),
+    content: $("#content").val(),
+    type: $("#type").val(),
+    lostfoundDetails:
+      $("#type").val() === "general"
+        ? null
+        : {
+            location: $("#details_location").val(),
+            date: $("#details_date").val()
+              ? formatHTMLDate($("#details_date").val())
+              : null,
+            contact_info: $("#details_contact").val(),
+            pet_details: {
+              species: $("#petdetails_species").val(),
+              breed: $("#petdetails_breed").val(),
+              color: $("#petdetails_color").val(),
+              other_details: $("#petdetails_other").val(),
+            },
+          },
+  };
+  try {
+    if (postFields?.title === undefined) throw `Title needs to be Provided.`;
+    postFields.title = postHelpers.istitleValid(postFields.title);
+  } catch (e) {
+    errors.push(e);
+  }
+  try {
+    if (postFields?.content === undefined)
+      throw `Content needs to be Provided.`;
+    postFields.content = postHelpers.iscontentValid(postFields.content);
+  } catch (e) {
+    errors.push(e);
+  }
+  try {
+    if (postFields?.type === undefined) throw `Type needs to be Provided.`;
+    postFields.type = postHelpers.istypeValid(postFields.type);
+    if (
+      !(
+        postFields.type === "general" ||
+        postFields.type === "lost" ||
+        postFields.type === "found"
+      )
+    )
+      throw `Type needs to be GENERAL or LOST or FOUND`;
+  } catch (e) {
+    errors.push(e);
+  }
+  try {
+    if (postFields.type === "lost" || postFields.type === "found") {
+      if (!postFields.lostfoundDetails) throw `Must have Lost-Found Details.`;
+      if (postFields.lostfoundDetails.location === "")
+        errors.push(`Must Provide Location`);
+      if (postFields.lostfoundDetails.date === null)
+        errors.push(`Must Provide Date`);
+      if (postFields.lostfoundDetails.contact_info === "")
+        errors.push(`Must Provide Contact Info`);
+      if (postFields.lostfoundDetails.pet_details === "")
+        errors.push(`Must Provide Pet Details`);
+      if (postFields.lostfoundDetails.pet_details.species === "")
+        errors.push(`Must Provide Pet Species`);
+      if (postFields.lostfoundDetails.pet_details.breed === "")
+        errors.push(`Must Provide Pet Breed`);
+      if (postFields.lostfoundDetails.pet_details.color === "")
+        errors.push(`Must Provide Pet Color`);
+      if (postFields.lostfoundDetails.pet_details.other_details === "")
+        errors.push(`Must Provide Pet Details`);
+      postFields.lostfoundDetails = postHelpers.islfdetailsValid(
+        postFields.lostfoundDetails
+      );
+    } else {
+      if (postFields.lostfoundDetails)
+        throw `General Post cannot have Lost-Found Details.`;
+    }
+  } catch (e) {
+    errors.push(e);
+  }
+  //   // Display errors if any
+  if (errors.length > 0) {
+    $("#error-list-client").show();
+    var errorList = $("#error-list-client");
+    errors.forEach((error) => {
+      errorList.append("<li>" + error + "</li>");
+    });
+  } else {
+    editpostForm.get(0).submit();
+  }
+});
+
+const validators = {
   checkString: (variable, variableName) => {
     if (!variable) throw `${variableName || "Input"} must be provided`;
     if (typeof variable !== "string")
@@ -140,7 +234,7 @@ export const validators = {
   },
 };
 
-export const postHelpers = {
+const postHelpers = {
   istitleValid: (title) => {
     title = validators.checkString(title, "Title");
     return title;
@@ -237,7 +331,7 @@ export const postHelpers = {
   },
 };
 
-export const getCurrentDateTime = () => {
+const getCurrentDateTime = () => {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
   const day = String(now.getDate()).padStart(2, "0");
@@ -249,7 +343,42 @@ export const getCurrentDateTime = () => {
   return `${month}/${day}/${year}@${hours}:${minutes}:${seconds}`;
 };
 
-export function formatHTMLDate(dateString) {
+function formatHTMLDate(dateString) {
   const [year, month, day] = dateString.split("-");
   return `${month}/${day}/${year}`;
 }
+
+$(document).ready(function () {
+  $("#searchInput").on("input", function () {
+    var searchTerm = $(this).val().trim();
+
+    if (searchTerm.length > 0) {
+      $.ajax({
+        url: "/posts/search",
+        method: "GET",
+        data: { q: searchTerm },
+        success: function (data) {
+          displayResults(data);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error fetching search results:", error);
+        },
+      });
+    } else {
+      $("#searchResults").empty(); // Clear results if search input is empty
+    }
+  });
+
+  function displayResults(results) {
+    var $searchResults = $("#searchResults");
+    $searchResults.empty(); // Clear previous results
+
+    if (results.length > 0) {
+      results.forEach((item) => {
+        $searchResults.append("<p>" + item.title + "</p>");
+      });
+    } else {
+      $searchResults.append("<p>No results found.</p>");
+    }
+  }
+});

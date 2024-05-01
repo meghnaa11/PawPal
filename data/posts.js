@@ -149,3 +149,60 @@ export const removePostbyUser = async (id) => {
   }
   return deletionInfo.deletedCount;
 };
+
+export const updatePost = async (postObj, userID, postID) => {
+  if (userID === undefined) throw `Need User ID.`;
+  userID = postHelpers.isuserIDValid(userID);
+  if (postObj?.title === undefined) throw `Title needs to be Provided.`;
+  if (postObj?.content === undefined) throw `Content needs to be Provided.`;
+  if (postObj?.type === undefined) throw `Type needs to be Provided.`;
+
+  postObj.title = postHelpers.istitleValid(postObj.title);
+  postObj.content = postHelpers.iscontentValid(postObj.content);
+  postObj.type = postHelpers.istypeValid(postObj.type);
+
+  if (postObj.type === "lost" || postObj.type === "found") {
+    if (!postObj.lostfoundDetails)
+      throw `LostFoundDetails needs to be Provided.`;
+    postObj.lostfoundDetails = postHelpers.islfdetailsValid(
+      postObj.lostfoundDetails
+    );
+  } else {
+    if (postObj.lostfoundDetails)
+      throw `General Post cannot have Lost-Found Details.`;
+  }
+
+  const updatedtime = new Date();
+  postObj.updatedtime = updatedtime;
+
+  const postCollection = await posts();
+  const insertPost = await postCollection.updateOne(
+    { _id: new ObjectId(postID) },
+    { $set: postObj }
+  );
+  if (insertPost.modifiedCount !== 1) throw `Could not Update Post`;
+
+  //const post = await get(newId);
+  return postID;
+};
+
+export const searchPosts = async (search) => {
+  const postCollection = await posts();
+  const items = await postCollection
+    .find({
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+      ],
+    })
+    .toArray();
+  if (items === null) throw `No Product Found with given Id`;
+  return items;
+};
+
+// try {
+//   let items = await searchPosts("v");
+//   console.log(items);
+// } catch (e) {
+//   console.log(e);
+// }

@@ -22,6 +22,13 @@ const upload = multer({
   
 }).single('instituteImage'); 
 
+const upload_update = multer({    
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, 
+  
+}).single('updated_profile_pic'); 
+
+
 router
   .route("/")
   .get(async (req, res) => {
@@ -49,7 +56,7 @@ router
         res.send("Only empty spaces");
       }
       if (institute_info.hashedPassword.length < 8) {
-        res.send("Minimum 8 characters required for password");
+        return res.send("Minimum 8 characters required for password");
       }
       institute_info.hashedPassword = institute_info.hashedPassword.trim();
       if (!/[A-Za-z]/.test(institute_info.hashedPassword)) {
@@ -213,6 +220,34 @@ if (passedInstitutionID !== sessionInstitutionID) {
       return res.redirect("/institutionDashboard");
     } catch (error) {
       return res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+  router.route("/update/image/:id").post(upload_update, async (req, res) => {
+    try {
+      if (!req.session.institution) {
+        return res.redirect("/institutionLogin");
+      }
+      const id = req.params.id;
+      const image = req.file;
+      console.log(image)
+      const institution = await institutions();
+      const current_institution = await institution.findOne({
+        _id: new ObjectId(id),
+      });
+      if(!current_institution){
+        res.status(404).json({ error: e.toString() });
+      }
+      const updated_image = await institution.updateOne(
+        { _id: new ObjectId(id) },  
+        { $set: { profileImage: image } } 
+      );
+      console.log(updated_image)
+    
+  
+      res.redirect("/institutionDashboard");
+    } catch (e) {
+      res.status(500).json({ error: e.toString() });
     }
   });
 

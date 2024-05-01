@@ -330,13 +330,6 @@ if (pet_form) {
       event.preventDefault();
     }
 
-    if (/\d/.test(name)) {
-      let p = document.createElement("p");
-      p.innerHTML = "Name should not contain a number";
-      error_pet.appendChild(p);
-      isValidRegistration = false;
-      event.preventDefault();
-    }
     if (name.length > 30 || name.length < 2) {
       let p = document.createElement("p");
       p.innerHTML = "Name should be between 2 and 30 characters";
@@ -344,6 +337,23 @@ if (pet_form) {
       isValidPet = false;
       event.preventDefault();
     }
+
+    if (/\d/.test(name)) {
+      let p = document.createElement("p");
+      p.innerHTML = "Name should not contain a number";
+      error_pet.appendChild(p);
+      isValidPet = false;
+      event.preventDefault();
+    }
+
+    if (/[^a-zA-Z0-9\s]/.test(name)) {
+      let p = document.createElement("p");
+      p.innerHTML = "Name should not contain special characters";
+      error_pet.appendChild(p);
+      isValidPet = false;
+      event.preventDefault();
+    }
+
     if (species.length > 30 || species.length < 2) {
       let p = document.createElement("p");
       p.innerHTML = "Species should be between 2 and 30 characters";
@@ -414,6 +424,13 @@ if (pet_form_update) {
     if (/\d/.test(name)) {
       let p = document.createElement("p");
       p.innerHTML = "Name should not contain a number";
+      error_pet_update.appendChild(p);
+      isValidPetupdate = false;
+      event.preventDefault();
+    }
+    if (/[^a-zA-Z0-9\s]/.test(name)) {
+      let p = document.createElement("p");
+      p.innerHTML = "Name should not contain special characters";
       error_pet_update.appendChild(p);
       isValidPetupdate = false;
       event.preventDefault();
@@ -722,7 +739,6 @@ if (institute_form_update) {
 }
 
 let user_login = document.getElementById("user_login");
-console.log("dds");
 let error_userlogin = document.getElementById("error_userlogin");
 if (user_login) {
   user_login.addEventListener("submit", (event) => {
@@ -866,6 +882,86 @@ if (resetPasswordForm) {
       event.preventDefault(); // Prevent form submission
       errorResetPassword.textContent = "Passwords do not match.";
       return;
+    }
+  });
+}
+
+let user_image_update_form = document.getElementById("user_image_update_form");
+let not_uploaded = document.getElementById("not_uploaded");
+if (user_image_update_form) {
+  user_image_update_form.addEventListener("submit", (event) => {
+    console.log("Form submission fired");
+    event.preventDefault();
+    let user_image_update = document.getElementById("updated_profile_pic");
+    console.log(user_image_update);
+    let isValidUserImageUpdate = true;
+
+    if (user_image_update.files.length === 0) {
+      let p = document.createElement("p");
+      p.innerHTML = "Upload an Image before Submitting";
+      not_uploaded.appendChild(p);
+      isValidUserImageUpdate = false;
+      event.preventDefault();
+    }
+
+    if (isValidUserImageUpdate) {
+      event.target.submit();
+    } else {
+      event.preventDefault();
+    }
+  });
+}
+
+let pet_image_update_form = document.getElementById("pet_image_update_form");
+let pet_image_not_uploaded = document.getElementById("pet_image_not_uploaded");
+if (pet_image_update_form) {
+  pet_image_update_form.addEventListener("submit", (event) => {
+    console.log("Form submission fired");
+    event.preventDefault();
+
+    let pet_image_update = document.getElementById("updated_pet_pic");
+    let isValidPetImageUpdate = true;
+
+    if (pet_image_update.files.length === 0) {
+      let p = document.createElement("p");
+      p.innerHTML = "Upload an Image before Submitting";
+      pet_image_not_uploaded.appendChild(p);
+      isValidPetImageUpdate = false;
+      event.preventDefault();
+    }
+
+    if (isValidPetImageUpdate) {
+      event.target.submit();
+    } else {
+      event.preventDefault();
+    }
+  });
+}
+
+let inst_image_update_form = document.getElementById("inst_image_update_form");
+let inst_image_not_uploaded = document.getElementById(
+  "inst_image_not_uploaded"
+);
+if (inst_image_update_form) {
+  inst_image_update_form.addEventListener("submit", (event) => {
+    console.log("Form submission fired");
+    event.preventDefault();
+
+    let inst_image_update = document.getElementById("updated_profile_pic");
+    let isValidInstImageUpdate = true;
+
+    if (inst_image_update.files.length === 0) {
+      let p = document.createElement("p");
+      p.innerHTML = "Upload an Image before Submitting";
+      inst_image_not_uploaded.appendChild(p);
+      isValidInstImageUpdate = false;
+      event.preventDefault();
+    }
+
+    if (isValidInstImageUpdate) {
+      event.target.submit();
+    } else {
+      event.preventDefault();
     }
   });
 }

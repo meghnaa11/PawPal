@@ -5,6 +5,9 @@ import { Router } from "express";
 import { userData } from "../data/index.js";
 import multer from 'multer'
 import path from 'path'
+import { ObjectId } from "mongodb";
+import {users} from "../config/mongoCollections.js"
+import { config } from 'process';
 // const __dirname = path.resolve();
 
 
@@ -23,6 +26,12 @@ const upload = multer({
   limits: { fileSize: 10 * 1024 * 1024 }, 
   
 }).single('profileImage'); 
+
+const upload_update = multer({    
+  storage: storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, 
+  
+}).single('updated_profile_pic');
 
 router
   .route("/")
@@ -152,21 +161,20 @@ router
     }
   });
 
-router.get("/:id", async (req, res) => {
-  console.log("FE")
-  try {
-    const id = req.params.id;
-    const user = await userData.getUserById(id);
-    console.log(user.profileImage)
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const user = await userData.getUserById(id);
+//     console.log(user.profileImage)
 
-    res.json(user);
-  } catch (e) {
-    res.status(500).json({ error: e.toString() });
-  }
-});
+//     res.json(user);
+//   } catch (e) {
+//     res.status(500).json({ error: e.toString() });
+//   }
+// });
 
-router.post("/update/:id", async (req, res) => {
-  console.log("f")
+router.post("/update/:id", upload,async (req, res) => {
+
   try {
     if (!req.session.user) {
       return res.redirect("/userLogin");
@@ -196,5 +204,32 @@ router.get("/update/:id", async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 });
+router.route("/update/image/:id").post(upload_update, async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect("/userLogin");
+    }
+    const id = req.params.id;
+    const image = req.file;
+    console.log(image)
+    const user = await userData.getUserById(id);
+    if(!user){
+      res.status(404).json({ error: e.toString() });
+    }
+    console.log(user)
+    const user_collection = await users()
+    const updated_image = await user_collection.updateOne(
+      { _id: new ObjectId(id) },  
+      { $set: { profileImage: image } } 
+    );
+    console.log(updated_image)
+  
+
+    res.redirect("/userDashboard");
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
 
 export default router;

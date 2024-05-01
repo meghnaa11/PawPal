@@ -14,7 +14,30 @@
     src="{{user.profileImage.path}}"
     alt="Profile Picture"
     style="max-width: 200px; max-height: 200px;"
+    id="user_image"
   />
+  <div id="update-image-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h1>Update Profile Pic</h1>
+      <form
+        action="/users/update/image/{{user._id}}"
+        method="POST"
+        enctype="multipart/form-data"
+        id="user_image_update_form"
+      >
+        <label for="updated_profile_pic">Update Profile Image:</label>
+        <input
+          type="file"
+          id="updated_profile_pic"
+          name="updated_profile_pic"
+          accept="image/*"
+        />
+        <div id="not_uploaded"></div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </form>
+    </div>
+  </div>
 
   <form action="/users/update/{{user._id}}" method="get" class="mb-3">
     <input type="submit" value="Update Profile" class="btn btn-primary" />
@@ -35,6 +58,10 @@
     <tbody>
       {{#each pet_names_array}}
         <tr>
+          <td><img
+              src="/public/assets/pets/{{this.image}}"
+              style="width: 80px; height: auto;"
+            /></td>
           <td><a href="/pets/view_pets/{{this._id}}">{{this.name}}</a></td>
           <td><a
               href="/pets/update/{{this._id}}"
@@ -49,3 +76,15 @@
     </tbody>
      </table>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() { var modal =
+  document.getElementById("update-image-modal"); var btn =
+  document.getElementById("user_image"); btn.onclick = function() {
+  modal.style.display = "block"; } var span =
+  document.getElementsByClassName("close")[0]; span.onclick = function() {
+  modal.style.display = "none"; } window.onclick = function(event) { if
+  (event.target == modal) { modal.style.display = "none"; } } });
+
+</script>
+<script src="/public/js/client_validation.js"></script>

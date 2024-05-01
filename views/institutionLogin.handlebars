@@ -48,7 +48,9 @@
   <div id="error_institution">
 
   </div>
-
+  {{#if error}}
+    <p>{{error}}</p>
+  {{/if}}
   <input type="submit" value="Login" />
 </form>
 

@@ -1,12 +1,14 @@
 import institutionRoutes from "./institutions.js";
 import appointmentRoutes from "./appointments.js";
 import postRoutes from "./posts.js";
+import commentRoutes from "./comments.js";
 import * as institutionData from "../data/institutions.js";
 
 const constructorMethod = (app) => {
   app.use("/institution", institutionRoutes);
   app.use("/getapp", appointmentRoutes);
   app.use("/posts", postRoutes);
+  app.use("/posts/:postId/comments", commentRoutes);
 
   app.get("/", async (req, res) => {
     const institutions = await institutionData.getAll();

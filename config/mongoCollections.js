@@ -14,9 +14,12 @@ const getCollectionFn = (collection) => {
 };
 
 // Note: You will need to change the code below!
-export const institution = getCollectionFn("institution");
+export const institutions = getCollectionFn("institutions");
 export const appointments = getCollectionFn("appointments");
-export const user = getCollectionFn("user");
+export const users = getCollectionFn("users");
 export const posts = getCollectionFn("posts");
 export const comments = getCollectionFn("comments");
-export const pet = getCollectionFn("pets");
+export const pets = getCollectionFn("pets");
+export const reviews = getCollectionFn("reviews");
+
+

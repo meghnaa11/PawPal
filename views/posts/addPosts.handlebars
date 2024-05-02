@@ -1,17 +1,20 @@
-<form id="add-post" method="POST" action="/posts/add">
+    {{> appdep}}
+    {{> nav}}
+
+<form id="add-post" method="POST" action="/posts/add" enctype="multipart/form-data">
   <label for="type">Type:</label>
-  <select id="type" name="type">
+  <select id="type" name="type" value="{{postFields.type}}">
     <option value="general">General</option>
     <option value="lost">Lost</option>
     <option value="found">Found</option>
   </select>
   <br />
   <label for="title">Title</label>
-  <input type="text" class="form-control" name="title" id="title" />
+  <input type="text" class="form-control" name="title" id="title" value="{{postFields.title}}"/>
   <label for="content">Content</label>
-  <textarea class="form-control" id="content" name="content"></textarea>
+  <textarea class="form-control" id="content" name="content" value="{{postFields.content}}"></textarea>
   <label for="image">Upload Image</label>
-  <input type="file" class="form-control-file" id="image" />
+  <input type="file" class="form-control-file" name="image" id="image" accept="image/*"/>
   <div id="additionalFields" style="display: none;">
     <label for="details_date">Date</label>
     <input
@@ -19,6 +22,7 @@
       class="form-control"
       id="details_date"
       name="details_date"
+      value="{{postFields.lostfoundDetails.date}}"
     />
     <label for="details_location">Location</label>
     <input
@@ -26,6 +30,7 @@
       class="form-control"
       id="details_location"
       name="details_location"
+      value="{{postFields.lostfoundDetails.location}}"
     />
     <label for="details_contact">Contact</label>
     <input
@@ -33,6 +38,7 @@
       class="form-control"
       id="details_contact"
       name="details_contact"
+      value="{{postFields.lostfoundDetails.contact}}"
     />
     <label for="petdetails_species">Species</label>
     <input
@@ -40,6 +46,7 @@
       class="form-control"
       id="petdetails_species"
       name="petdetails_species"
+      value="{{postFields.lostfoundDetails.pet_details.species}}"
     />
     <label for="petdetails_breed">Breed</label>
     <input
@@ -47,6 +54,7 @@
       class="form-control"
       id="petdetails_breed"
       name="petdetails_breed"
+      value="{{postFields.lostfoundDetails.pet_details.breed}}"
     />
     <label for="petdetails_color">Color</label>
     <input
@@ -54,6 +62,7 @@
       class="form-control"
       id="petdetails_color"
       name="petdetails_color"
+      value="{{postFields.lostfoundDetails.pet_details.color}}"
     />
     <label for="petdetails_other">Other Details</label>
     <input
@@ -61,6 +70,7 @@
       class="form-control"
       id="petdetails_other"
       name="petdetails_other"
+      value="{{postFields.lostfoundDetails.pet_details.other_details}}"
     />
   </div>
   <div class="modal-footer">
@@ -76,8 +86,21 @@
     >Submit</button>
   </div>
 </form>
+{{#if hasErrors}}
+    <ul class="error-list">
+      {{#each errors}}
+        <li>
+          {{this}}
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+<ul id="error-list-client" class="error-list"></ul>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link rel="stylesheet" href="../../public/css/posts.css" />
+<script type="module" src="/../../public/js/posts_clientvalidations.js"></script>
 <script>
   $(document).ready(function () { $('select[name=type]').change(function () { if
   (this.value === 'lost' || this.value === 'found') {

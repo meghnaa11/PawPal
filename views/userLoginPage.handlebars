@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/public/css/loginstyles.css" />
+
+<form action="/user" method="POST" name="user_login" id="user_login">
+  <div class="form-floating mb-3">
+    <h1>User Login</h1>
+    <label for="floatingInput">Email address</label>
+    <input
+      type="email"
+      class="form-control input-box"
+      id="email"
+      name="email"
+      placeholder="name@example.com"
+    />
+
+  </div>
+  <div class="form-floating">
+    <label for="floatingPassword">Password</label>
+
+    <input
+      type="password"
+      class="form-control input-box"
+      id="password"
+      name="password"
+      placeholder="Password"
+    />
+  </div>
+  <a href="/forgotPassword/userReset">Forgot Password?</a><br />
+  <a href="/users">New User?</a><br />
+  <div id="error_userlogin">
+
+  </div>
+  <br />
+  <div>
+    {{#if error}}
+      <p>{{error}}</p>
+    {{/if}}
+  </div>
+  <input type="submit" value="Login" />
+</form>
+<script src="/public/js/client_validation.js"></script>

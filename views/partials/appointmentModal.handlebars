@@ -1,7 +1,7 @@
 <link
   rel='stylesheet'
   href='https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.css'
-/>
+>
 <script
   src='https://cdn.jsdelivr.net/npm/timepicker@1.14.1/jquery.timepicker.js'
 ></script>
@@ -31,31 +31,27 @@
 
         <div class='mb-3'>
           <div>Select the services:</div>
-          <input
-            class='form-check-input'
-            type='checkbox'
-            value='Veterinary Doctor'
-            id='servicetype'
-          />
-          <label class='form-check-label' for='servicetype'>
-            Veterinary Doctor
-          </label>
-          <input
-            class='form-check-input'
-            type='checkbox'
-            value='Grooming'
-            id='servicetype2'
-          />
-          <label class='form-check-label' for='servicetype2'>
-            Grooming
-          </label>
+          {{#each institution.services}}
+            <input
+              class='form-check-input'
+              type='radio'
+              value='{{this}}'
+              data-service='{{this}}'
+              id='servicetype-{{@index}}'
+              name='serviceType' 
+            >
+            <label class='form-check-label' for='servicetype-{{@index}}'>
+              {{this}}
+            </label>
+            <br >
+          {{/each}}
         </div>
         <div class='mb-3'>
           <label for='floatingTextarea2'>Description:</label>
           <textarea
             class='form-control'
             placeholder='Leave a comment here'
-            id='desc'
+            id='floatingTextarea2'
             style='height: 100px'
           ></textarea>
 
@@ -68,19 +64,24 @@
             id='date'
             placeholder='Select Date'
             name='date'
-          />
+          >
         </div>
 
         <div class='mb-3'>
           <label for='timepicker'>Pick your time (30 min): </label>
-          <input type='text' id='timepicker' />
+          <input type='text' id='timepicker' >
         </div>
 
         <div class='mb-3'>
-          <select class='form-select' aria-label='Select your pet'>
-            <option selected>Select your pet</option>
-            {{#each petNames}}
-              <option>{{this}}</option>
+          <label for='petSelect'>Select your pet:</label>
+          <select
+            class='form-select'
+            aria-label='Select your pet'
+            id='petSelect'
+          >
+
+            {{#each pet}}
+              <option value='{{this.id}}'>{{this.name}}</option>
             {{/each}}
 
           </select>
@@ -114,7 +115,7 @@
     role='alert'
     aria-live='assertive'
     aria-atomic='true'
-    data-bs-config='{"delay":1000}'
+    data-bs-config='{"delay":3000}'
   >
 
     <div class='toast-body' id='toastText'>
@@ -127,6 +128,7 @@
   id='dataContainer'
   data-insid='{{institution._id}}'
   data-content='{{content}}'
+  data-userid='{{userid}}'
 ></div>
 
 <script type='module' src='/public/js/app-modal.js'></script>

@@ -161,3 +161,13 @@ export const getCurrentDateTime = () => {
 
   return `${month}/${day}/${year}@${hours}:${minutes}:${seconds}`;
 };
+
+export function formatHTMLDate(dateString) {
+  const [year, month, day] = dateString.split("-");
+  return `${month}/${day}/${year}`;
+}
+
+export function formatJSDate(dateString) {
+  const [month, date, year] = dateString.split("/");
+  return `${year}-${month}-${date}`;
+}

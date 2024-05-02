@@ -2,7 +2,7 @@ const timePicker = document.getElementById('timepicker');
 const dataContainer = document.getElementById('dataContainer');
 
 const insid = dataContainer.getAttribute('data-insid');
-//const userid
+const userid = dataContainer.getAttribute('data-userid');
 
 const toastTrigger = document.getElementById('liveToastBtn')
 const toastLiveExample = document.getElementById('liveToast')
@@ -16,6 +16,21 @@ let disableTimeRanges = [];
 let appMap = {};
 let disabledDates = [];
 let formsub = document.getElementById('appsub');
+const reviewform = document.getElementById('reviewform');
+reviewform.addEventListener('submit', async function (e) {
+ e.preventDefault();
+ const review = document.getElementById('review').value;
+ const rating = document.getElementById('rating').value;
+
+ if (!review || !rating) {
+  const toastText = document.getElementById('toastText');
+  toastText.innerText = 'All fields need to be supplied!';
+  toastBootstrap.show();
+  return;
+ }
+ reviewform.submit();
+ toastBootstrap.show();
+});
 
 
 const myModalEl = document.getElementById('appointmentModal')
@@ -29,31 +44,28 @@ myModalEl.addEventListener('hidden.bs.modal', event => {
 })
 formsub.addEventListener('click', async function (e) {
  e.preventDefault();
- const service1 = document.getElementById('servicetype');
- const service2 = document.getElementById('servicetype2');
  let service = [];
+ document.querySelectorAll('[data-service]').forEach(checkbox => {
+  if (checkbox.checked) {
+   service.push(checkbox.value);
+  }
 
- if (service1.checked) {
-  service.push(service1.value);
+ });
 
- }
- if (service2.checked) {
-  service.push(service2.value);
-
- }
-
-
+ const petid = document.getElementById('petSelect').value;
+ const desc = document.getElementById('floatingTextarea2').value;
+ console.log('petid, ', petid);
  let date = document.getElementById('date').value;
 
  let timesub = document.getElementById('timepicker').value;
- if (!date || !timesub) {
+ if (!date || !timesub || service.length === 0 || !desc) {
   const toastText = document.getElementById('toastText');
-  toastText.innerText = 'Please select a date and time';
+  toastText.innerText = 'All fields need to be supplied!';
   toastBootstrap.show();
   return;
 
  }
- const desc = document.getElementById('desc').value;
+
 
  let momentDate = new Date(date);
 
@@ -72,11 +84,13 @@ formsub.addEventListener('click', async function (e) {
 
  let appointmentTime = momentDate;
 
- let res = await axios.post(`/getapp/makeapp/6618ae9f3cb1bc6706814588/${insid}`, { appointmentTime, category: service, desc });
+
+
+ let res = await axios.post(`/getapp/makeapp/${insid}`, { appointmentTime, category: service, desc, petid: petid });
  const toastText = document.getElementById('toastText');
 
 
- toastText.innerText = 'Appointment has been made!';
+ toastText.innerText = 'Appointment has been made! Check your email for confirmation!';
 
  mymodal.hide();
 
@@ -93,9 +107,9 @@ async function getnewTime() {
  time = [];
  const applist = await axios.get(`/getapp/ins/${insid}`)
  for (const value of applist.data) {
-  const appointment = await axios.get(`/getapp/${value}`)
-  if (new Date(appointment.data.appointment_time) >= new Date()) {
-   time.push(appointment.data.appointment_time);
+  const appointment_time = new Date(value.appointment_time);
+  if (appointment_time >= new Date()) {
+   time.push(appointment_time);
   }
  }
 }

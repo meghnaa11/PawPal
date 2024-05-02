@@ -1,67 +1,139 @@
-import { institution } from "../config/mongoCollections.js";
+import { institutions } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
+import bcrypt from "bcryptjs";
 
-export const create = async (name, service_provided, phone, address, city, state, userID) => {
- if (!name || !service_provided || !phone || !address || !city || !state || !userID) {
-  throw 'All fields need to be supplied';
- }
- if (typeof name !== 'string' || typeof service_provided !== 'string' || typeof phone !== 'string' || typeof address !== 'string' || typeof city !== 'string' || typeof state !== 'string') {
-  throw 'input not strings'
- }
- name = name.trim();
- service_provided = service_provided.trim();
- phone = phone.trim();
- address = address.trim();
- city = city.trim();
- state = state.trim();
+const institutionDataFunctions = {
+  async institutionRegistration(
+    name,
+    email,
+    services,
+    address,
+    city,
+    state,
+    hashedPassword,
+    confirmhashedPassword,
+    instituteImage
+  ) {
+    if (
+      !email ||
+      typeof email !== "string" ||
+      email.trim() === "" ||
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+        email.toLowerCase()
+      )
+    ) {
+      throw "Invalid Email";
+    }
 
- if (name.length === 0 || service_provided.length === 0 || phone.length === 0 || address.length === 0 || city.length === 0 || state.length === 0) {
-  throw 'input cannot be empty'
- }
+    const institutionCollection = await institutions();
+    const existingInstitution = await institutionCollection.findOne({
+      email: email.toLowerCase(),
+    });
+    if (existingInstitution) {
+      throw "Institution with the same email already exists";
+    }
 
- const institutionCollection = await institution();
- const newInstitution = {
-  name: name,
-  service_provided: service_provided,
-  phone: phone,
-  address: address,
-  city: city,
-  state: state,
-  userID: userID,
-  appointments: []
- };
+    if (!name || typeof name !== "string" || name.trim() === "") {
+      throw "Invalid Name";
+    }
 
- const insertInfo = await institutionCollection.insertOne(newInstitution);
- if (!insertInfo.acknowledged || !insertInfo.insertedId) throw 'Could not add institution';
+    if (!address || typeof address !== "string" || address.trim() === "") {
+      throw "Invalid Address";
+    }
 
+    if (!city || typeof city !== "string" || city.trim() === "") {
+      throw "Invalid City";
+    }
 
- return insertInfo.insertedId;
+    if (!hashedPassword || typeof hashedPassword !== "string") {
+      throw "Invalid Password";
+    }
 
-}
+    if (!state || typeof state !== "string") {
+      throw "Invalid State";
+    }
 
-export const getAll = async () => {
- const institutionCollection = await institution();
- const institutionList = await institutionCollection.find({}).toArray();
- return institutionList;
-}
+    if (
+      !services ||
+      !Array.isArray(services) ||
+      services.some(
+        (service) => typeof service !== "string" || service.trim() === ""
+      )
+    ) {
+      throw "Invalid Services";
+    }
 
-export const get = async (id) => {
- if (!id) {
-  throw 'id not supplied';
- }
- if (typeof id !== 'string') {
-  throw 'id not a string';
- }
- if (id.length === 0) {
-  throw 'id cannot be empty';
- }
- if (!ObjectId.isValid(id)) {
-  throw 'invalid id';
- }
- const institutionCollection = await institution();
- const institutionInfo = await institutionCollection.findOne({ _id: new ObjectId(id) });
- if (institutionInfo === null) {
-  throw 'No institution with that id';
- }
- return institutionInfo;
-}
+    if (hashedPassword !== confirmhashedPassword) {
+      throw "Passwords do not match";
+    }
+
+    const newInstitution = {
+      name: name,
+      email: email.toLowerCase(),
+      services: services,
+      address: address,
+      city: city,
+      state: state,
+      hashedPassword: hashedPassword,
+      profileImage: instituteImage
+    };
+
+    // const institutionCollection = await institutions();
+    const create_institution = await institutionCollection.insertOne(
+      newInstitution
+    );
+
+    if (create_institution.acknowledged || create_institution.insertedId) {
+      console.log("Institution Added successfully");
+    } else {
+      throw "Could not add Institution";
+    }
+
+    return create_institution;
+  },
+
+  async updateInstitutionDetails(institutionID, updatedFields) {
+    if (!institutionID) {
+      throw "No Institution ID";
+    }
+    if (!updatedFields) {
+      throw "No Update Fields provided";
+    }
+
+    const institutionCollection = await institutions();
+    const updatedInstitution = await institutionCollection.updateOne(
+      { _id: institutionID },
+      { $set: updatedFields }
+    );
+
+    if (updatedInstitution.modifiedCount !== 1) {
+      throw "Institution Update failed";
+    }
+
+    return updatedInstitution;
+  },
+
+  async getInstitutionById(id) {
+    if (!id) {
+      throw "You must provide an id to search for";
+    }
+
+    const institutionCollection = await institutions();
+    const institution = await institutionCollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (institution === null) {
+      throw "No institution with that id";
+    }
+
+    return institution;
+  },
+  async getAll() {
+    const institutionCollection = await institutions();
+    const institutionList = await institutionCollection.find({}).toArray();
+    return institutionList;
+  }
+};
+
+export default institutionDataFunctions;

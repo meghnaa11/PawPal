@@ -1,19 +1,36 @@
+import userRoutes from "./users.js";
 import institutionRoutes from "./institutions.js";
+import petRoutes from "./pets.js";
+import loginRoutes from "./login.js";
 import appointmentRoutes from "./appointments.js";
 import postRoutes from "./posts.js";
 import commentRoutes from "./comments.js";
-import * as institutionData from "../data/institutions.js";
-
+import institutionappRoutes from "./institutionapp.js";
+import { institutionData } from "../data/index.js";
+import forgotPasswordRoutes from "./forgot-password.js";
 const constructorMethod = (app) => {
-  app.use("/institution", institutionRoutes);
+  // app.use("/register", userRoutes);
+  app.use("/institution_register", institutionRoutes);
+  app.use("/pets", petRoutes);
   app.use("/getapp", appointmentRoutes);
   app.use("/posts", postRoutes);
-  app.use("/posts/:postId/comments", commentRoutes);
+  app.use("/", loginRoutes);
+  app.use("/users", userRoutes);
+  app.use("/institutionapp", institutionappRoutes);
+  app.use("/forgotPassword", forgotPasswordRoutes);
 
-  app.get("/", async (req, res) => {
+  app.get("/home", async (req, res) => {
+    if (!req.session.user) {
+      return res.redirect("/");
+    }
     const institutions = await institutionData.getAll();
-    console.log(institutions);
-    res.render("home/index", { institutions: institutions });
+
+    let ins = [];
+    for (let i = 0; i < 4; i++) {
+      ins.push(institutions[i]);
+    }
+
+    res.render("home/index", { institutions: ins });
   });
 
   // app.use("*", (req, res) => {

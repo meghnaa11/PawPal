@@ -1,0 +1,63 @@
+<div
+  class='modal fade'
+  id='reviewModal'
+  tabindex='-1'
+  aria-labelledby='exampleModalLabel'
+  aria-hidden='true'
+>
+  <div class='modal-dialog modal-dialog-centered'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title'>Make a review</h5>
+        <button
+          type='button'
+          class='btn-close'
+          data-bs-dismiss='modal'
+          aria-label='Close'
+        ></button>
+      </div>
+      <div class='modal-body'>
+        <form
+          action='/institutionapp/makereview/{{institution._id}}'
+          method='post'
+          id='reviewform'
+        >
+
+          <label for='rating'>Rating:</label>
+          <select
+            class='form-select'
+            aria-label='Default select example'
+            id='rating'
+            name='rating'
+          >
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            <option value='5'>5</option>
+          </select>
+
+          <label for='review'>Description:</label>
+          <textarea
+            class='form-control'
+            placeholder='Leave a comment here'
+            id='review'
+            style='height: 100px'
+            name='review'
+          ></textarea>
+          <div class='modal-footer'>
+            <button
+              type='button'
+              class='btn btn-secondary'
+              data-bs-dismiss='modal'
+            >Close</button>
+            <button type='submit' class='btn btn-primary'>Submit</button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,3 +1,9 @@
+{{> appdep}}
+
+<header>
+  {{> nav}}
+</header>
+
 <div class='p-5 mb-4 bg-light rounded-3 text-center'>
   <div class='container-fluid py-5'>
     <h1 class='display-5 fw-bold'>PawPal — Redefining Pet Care</h1>
@@ -5,9 +11,9 @@
     <button class='btn btn-primary btn-lg' type='button'>Learn more</button>
   </div>
 </div>
-<hr />
+<hr >
 <div>
-  <h2 class='text-center mb-3'>Service Providers</h2>
+  <h2 class='text-center mb-3'>Newly Registered Service Providers</h2>
 
   <div class='container'>
     <div class='row row-cols-auto gy-4'>
@@ -15,25 +21,20 @@
       
       <div class='col col-md-3'>
         <div class='card'>
-          <img src={{this.img}} class='card-img-top' alt='...' />
+          <img src={{this.profileImage.path}} class='card-img-top' alt='...' >
           <div class='card-body'>
             <h5 class='card-title'>{{this.name}}</h5>
-            {{!-- <p class='card-text'>Description</p> --}}
-            <a href='/institution/{{this._id}}' class='btn btn-primary'>Go to the institution</a>
+            <a href='/institutionapp/{{this._id}}' class='btn btn-primary'>Go to the institution</a>
           </div>
         </div>
       </div>
-      {{/each}}
-      
-    
-      
-      
-      
-  </div>
+      {{/each}}  
+    </div>
+</div>
 </div>
 <div class='row'>
         <div class='col text-center mt-4'>
-            <a href="/institution" class='btn btn-outline-primary'>Show More</a>
+            <a href="/institutionapp" class='btn btn-outline-primary'>Show More</a>
         </div>
-    </div>
-<hr />
+</div>
+<hr >

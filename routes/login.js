@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { pets } from "../config/mongoCollections.js";
+import { petData } from "../data/index.js";
 import { ObjectId } from "mongodb";
+import * as appointmentData from "../data/appointments.js";
+import * as reviewData from "../data/reviews.js";
+import moment from "moment";
 
 const router = Router();
 import { loginData, userData, institutionData } from "../data/index.js";
@@ -23,7 +27,7 @@ router.get("/userDashboard", async (req, res) => {
       if (!temp) {
         res.send("Error retrieving pets");
       }
-      pet_names_array.push({ _id: temp._id, name: temp.name , image:temp.profileImage.filename});
+      pet_names_array.push({ _id: temp._id, name: temp.name, image: temp.profileImage.filename });
     }
   }
 
@@ -45,6 +49,51 @@ router.get("/institutionDashboard", async (req, res) => {
     res.render("institution_dashboard", {
       institution,
       page_title: "Institution Dashboard",
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("An error occurred while fetching the institution.");
+  }
+});
+router.get("/institutionDashboard/insmng", async (req, res) => {
+  if (!req.session.institution) {
+    return res.redirect("/institutionLogin");
+  }
+  try {
+    const institution = await institutionData.getInstitutionById(
+      req.session.institution._id
+    );
+    const appointments = await appointmentData.getAllByInsId(req.session.institution._id);
+    let newapps = [];
+    for (let i = 0; i < appointments.length; i++) {
+      if (appointments[i].appointment_time < new Date()) continue;
+      let user = await userData.getUserById(appointments[i].userID);
+      const pet = await petData.getPetDetails(appointments[i].petID);
+
+      newapps.push({
+
+        category: appointments[i].category,
+        appointment_time: moment(appointments[i].appointment_time).format('MMMM D, YYYY, h:mm A'),
+        description: appointments[i].description,
+        user: user.firstName,
+        pet: pet.name,
+      });
+    }
+
+    let reviews = [];
+
+    const reviewsarr = await reviewData.getAllByInsId(req.session.institution._id);
+
+    for (let i = 0; i < reviewsarr.length; i++) {
+      const user = await userData.getUserById(reviewsarr[i].userID);
+      reviews.push({ review: reviewsarr[i].content, rating: reviewsarr[i].rating, name: user.firstName });
+    }
+
+    res.render("institution/insmng", {
+      institution,
+      appointments: newapps,
+      reviews,
+      page_title: "Institution Management",
     });
   } catch (e) {
     console.error(e);

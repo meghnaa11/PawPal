@@ -1,6 +1,4 @@
 import { reviews } from "../config/mongoCollections.js";
-import { users } from "../config/mongoCollections.js";
-import { institutions } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 
 // Function to create a new review

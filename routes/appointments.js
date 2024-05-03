@@ -43,4 +43,13 @@ router.route('/makeapp/:insid').post(async (req, res) => {
  }
 });
 
+router.route('/delete/:id').delete(async (req, res) => {
+ try {
+  const appointment = await appointmentData.remove(req.params.id);
+  res.json(appointment);
+ } catch (error) {
+  return res.status(400).json({ message: error });
+ }
+});
+
 export default router;

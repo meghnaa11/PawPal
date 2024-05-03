@@ -5,7 +5,8 @@ const router = Router();
 
 import { institutionData, petData, userData } from "../data/index.js";
 import * as reviewData from '../data/reviews.js';
-
+import * as appointmentData from '../data/appointments.js';
+import moment from 'moment';
 
 
 
@@ -36,6 +37,35 @@ router.route('/')
 
  });
 
+router.route('/myapp').get(async (req, res) => {
+ if (!req.session.user) {
+  return res.redirect("/");
+ }
+ try {
+  const appointments = await appointmentData.getAllByUserId(req.session.user._id);
+  let newapp = [];
+  for (let i = 0; i < appointments.length; i++) {
+   if (appointments[i].appointment_time < new Date()) {
+    continue;
+   }
+   const institution = await institutionData.getInstitutionById(appointments[i].institutionID);
+   const petname = await petData.getPetDetails(appointments[i].petID);
+   newapp.push({
+    id: appointments[i]._id,
+    category: appointments[i].category,
+    appointment_time: moment(appointments[i].appointment_time).format('MMMM D, YYYY, h:mm A'),
+    description: appointments[i].description,
+    institution: institution,
+    pet: petname.name,
+   });
+  }
+  res.render('institution/myapp', { appointments: newapp });
+
+ } catch (error) {
+  return res.status(400).json({ message: error });
+ }
+});
+
 router.route('/:id').get(async (req, res) => {
  if (!req.session.user) {
   return res.redirect("/");
@@ -59,7 +89,6 @@ router.route('/:id').get(async (req, res) => {
    const user = await userData.getUserById(reviewsarr[i].userID);
    reviews.push({ review: reviewsarr[i].content, rating: reviewsarr[i].rating, name: user.firstName });
   }
-  console.log(reviews);
 
 
 
@@ -82,6 +111,8 @@ router.route('/makereview/:insid').post(async (req, res) => {
   return res.status(400).json({ message: error });
  }
 });
+
+
 
 
 

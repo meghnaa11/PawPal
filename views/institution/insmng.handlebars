@@ -1,0 +1,52 @@
+{{> appdep}}
+{{> insnav}}
+
+
+<div class="text-center">
+  <div class="container mt-5">
+    <h2 class="mb-3">Upcoming Appointments</h2>
+    <div class="list-group">
+      {{#if appointments}}
+
+      {{#each appointments}}
+       <div class="list-group-item">
+            <h5 class="mb-1">{{this.category}}</h5>
+            <p class="mb-1">{{this.description}}</p>
+            <small>Appointment Time: {{this.appointment_time}}</small>
+            
+            <div class="text-muted">
+                Customer: {{this.user}}
+                <br>
+                Pet: {{this.pet}}
+            </div>
+        </div>
+       {{/each}}
+
+     
+      {{else}}
+
+      <div class="list-group-item">
+        <h5 class="mb-1">No Appointments</h5>
+        <p class="mb-1">You have no upcoming appointments.</p>
+      </div>
+      
+      {{/if}}
+        
+       
+    </div>
+</div>
+</div>
+
+<hr >
+     {{#if reviews}}
+{{> reviewlist}}
+{{/if}}
+{{!-- {{> appointmentModal}} --}}
+
+
+
+
+
+
+
+

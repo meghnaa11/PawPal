@@ -3,7 +3,7 @@ const dataContainer = document.getElementById('dataContainer');
 
 const insid = dataContainer.getAttribute('data-insid');
 const userid = dataContainer.getAttribute('data-userid');
-
+const pets = dataContainer.getAttribute('data-pets');
 const toastTrigger = document.getElementById('liveToastBtn')
 const toastLiveExample = document.getElementById('liveToast')
 const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
@@ -42,6 +42,12 @@ myModalEl.addEventListener('hidden.bs.modal', event => {
  }
 
 })
+
+myModalEl.addEventListener('show.bs.modal', event => {
+ testPets();
+})
+
+
 formsub.addEventListener('click', async function (e) {
  e.preventDefault();
  let service = [];
@@ -54,7 +60,6 @@ formsub.addEventListener('click', async function (e) {
 
  const petid = document.getElementById('petSelect').value;
  const desc = document.getElementById('floatingTextarea2').value;
- console.log('petid, ', petid);
  let date = document.getElementById('date').value;
 
  let timesub = document.getElementById('timepicker').value;
@@ -95,6 +100,7 @@ formsub.addEventListener('click', async function (e) {
  mymodal.hide();
 
  toastBootstrap.show();
+ window.location.href = '/institutionapp/myapp';
 
 
 
@@ -210,4 +216,20 @@ function getCheckedOptions() {
 
  console.log('Selected options:', options);
  return options;
+}
+
+function testPets() {
+
+ if (!pets) {
+  const toastText = document.getElementById('toastText');
+  toastText.innerText = 'You need to add a pet first! Redirecting to pet page...';
+  toastBootstrap.show();
+
+
+  setTimeout(function () {
+   window.location.href = '/pets';
+  }, 2000);
+
+  return;
+ }
 }

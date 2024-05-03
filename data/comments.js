@@ -16,8 +16,6 @@ const createComment = async (commentObj) => {
     const post = await postData.getPostsbyID(commentObj.postId);
     if(!post) throw `No post with ID: ${commentObj.postId}`;
 
-    // TODO: check if user is present
-
     const updatedTime = getCurrentDateTime();
 
     const newComment = {
@@ -46,7 +44,6 @@ const getCommentById = async (commentId) => {
 }
 
 const getAllComments = async (postId) => {
-    // TODO: check if postId, userId needs to be checked
     if(!postId) throw "Post ID needs to be provided";
     postId = validators.checkId(postId);
 
@@ -59,14 +56,11 @@ const getAllComments = async (postId) => {
         element._id = element._id.toString();
         element.userId = element.userId.toString();
 
-    });
-    // console.log(postCommentsList)
-    //if (!postCommentsList) throw "No comments present for the post"; -- empty if no comments in UI 
+    }); 
     return postCommentsList;
 };
 
 const deleteComment = async(commentId) => {
-    // TODO: check if postId, userId needs to be checked
     if(!commentId) throw "Comment ID needs to be provided";
 
     commentId = validators.checkId(commentId);
@@ -79,19 +73,12 @@ const deleteComment = async(commentId) => {
 
 const editComment = async (commentObj) => {
     if(!commentObj.comment) throw "Content needs to be provided"; 
-    //if(!commentObj.postId) throw "Post ID needs to be provided";
     if(!commentObj.userId) throw "User ID needs to be provided"; 
     if(!commentObj.commentId) throw "Comment ID needs to be provided"; 
 
 
     commentObj.comment = validators.checkString(commentObj.comment);
     commentObj.userId = validators.checkId(commentObj.userId);
-    //commentObj.postId = validators.checkId(commentObj.postId);
-
-    // const post = await postData.getPostsbyID(commentObj.postId);
-    // if(!post) throw `No post found with ID: ${commentObj.postId}`;
-
-    // TODO: check if user is present
 
     const commentCollection = await comments();
     const comment = await commentCollection.findOne({ _id: new ObjectId(commentObj.commentId) }); 

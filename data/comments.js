@@ -50,11 +50,17 @@ const getAllComments = async (postId) => {
     if(!postId) throw "Post ID needs to be provided";
     postId = validators.checkId(postId);
 
-    const post = await postData.getPostsbyID(commentObj.postId);
+    const post = await postData.getPostsbyID(postId);
     if(!post) throw `No post found with ID: ${postId}`;
 
     const commentCollection = await comments();
-    const postCommentsList = await commentCollection.find({postId: new ObjectId(postId)});
+    const postCommentsList = await commentCollection.find({postId: new ObjectId(postId)}).toArray();
+    postCommentsList.forEach(element => {
+        element._id = element._id.toString();
+        element.userId = element.userId.toString();
+
+    });
+    // console.log(postCommentsList)
     //if (!postCommentsList) throw "No comments present for the post"; -- empty if no comments in UI 
     return postCommentsList;
 };
@@ -68,20 +74,22 @@ const deleteComment = async(commentId) => {
     const commentCollection = await comments();
     const deletedCommentInfo = await commentCollection.findOneAndDelete({_id: new ObjectId(commentId)});
     if(!deletedCommentInfo) throw `The comment with ID ${commentId} does not exist and could not be deleted`;
-    return deletedCommentInfo.value._id;
+    return true;
 } 
 
 const editComment = async (commentObj) => {
-    if(!commentObj.content) throw "Content needs to be provided"; 
-    if(!commentObj.postId) throw "Post ID needs to be provided"; 
+    if(!commentObj.comment) throw "Content needs to be provided"; 
+    //if(!commentObj.postId) throw "Post ID needs to be provided";
     if(!commentObj.userId) throw "User ID needs to be provided"; 
+    if(!commentObj.commentId) throw "Comment ID needs to be provided"; 
 
-    commentObj.content = validators.checkString(commentObj.content);
+
+    commentObj.comment = validators.checkString(commentObj.comment);
     commentObj.userId = validators.checkId(commentObj.userId);
-    commentObj.postId = validators.checkId(commentObj.postId);
+    //commentObj.postId = validators.checkId(commentObj.postId);
 
-    const post = await postData.getPostsbyID(commentObj.postId);
-    if(!post) throw `No post found with ID: ${commentObj.postId}`;
+    // const post = await postData.getPostsbyID(commentObj.postId);
+    // if(!post) throw `No post found with ID: ${commentObj.postId}`;
 
     // TODO: check if user is present
 
@@ -92,7 +100,7 @@ const editComment = async (commentObj) => {
     const updatedTime = getCurrentDateTime();
 
     const updatedComment = {
-        content: commentObj.content,
+        content: commentObj.comment,
         updatedTime: updatedTime
     };
     
@@ -104,7 +112,7 @@ const editComment = async (commentObj) => {
 
     if(!updatedCommentInfo) throw `The comment with ID ${commentObj.commentId} could not be updated`;
 
-    return updatedCommentInfo.value._id;
+    return updatedCommentInfo._id;
 }
 
 const deleteUserComments = async (userId) => {

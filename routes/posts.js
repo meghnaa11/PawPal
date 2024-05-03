@@ -4,6 +4,8 @@ const router = Router();
 import * as postData from "../data/posts.js";
 import * as helpers from "../helper.js";
 import multer from "multer";
+import * as commentData from "../data/comments.js"
+
 import { userData } from "../data/index.js";
 import { comments, posts } from "../config/mongoCollections.js";
 
@@ -53,10 +55,27 @@ router.route("/search").post(async (req, res) => {
 router.route("/postbyID/:id").get(async (req, res) => {
   try {
     const postbyID = await postData.getPostsbyID(req.params.id);
+    const comments = await commentData.getAllComments(req.params.id)
+
     let isUsersPost = false;
     if (req.session.user._id === postbyID.userID.toString()) isUsersPost = true;
+
+    for (const comment of comments) {
+      console.log('Logged In User: ' + req.session.user._id);
+      try {
+          const user = await userData.getUserById(comment.userId);
+          comment.user = user;
+      } catch (error) {
+          comment.user = {}; 
+      }
+      comment.isUsersComment = (comment.userId == req.session.user._id);
+  }
+
+    console.log(comments)
+
     res.render("posts/viewPost", {
       post: postbyID,
+      comment:comments,
       isUsersPost: isUsersPost,
     });
   } catch (error) {
@@ -73,6 +92,9 @@ router.route("/postbyID/:id").delete(async (req, res) => {
     } catch (e) {
       return res.status(403).json({ message: error });
     }
+
+    const deleteComments = await commentData.deletePostComments(req.params.id)
+
     const deletion = await postData.removePost(
       req.params.id,
       req.session.user._id

@@ -14,6 +14,7 @@ const constructorMethod = (app) => {
   app.use("/pets", petRoutes);
   app.use("/getapp", appointmentRoutes);
   app.use("/posts", postRoutes);
+  app.use("/posts/comments", commentRoutes);
   app.use("/", loginRoutes);
   app.use("/users", userRoutes);
   app.use("/institutionapp", institutionappRoutes);

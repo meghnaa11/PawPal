@@ -1,0 +1,46 @@
+/* Commenter CSS Styles */
+
+.commenter-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.commenter-profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px; /* Add margin to separate image from text */
+}
+
+.commenter-name {
+    font-weight: bold;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    margin-left: 10px;
+}
+
+.commenter-actions {
+    margin-top: 5px;
+}
+
+.commenter-actions button,
+.commenter-actions a {
+    margin-right: 5px;
+    text-decoration: none;
+    color: #007bff; /* Link color */
+}
+
+.commenter-actions button:hover,
+.commenter-actions a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.commenter-comment{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+/* end commenter style */

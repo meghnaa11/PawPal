@@ -202,4 +202,28 @@ export const get = async (id) => {
   return appointment;
 };
 
-// await create('category', '2021-12-12T12:12:12', 'desc', '6618b67df5dd79f2b81e698b', '6618ae9f3cb1bc6706814588', '61f7b3b3b3b3b3b3b3b3b3');
+export const remove = async (id) => {
+  if (!id) {
+    throw "id not supplied";
+  }
+  if (typeof id !== "string") {
+    throw "id not a string";
+  }
+  if (id.trim().length === 0) {
+    throw "id cannot be empty";
+  }
+  if (!ObjectId.isValid(id)) throw "Invalid id";
+
+  const appointmentCollection = await appointments();
+  const appointment = await get(id);
+
+  const deletionInfo = await appointmentCollection.deleteOne({
+    _id: new ObjectId(id),
+  });
+
+  if (deletionInfo.deletedCount === 0) {
+    return { deleted: false };
+  }
+
+  return { deleted: true };
+};

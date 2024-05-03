@@ -176,3 +176,9 @@ input[type="submit"]:hover,
   font-weight: bold;
   margin-top: 10px;
 }
+
+.error-institution-user {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}

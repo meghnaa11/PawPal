@@ -1,0 +1,54 @@
+{{> appdep}}
+{{> nav}}
+
+
+<div>
+  <div class="container mt-5">
+    <h2 class="mb-3 text-center">Upcoming Appointments</h2>
+    <a class="btn btn-primary" href="/institutionapp">New Appointment</a>
+    <div class="list-group">
+      {{#if appointments}}
+      {{#each appointments}}
+      <div class="list-group-item mt-3 border border-4">
+        <h5 class="mb-1">Institution Name: {{this.institution.name}}</h5>
+        <h5 class="mb-1">Service: {{this.category}}</h5>
+        <strong>Appointment Time: {{this.appointment_time}}</strong>
+        <p class="mt-3">{{this.description}}</p>
+        <p>Pet: {{this.pet}} </p>
+
+
+        <button class="btn btn-danger" id="cancelbtn-{{@index}}" data-appid="{{this.id}}">Cancel</button>
+
+
+
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="list-group-item">
+        <h5 class="mb-1">No Appointments</h5>
+        <p class="mb-1">You have no upcoming appointments.</p>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  
+    const buttons = document.querySelectorAll('.btn-danger');
+
+  
+    buttons.forEach(button => {
+      button.addEventListener('click', function () {
+        const appID = this.getAttribute('data-appid');
+        fetch(`/getapp/delete/${appID}`, { method: 'DELETE' });
+        this.parentElement.remove();
+
+
+      });
+    });
+  });
+
+
+</script>

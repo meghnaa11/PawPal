@@ -39,6 +39,11 @@ export const validators = {
     return variable;
   },
 
+  isValidContactNumber: (contactNumber) => {
+    var regex = /^\d{10}$/;
+    if (!regex.test(contactNumber)) throw "Invalid Contact";
+  },
+
   checkValidDate: (dateReleased) => {
     const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(19|20)\d{2}$/;
     const todayDate = new Date();
@@ -99,6 +104,7 @@ export const postHelpers = {
       lostfoundDetails.contact_info,
       "Contact"
     );
+    validators.isValidContactNumber(lostfoundDetails.contact_info);
 
     if (lostfoundDetails?.pet_details === undefined)
       throw `Must Provide Pet Details`;

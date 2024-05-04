@@ -178,14 +178,6 @@ router.route("/postbyID/:id/edit").post(upload, async (req, res) => {
 
   try {
     if (postFields.type === "lost" || postFields.type === "found") {
-      // const postObj = {
-      //   title: postFields.title,
-      //   content: postFields.content,
-      //   image: postFields.image,
-      //   type: postFields.type,
-      //   lostfoundDetails: postFields.lostfoundDetails,
-      //   userID: postFields.userID,
-      // };
       const post = await postData.updatePost(
         postFields,
         req.session.user._id,
@@ -194,13 +186,6 @@ router.route("/postbyID/:id/edit").post(upload, async (req, res) => {
       res.redirect(`/posts/postbyID/${post}`);
     } else {
       delete postFields.lostfoundDetails;
-      // const postObj = {
-      //   title: postFields.title,
-      //   content: postFields.content,
-      //   image: postFields.image,
-      //   type: postFields.type,
-      //   userID: postFields.userID,
-      // };
       const post = await postData.updatePost(
         postFields,
         req.session.user._id,

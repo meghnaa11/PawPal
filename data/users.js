@@ -222,7 +222,7 @@ const userDataFunctions = {
     }catch(error){
       throw error;
     }
-  }
+  },
 
   async deleteUser(user_id){
     if(!user_id){

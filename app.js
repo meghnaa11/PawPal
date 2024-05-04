@@ -66,6 +66,18 @@ app.get("/userLogin", async (req, res, next) => {
   next();
 });
 
+app.get("/users", async (req, res, next) => {
+  let bool = "Non Authenticated User";
+  if (req.session.user) bool = "Authenticated User";
+  else if (req.session.institution) bool = "Authenticated Institution";
+  if (bool === "Authenticated User") {
+    return res.redirect("/home");
+  } else if (bool === "Authenticated Institution") {
+    return res.redirect("/institutionDashboard");
+  }
+  next();
+});
+
 app.get("/forgotPassword/userReset", async (req, res, next) => {
   let bool = "Non Authenticated User";
   if (req.session.user) bool = "Authenticated User";

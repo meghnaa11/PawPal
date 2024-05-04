@@ -4,8 +4,8 @@ const router = Router();
 import * as postData from "../data/posts.js";
 import * as helpers from "../helper.js";
 import multer from "multer";
-import * as commentData from "../data/comments.js"
-
+import * as commentData from "../data/comments.js";
+import xss from "xss";
 import { userData } from "../data/index.js";
 import { comments, posts } from "../config/mongoCollections.js";
 
@@ -41,7 +41,7 @@ router.route("/search").get(async (req, res) => {
 });
 
 router.route("/search").post(async (req, res) => {
-  const searchTerm = req.body.q;
+  const searchTerm = xss(req.body.q);
   let regex = new RegExp([".*", searchTerm, ".*"].join(""), "gi");
   try {
     const items = await postData.searchPosts(searchTerm);
@@ -61,21 +61,21 @@ router.route("/postbyID/:id").get(async (req, res) => {
     if (req.session.user._id === postbyID.userID.toString()) isUsersPost = true;
 
     for (const comment of comments) {
-      console.log('Logged In User: ' + req.session.user._id);
+      console.log("Logged In User: " + req.session.user._id);
       try {
-          const user = await userData.getUserById(comment.userId);
-          comment.user = user;
+        const user = await userData.getUserById(comment.userId);
+        comment.user = user;
       } catch (error) {
-          comment.user = {}; 
+        comment.user = {};
       }
-      comment.isUsersComment = (comment.userId == req.session.user._id);
-  }
+      comment.isUsersComment = comment.userId == req.session.user._id;
+    }
 
     console.log(comments);
 
     res.render("posts/viewPost", {
       post: postbyID,
-      comment:comments,
+      comment: comments,
       isUsersPost: isUsersPost,
     });
   } catch (error) {
@@ -85,7 +85,7 @@ router.route("/postbyID/:id").get(async (req, res) => {
 
 router.route("/postbyID/:id").delete(async (req, res) => {
   try {
-    const postbyID = await postData.getPostsbyID(req.params.id);
+    const postbyID = await postData.getPostsbyID(xss(req.params.id));
     try {
       if (!(req.session.user._id === postbyID.userID.toString()))
         throw `403: Unauthorized`;
@@ -126,8 +126,8 @@ router.route("/postbyID/:id/edit").get(async (req, res) => {
 });
 
 router.route("/postbyID/:id/edit").post(upload, async (req, res) => {
-  const postID = req.params.id;
-  const postbyID = await postData.getPostsbyID(req.params.id);
+  const postID = xss(req.params.id);
+  const postbyID = await postData.getPostsbyID(xss(req.params.id));
   try {
     if (!(req.session.user._id === postbyID.userID.toString()))
       throw `403: Unauthorized`;
@@ -135,24 +135,24 @@ router.route("/postbyID/:id/edit").post(upload, async (req, res) => {
     return res.status(403).json({ message: error });
   }
   const postFields = {
-    title: req.body.title,
-    content: req.body.content,
-    type: req.body.type,
+    title: xss(req.body.title),
+    content: xss(req.body.content),
+    type: xss(req.body.type),
     image: req.file ? req.file : null,
     lostfoundDetails:
-      req.body.type === "general"
+      xss(req.body.type) === "general"
         ? null
         : {
-            location: req.body.details_location,
-            date: req.body.details_date
-              ? helpers.formatHTMLDate(req.body.details_date)
+            location: xss(eq.body.details_location),
+            date: xss(req.body.details_date)
+              ? helpers.formatHTMLDate(xss(req.body.details_date))
               : null,
-            contact_info: req.body.details_contact,
+            contact_info: xss(req.body.details_contact),
             pet_details: {
-              species: req.body.petdetails_species,
-              breed: req.body.petdetails_breed,
-              color: req.body.petdetails_color,
-              other_details: req.body.petdetails_other,
+              species: xss(req.body.petdetails_species),
+              breed: xss(req.body.petdetails_breed),
+              color: xss(req.body.petdetails_color),
+              other_details: xss(req.body.petdetails_other),
             },
           },
   };
@@ -253,25 +253,25 @@ router.route("/add").get(async (req, res) => {
 
 router.route("/add").post(upload, async (req, res) => {
   const postFields = {
-    userID: req.session.user._id,
-    title: req.body.title,
-    content: req.body.content,
-    type: req.body.type,
+    userID: xss(req.session.user._id),
+    title: xss(req.body.title),
+    content: xss(req.body.content),
+    type: xss(req.body.type),
     image: req.file,
     lostfoundDetails:
-      req.body.type === "general"
+      xss(req.body.type) === "general"
         ? null
         : {
-            location: req.body.details_location,
-            date: req.body.details_date
-              ? helpers.formatHTMLDate(req.body.details_date)
+            location: xss(req.body.details_location),
+            date: xss(req.body.details_date)
+              ? helpers.formatHTMLDate(xss(req.body.details_date))
               : null,
-            contact_info: req.body.details_contact,
+            contact_info: xss(req.body.details_contact),
             pet_details: {
-              species: req.body.petdetails_species,
-              breed: req.body.petdetails_breed,
-              color: req.body.petdetails_color,
-              other_details: req.body.petdetails_other,
+              species: xss(req.body.petdetails_species),
+              breed: xss(req.body.petdetails_breed),
+              color: xss(req.body.petdetails_color),
+              other_details: xss(req.body.petdetails_other),
             },
           },
   };

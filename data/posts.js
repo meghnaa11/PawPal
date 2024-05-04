@@ -1,6 +1,7 @@
 import { comments, posts } from "../config/mongoCollections.js";
 import { users } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
+import * as commentData from '../data/comments.js'
 import { postHelpers, getCurrentDateTime, validators } from "../helper.js";
 
 export const createPost = async (postObj) => {
@@ -134,6 +135,7 @@ export const removePost = async (id, userID) => {
   if (!deletionInfo) {
     throw `Could not delete post with id of ${id}`;
   }
+  commentData.deletePostComments(id);
   await user.updateOne({ _id: new ObjectId(userID) }, { $pull: { posts: id } });
   return deletionInfo;
 };

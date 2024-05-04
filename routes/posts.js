@@ -55,7 +55,7 @@ router.route("/search").post(async (req, res) => {
 router.route("/postbyID/:id").get(async (req, res) => {
   try {
     const postbyID = await postData.getPostsbyID(req.params.id);
-    const comments = await commentData.getAllComments(req.params.id)
+    const comments = await commentData.getAllComments(req.params.id);
 
     let isUsersPost = false;
     if (req.session.user._id === postbyID.userID.toString()) isUsersPost = true;
@@ -71,7 +71,7 @@ router.route("/postbyID/:id").get(async (req, res) => {
       comment.isUsersComment = (comment.userId == req.session.user._id);
   }
 
-    console.log(comments)
+    console.log(comments);
 
     res.render("posts/viewPost", {
       post: postbyID,
@@ -92,8 +92,6 @@ router.route("/postbyID/:id").delete(async (req, res) => {
     } catch (e) {
       return res.status(403).json({ message: error });
     }
-
-    const deleteComments = await commentData.deletePostComments(req.params.id)
 
     const deletion = await postData.removePost(
       req.params.id,

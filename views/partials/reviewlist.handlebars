@@ -1,20 +1,18 @@
 <h3 class='text-center'>
-  Reviews of the Institution
+  Reviews 
 </h3>
 <div class='container reviews-container'>
   <div class='row justify-content-center'>
     <ul class='list-group list-group-numbered w-50'>
       {{#each reviews}}
-        <li
-          class='list-group-item d-flex justify-content-between align-items-start'
-        >
-          <div class='ms-2 me-auto'>
-            <div class='fw-bold'>{{this.name}}</div>
-            {{this.review}}
-          </div>
-          <span class='badge text-bg-primary rounded-pill'>Rating:
-            {{this.rating}}</span>
-        </li>
+      <li class='list-group-item d-flex justify-content-between align-items-start'>
+        <div class='ms-2 me-auto'>
+          <div class='fw-bold'>{{this.name}}</div>
+          {{this.review}}
+        </div>
+        <span class='badge text-bg-primary rounded-pill'>Rating:
+          {{this.rating}}</span>
+      </li>
       {{/each}}
     </ul>
   </div>

@@ -1,4 +1,6 @@
 import { ObjectId } from "mongodb";
+import sanitizeHtml from 'sanitize-html';
+
 
 /*
 Available Functions:
@@ -176,4 +178,9 @@ export function formatHTMLDate(dateString) {
 export function formatJSDate(dateString) {
   const [month, date, year] = dateString.split("/");
   return `${year}-${month}-${date}`;
+}
+
+export const sanitizeData = (text) => {
+  const sanitizedText = sanitizeHtml(text);
+  return sanitizedText;
 }

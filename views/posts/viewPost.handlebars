@@ -42,38 +42,54 @@
       <cite class="card-text">~{{post.firstName}} {{post.lastName}}</cite>
     </div>
   </div>
-  {{#each comment}}
-    <!-- Comments Section -->
-    <div class="card mt-3">
+  <div class="card mt-3">
       <div class="card-header">
         Comments
       </div>
-      <ul class="list-group list-group-flush">
-        <!-- Sample Comment -->
+      <ul class="list-group list-group-flush comment-list">
+
+  {{#each comment}}
         <li class="list-group-item">
-          <p>{{comment.content}}</p>
-          <small>Commented by: Jane Smith</small>
+          <div class="commenter-profile">
+            <img src="/{{user.profileImage.path}}" width="50" height="50">
+            <small>
+              <div class="commenter-name"> {{user.firstName}} {{user.lastName}} </div>  {{#if isUsersComment }} 
+              <button data-id="{{_id}}" class="btn btn-sm btn-link comment-edit-btn">edit comment</button> | <a data-id="{{_id}}" class="btn btn-sm btn-link comment-delete-btn">delete comment</a> {{/if }}
+            </small>
+          </div>
+          <div class="commenter-comment">
+            <div class="comment-content">
+              <p>{{content}}</p>
+            </div>
+            <div class="comment-edit-form" style="display: none;">
+              <textarea class="form-control comment-edit-textarea" style="margin-bottom: 10px;">{{content}}</textarea>
+              <button type="button" class="btn btn-primary btn-sm comment-submit-btn">Submit</button>
+              <button type="button" class="btn btn-sm btn-link comment-cancel-btn" style="color: red;">Cancel</button>
+            </div>
+          </div>
         </li>
-        <!-- Add more comments dynamically here -->
-      </ul>
-    </div>
+      
   {{/each}}
+
+  </ul>
+    </div>
   <!-- Add Comment Form -->
   <div class="card mt-3">
     <div class="card-header">
       Add Comment
     </div>
     <div class="card-body">
-      <form>
+      <form id="addCommentForm">
         <div class="form-group">
           <label for="comment">Your Comment:</label>
           <textarea class="form-control" id="comment" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" id="submitComment">Submit</button>
       </form>
     </div>
   </div>
 </div>
+<script src="/public/js/comments.js"></script>
 
 <script>
   $(document).ready(function () {  

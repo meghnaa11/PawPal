@@ -4,6 +4,7 @@ import petRoutes from "./pets.js";
 import loginRoutes from "./login.js";
 import appointmentRoutes from "./appointments.js";
 import postRoutes from "./posts.js";
+import commentRoutes from "./comments.js";
 import institutionappRoutes from "./institutionapp.js";
 import { institutionData } from "../data/index.js";
 import forgotPasswordRoutes from "./forgot-password.js";
@@ -13,6 +14,7 @@ const constructorMethod = (app) => {
   app.use("/pets", petRoutes);
   app.use("/getapp", appointmentRoutes);
   app.use("/posts", postRoutes);
+  app.use("/posts/comments", commentRoutes);
   app.use("/", loginRoutes);
   app.use("/users", userRoutes);
   app.use("/institutionapp", institutionappRoutes);

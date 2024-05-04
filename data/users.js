@@ -192,6 +192,38 @@ const userDataFunctions = {
     return await this.getUserById(id);
   },
 
+  async addUsersComments(id, commentId){
+    try{
+      const userCollection = await users();
+      const user = await this.getUserById(id);
+      //console.log(user);
+      const currentComments = user.comments;
+      currentComments.push(commentId);
+      const insertComment = await userCollection.updateOne({ _id: new ObjectId(id) }, {$set: {comments: currentComments}});
+      if (insertComment.modifiedCount !== 1) throw `Could not Update User`;
+      return true;
+
+    }catch(error){
+      throw error;
+    }
+  },
+
+  async deleteUsersComments(id, commentId){
+    try{
+      const userCollection = await users();
+      const user = await this.getUserById(id);
+      const currentComments = user.comments;
+      const i = currentComments.indexOf(commentId);
+      currentComments.splice(i, 1);
+      const deleteComment = await userCollection.updateOne({ _id: new ObjectId(id) }, {$set: {comments: currentComments}});
+      if (deleteComment.modifiedCount !== 1) throw `Could not Update User`;
+      return true;
+
+    }catch(error){
+      throw error;
+    }
+  },
+
   async deleteUser(user_id){
     if(!user_id){
         throw 'No Pet ID provided'

@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 import { comments } from '../config/mongoCollections.js';
 import { getCurrentDateTime, validators } from "../helper.js";
 import * as postData from "../data/posts.js";
+import  userDataFunctions  from "../data/users.js";
 
 
 const createComment = async (commentObj) => {
@@ -15,6 +16,13 @@ const createComment = async (commentObj) => {
 
     const post = await postData.getPostsbyID(commentObj.postId);
     if(!post) throw `No post with ID: ${commentObj.postId}`;
+
+    const user = await userDataFunctions.getUserById(commentObj.userId);
+
+    if(!user){
+        throw `User does not exist with ID: ${commentObj.userId}`;
+    }
+
 
     const updatedTime = getCurrentDateTime();
 
@@ -30,6 +38,10 @@ const createComment = async (commentObj) => {
     if (!createComment.acknowledged || !createComment.insertedId) throw "Could not add comment";
 
     const newId = createComment.insertedId.toString();
+
+    await postData.addCommentToPost(commentObj.postId, newId);
+    await userDataFunctions.addUsersComments(commentObj.userId, newId);
+
     return newId;
     
 };
@@ -60,14 +72,24 @@ const getAllComments = async (postId) => {
     return postCommentsList;
 };
 
-const deleteComment = async(commentId) => {
+const deleteComment = async(userId, commentId) => {
     if(!commentId) throw "Comment ID needs to be provided";
 
     commentId = validators.checkId(commentId);
 
     const commentCollection = await comments();
+
+    const comment = await commentCollection.findOne({ _id: new ObjectId(commentId) }); 
+    if (!comment) throw `No comment found with the ID: ${commentId}`;
+
+    if(comment.userId.toString() !== userId){
+        throw "Only the commenter can delete the comment";
+    }
+
     const deletedCommentInfo = await commentCollection.findOneAndDelete({_id: new ObjectId(commentId)});
     if(!deletedCommentInfo) throw `The comment with ID ${commentId} does not exist and could not be deleted`;
+    await postData.deleteCommentFromPost(deletedCommentInfo.postId.toString(), commentId);
+    await userDataFunctions.deleteUsersComments(userId, commentId);
     return true;
 } 
 
@@ -80,9 +102,21 @@ const editComment = async (commentObj) => {
     commentObj.comment = validators.checkString(commentObj.comment);
     commentObj.userId = validators.checkId(commentObj.userId);
 
+    const user = await userDataFunctions.getUserById(commentObj.userId);
+
+    if(!user){
+        throw `User does not exist with the ID: ${commentObj.userId}`;
+    }
+
+
+
     const commentCollection = await comments();
     const comment = await commentCollection.findOne({ _id: new ObjectId(commentObj.commentId) }); 
     if (!comment) throw `No comment found with the ID: ${commentObj.commentId}`;
+
+    if(comment.userId.toString() !== commentObj.userId){
+        throw "Only the commenter can edit the comment";
+    }
 
     const updatedTime = getCurrentDateTime();
 

@@ -208,3 +208,34 @@ export const searchPosts = async (search) => {
 // } catch (e) {
 //   console.log(e);
 // }
+
+export const addCommentToPost = async (postId, commentId) => {
+  const postCollection = await posts();
+  try{
+    const post = await getPostsbyID(postId);
+    const currentComments = post.comments;
+    currentComments.push(commentId);
+    const insertComment = await postCollection.updateOne({ _id: new ObjectId(postId) }, {$set: {comments: currentComments}});
+    if (insertComment.modifiedCount !== 1) throw `Could not update post`;
+    return true;
+
+  }catch(error){
+    throw error;
+  }
+}
+
+export const deleteCommentFromPost = async (postId, commentId) => {
+  const postCollection = await posts();
+  try{
+    const post = await getPostsbyID(postId);
+    const currentComments = post.comments;
+    const i = currentComments.indexOf(commentId);
+    currentComments.splice(i, 1);
+    const deleteComment = await postCollection.updateOne({ _id: new ObjectId(postId) }, {$set: {comments: currentComments}});
+    if (deleteComment.modifiedCount !== 1) throw `Could not update the post`;
+    return true
+
+  }catch(error){
+    throw error;
+  }
+}

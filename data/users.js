@@ -122,7 +122,7 @@ const userDataFunctions = {
 
     const newUser = {
       firstName: firstName.trim(),
-      lastName: lastName.trim(),
+      lastName: lastName.trim(), 
       email: email.toLowerCase(),
       gender,
       city: city.trim(),
@@ -191,6 +191,26 @@ const userDataFunctions = {
 
     return await this.getUserById(id);
   },
+
+  async deleteUser(user_id){
+    if(!user_id){
+        throw 'No Pet ID provided'
+    }
+     
+    const user = await users()
+    const current_user = await user.findOne({_id:new ObjectId(user_id)});
+    if(!current_user){
+        throw 'No user found'
+    }
+    
+    const deleted_user = await user.deleteOne({_id:new ObjectId(user_id)})
+    if(!deleted_user){
+        throw 'Failed to delete'
+    }
+    console.log(deleted_user)
+    return deleted_user;
+}
 };
+
 
 export default userDataFunctions;

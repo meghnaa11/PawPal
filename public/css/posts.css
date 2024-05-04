@@ -3,3 +3,20 @@
   color: red;
   font-weight: bold;
 }
+
+#searchInput {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Style for the search input when focused */
+#searchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}

@@ -131,6 +131,13 @@ router
         return res.status(400).send("No file uploaded or file data missing");
       }
 
+      const userCollection = await users();
+      const existingUser = await userCollection.findOne({
+          email: user_info.email.toLowerCase()
+    });
+    if (existingUser) {
+      return res.status(401).render("user_registration", { error: "User with same Email ID Exists" });
+    }
       const user = await userData.userRegistration(
         user_info.firstName,
         user_info.lastName,
@@ -144,9 +151,10 @@ router
         profileImage
       );
       if(!user){
-        return res.status(404).send("Unable to adduser");
+        return res.status(401).render("user_registration", { error: "Unable to add user" });
       }
       
+
      // const imagePath = new URL('./public/images/user/', import.meta.url).pathname;
       // const imagePathString = path.join(imagePath, profileImage.originalname);
       // const imagePath = path.join(process.cwd(),'.','public/images/user/',profileImage.originalname);
@@ -222,7 +230,6 @@ router.route("/update/image/:id").post(upload_update, async (req, res) => {
       { _id: new ObjectId(id) },  
       { $set: { profileImage: image } } 
     );
-    console.log(updated_image)
   
 
     res.redirect("/userDashboard");
@@ -231,5 +238,22 @@ router.route("/update/image/:id").post(upload_update, async (req, res) => {
   }
 });
 
+  router.route("/delete/:id").get(async (req,res) => {
+    const user_id = req.params.id;
+    console.log(user_id)
+    if (!user_id) {
+      res.send("No User ID");
+    }
+    const isValidObjectuserId = ObjectId.isValid(user_id);
+    if (!isValidObjectuserId) {
+      res.send("Invalid Object ID");
+    }
+    const delete_user = await userData.deleteUser(user_id);
+    if (!delete_user) {
+      res.send("Couldnot Delete user");
+    }
+    res.redirect("/userLogin");
 
+  })
 export default router;
+          

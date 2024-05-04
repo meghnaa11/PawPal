@@ -63,15 +63,24 @@
             <p class="mb-1">{{content}}</p>
             <p class="mb-1">Location : {{lostfoundDetails.location}}</p>
             <p class="mb-1">Date : {{lostfoundDetails.date}}</p>
+            <p class="mb-1">Contact : {{lostfoundDetails.contact_info}}</p>
             <p class="mb-1">Species :
               {{lostfoundDetails.pet_details.species}}</p>
             <p class="mb-1">Breed : {{lostfoundDetails.pet_details.breed}}</p>
-            <img src="../../{{image.path}}" style="max-width: 200px; max-height: 200px;" onerror='this.style.display = "none"'>
-            <br></br>
-            <cite>~{{_id}}</cite>
+            <p><img src="../../{{image.path}}" style="max-width: 200px; max-height: 200px;" onerror='this.style.display = "none"'></p>
+            <cite>~{{firstName}} {{lastName}}</cite>
           </a>
         </div>
       {{/each}}
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () { $('select[name=type]').change(function () { if
+  (this.value === 'lost' || this.value === 'found') {
+  $('#additionalFields').show(); } else { $('#additionalFields').hide(); } });
+  });
+  var today = new Date().toISOString().split('T')[0];
+document.getElementById("details_date").setAttribute("max", today);
+</script>

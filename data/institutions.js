@@ -131,7 +131,7 @@ const institutionDataFunctions = {
   },
   async getAll() {
     const institutionCollection = await institutions();
-    const institutionList = await institutionCollection.find({}).toArray();
+    const institutionList = await institutionCollection.find({}).sort({ _id: -1 }).toArray();
     return institutionList;
   }
 };

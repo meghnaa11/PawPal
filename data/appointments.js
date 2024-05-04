@@ -154,7 +154,9 @@ export const getAllByUserId = async (id) => {
   if (!ObjectId.isValid(id)) throw "Invalid id";
 
   const appointmentCollection = await appointments();
-  const applist = await appointmentCollection.find({ userID: id }).toArray();
+  const applist = await appointmentCollection.find({ userID: id }).sort({
+    appointment_time: 1
+  }).toArray();;
 
   return applist;
 };
@@ -172,8 +174,11 @@ export const getAllByInsId = async (id) => {
   if (!ObjectId.isValid(id)) throw "Invalid id";
 
   const appointmentCollection = await appointments();
+
   const applist = await appointmentCollection.find({
     institutionID: id
+  }).sort({
+    appointment_time: 1
   }).toArray();
 
   return applist;

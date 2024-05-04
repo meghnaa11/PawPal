@@ -6,7 +6,8 @@
   <div class='row'>
 
     <div class='col-md-6' style="height: 500px;">
-      <img src={{institution.profileImage.path}} class='img-fluid rounded h-100 w-auto' alt='...'  >     
+      <img src='/public/assets/institutions/{{institution.profileImage.filename}}'
+        class='img-fluid rounded h-100 w-auto' alt='...'>
     </div>
 
     <div class='col-md-6'>
@@ -20,58 +21,41 @@
             {{institution.address}},
             {{institution.city}},
             {{institution.state}}</p>
-          <button
-            type='button'
-            class='btn btn-primary mr-2'
-            data-bs-toggle='modal'
-            data-bs-target='#appointmentModal'
-            id='appointmentButton'
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='16'
-              height='16'
-              fill='currentColor'
-              class='bi bi-calendar-plus'
-              viewBox='0 0 16 16'
-            >
+          <button type='button' class='btn btn-primary mr-2' data-bs-toggle='modal' data-bs-target='#appointmentModal'
+            id='appointmentButton'>
+            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor'
+              class='bi bi-calendar-plus' viewBox='0 0 16 16'>
               <path
-                d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'
-              >
+                d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'>
               </path>
               <path
-                d='M8.5 7.5a.5.5 0 0 1 .5.5v1.5H11a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V10H6.5a.5.5 0 0 1 0-1H8V7.5a.5.5 0 0 1 .5-.5z'
-              >
+                d='M8.5 7.5a.5.5 0 0 1 .5.5v1.5H11a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V10H6.5a.5.5 0 0 1 0-1H8V7.5a.5.5 0 0 1 .5-.5z'>
               </path>
             </svg>
             Make Appointment
           </button>
-          <button
-            type='button'
-            class='btn btn-primary'
-            data-bs-toggle='modal'
-            data-bs-target='#reviewModal'
-            id='reviewButton'
-          >
-            
+          {{#if isReview}}
+          <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#reviewModal'
+            id='reviewButton'>
             Make a review
           </button>
+          {{/if}}
         </div>
       </div>
       <div class="mt-4">
-       <h4>Guidelines </h4>
-       <ol>
-        <li>Vaccinations: Ensure your pet is up-to-date on all required vaccinations.</li>
-        <li>Health Records: Bring your pet's health records and information about any medical conditions.</li>
-        <li>Behavior: Pets may need a behavioral assessment to ensure they are safe around other animals.</li>
-        <li>Timeliness: Adhere to scheduled pick-up and drop-off times to avoid additional charges.</li>
-       </ol>
+        <h4>Guidelines </h4>
+        <ol>
+          <li>Vaccinations: Ensure your pet is up-to-date on all required vaccinations.</li>
+          <li>Health Records: Bring your pet's health records and information about any medical conditions.</li>
+          <li>Behavior: Pets may need a behavioral assessment to ensure they are safe around other animals.</li>
+          <li>Timeliness: Adhere to scheduled pick-up and drop-off times to avoid additional charges.</li>
+        </ol>
       </div>
     </div>
   </div>
 </div>
 
-<hr >
+<hr>
 {{> appointmentModal}}
 
 
@@ -80,6 +64,3 @@
 {{#if reviews}}
 {{> reviewlist}}
 {{/if}}
-
-
-

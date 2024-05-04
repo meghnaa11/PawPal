@@ -1,4 +1,3 @@
-
 {{> appdep}}
 
 <header>
@@ -6,30 +5,30 @@
 </header>
 
 <h3 class='text-center'>Institution List</h3>
-  <div class='container'>
-    <div class='row row-cols-auto gy-4'>
-      {{#each institutions}}
-      
-      <div class='col col-md-3'>
-        <div class='card'>
-          <img src={{this.profileImage.path}} class='card-img-top' alt='...' >
-          <div class='card-body'>
-            <h5 class='card-title'>{{this.name}}</h5>
-            <strong>Services:</strong>
-            
-           
-            <p class='card-text'>{{this.services}}</p>
- 
-            
-            <strong>Address:</strong>
-             {{this.address}} {{this.city}} {{this.state}}
-            <a href='/institutionapp/{{this._id}}' class='btn btn-primary mt-1'>Go to the institution</a>
-            
-          
-          </div>
+<div class='container'>
+  <div class='row row-cols-auto gy-4'>
+    {{#each institutions}}
+
+    <div class='col col-md-3'>
+      <div class='card'>
+        <img src='/public/assets/institutions/{{this.profileImage.filename}}' class='card-img-top' alt='...'>
+        <div class='card-body'>
+          <h5 class='card-title'>{{this.name}}</h5>
+          <strong>Services:</strong>
+
+
+          <p class='card-text'>{{this.services}}</p>
+
+
+          <strong>Address:</strong>
+          {{this.address}} {{this.city}} {{this.state}}
+          <a href='/institutionapp/{{this._id}}' class='btn btn-primary mt-1'>Go to the institution</a>
+
+
         </div>
       </div>
-      {{/each}}
-   
+    </div>
+    {{/each}}
+
   </div>
 </div>

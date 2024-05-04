@@ -42,6 +42,9 @@
   <form action="/users/update/{{user._id}}" method="get" class="mb-3">
     <input type="submit" value="Update Profile" class="btn btn-primary" />
   </form>
+  <form action="/home" method="get" class="mb-3">
+    <input type="submit" value="Home Page" class="btn btn-primary" />
+  </form>
   <form action="/logout" method="get" class="mb-3">
     <input type="submit" value="Logout" class="btn btn-secondary" />
   </form>
@@ -74,16 +77,17 @@
         </tr>
       {{/each}}
     </tbody>
-     </table>
+     
+  </table>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() { var modal =
+  document.addEventListener("DOMContentLoaded", function () { var modal =
   document.getElementById("update-image-modal"); var btn =
-  document.getElementById("user_image"); btn.onclick = function() {
+  document.getElementById("user_image"); btn.onclick = function () {
   modal.style.display = "block"; } var span =
-  document.getElementsByClassName("close")[0]; span.onclick = function() {
-  modal.style.display = "none"; } window.onclick = function(event) { if
+  document.getElementsByClassName("close")[0]; span.onclick = function () {
+  modal.style.display = "none"; } window.onclick = function (event) { if
   (event.target == modal) { modal.style.display = "none"; } } });
 
 </script>

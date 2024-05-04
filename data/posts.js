@@ -3,6 +3,7 @@ import { users } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 import * as commentData from '../data/comments.js'
 import { postHelpers, getCurrentDateTime, validators } from "../helper.js";
+import userDataFunctions from "./users.js";
 
 export const createPost = async (postObj) => {
   if (postObj?.userID === undefined) throw `Need User ID.`;
@@ -71,10 +72,15 @@ export const getAllGeneralPosts = async () => {
     .toArray();
   if (!postList) throw `Could not get all Posts`;
   if (postList.length === 0) return postList;
-  postList = postList.map((element) => {
-    element._id = element._id.toString();
-    return element;
-  });
+  postList = await Promise.all(
+    postList.map(async (element) => {
+      element._id = element._id.toString();
+      const userDetails = await userDataFunctions.getUserById(element.userID);
+      element.firstName = userDetails.firstName;
+      element.lastName = userDetails.lastName;
+      return element;
+    })
+  );
   return postList;
 };
 
@@ -86,10 +92,15 @@ export const getAllLFPosts = async () => {
     .toArray();
   if (!postList) throw `Could not get all Posts`;
   if (postList.length === 0) return postList;
-  postList = postList.map((element) => {
-    element._id = element._id.toString();
-    return element;
-  });
+  postList = await Promise.all(
+    postList.map(async (element) => {
+      element._id = element._id.toString();
+      const userDetails = await userDataFunctions.getUserById(element.userID);
+      element.firstName = userDetails.firstName;
+      element.lastName = userDetails.lastName;
+      return element;
+    })
+  );
   return postList;
 };
 
@@ -99,6 +110,9 @@ export const getPostsbyID = async (id) => {
   const postbyID = await postCollection.findOne({ _id: new ObjectId(id) });
   if (postbyID === null) throw `No Product Found with given Id`;
   postbyID._id = postbyID._id.toString();
+  const userDetails = await userDataFunctions.getUserById(postbyID.userID);
+  postbyID.firstName = userDetails.firstName;
+  postbyID.lastName = userDetails.lastName;
   return postbyID;
 };
 
@@ -190,15 +204,37 @@ export const updatePost = async (postObj, userID, postID) => {
 
 export const searchPosts = async (search) => {
   const postCollection = await posts();
-  const items = await postCollection
+  var items = await postCollection
     .find({
       $or: [
         { title: { $regex: search, $options: "i" } },
         { content: { $regex: search, $options: "i" } },
+        { "lostfoundDetails.location": { $regex: search, $options: "i" } },
+        {
+          "lostfoundDetails.pet_details.species": {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          "lostfoundDetails.pet_details.breed": {
+            $regex: search,
+            $options: "i",
+          },
+        },
       ],
     })
     .toArray();
-  if (items === null) throw `No Product Found with given Id`;
+  if (items === null) throw `No Product Found`;
+  items = await Promise.all(
+    items.map(async (element) => {
+      element._id = element._id.toString();
+      const userDetails = await userDataFunctions.getUserById(element.userID);
+      element.firstName = userDetails.firstName;
+      element.lastName = userDetails.lastName;
+      return element;
+    })
+  );
   return items;
 };
 

@@ -220,6 +220,11 @@ const validators = {
     return variable;
   },
 
+  isValidContactNumber: (contactNumber) => {
+    var regex = /^\d{10}$/;
+    if (!regex.test(contactNumber)) throw "Invalid Contact";
+  },
+
   checkValidDate: (dateReleased) => {
     const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/(19|20)\d{2}$/;
     const todayDate = new Date();
@@ -280,6 +285,7 @@ const postHelpers = {
       lostfoundDetails.contact_info,
       "Contact"
     );
+    validators.isValidContactNumber(lostfoundDetails.contact_info);
 
     if (lostfoundDetails?.pet_details === undefined)
       throw `Must Provide Pet Details`;
@@ -375,7 +381,44 @@ $(document).ready(function () {
 
     if (results.length > 0) {
       results.forEach((item) => {
-        $searchResults.append("<p>" + item.title + "</p>");
+        if (item.type === "general") {
+          var html = `
+        <div class="list-group">
+          <a
+            href="/posts/postbyID/${item._id}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">${item.title} (Type : ${item.type})</h5>
+              <small>${item.updatedtime}</small>
+            </div>
+            <p class="mb-1 mt-2">${item.content}</p>
+            <cite>~${item.firstName} ${item.lastName}</cite>
+          </a>
+        </div>`;
+          $searchResults.append(html);
+        } else {
+          var htmllf = `
+        <div class="list-group">
+          <a
+            href="/posts/postbyID/${item._id}"
+            class="list-group-item list-group-item-action"
+          >
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">${item.title} (Type : ${item.type})</h5>
+              <small>${item.updatedtime}</small>
+            </div>
+            <p class="mb-1 mt-2">${item.content}</p>
+            <p class="mb-1">Location : ${item.lostfoundDetails.location}</p>
+            <p class="mb-1">Contact : ${item.lostfoundDetails.contact_info}</p>
+            <p class="mb-1">Date : ${item.lostfoundDetails.date}</p>
+            <p><img src="../../public/assets/posts/${item.image.filename}" style="max-width: 200px; max-height: 200px;" onerror='this.style.display = "none"'></p>
+            <cite>~${item.firstName} ${item.lastName}</cite>
+          </a>
+        </div>
+    </div>`;
+          $searchResults.append(htmllf);
+        }
       });
     } else {
       $searchResults.append("<p>No results found.</p>");

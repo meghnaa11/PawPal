@@ -19,7 +19,7 @@ const exportedMethods = {
     console.log("institutionLogin method called");
     const institutionData = await institutions();
     const institution = await institutionData.findOne({ email: email });
-    console.log(institution);
+    console.log(institution); 
 
     if (
       institution &&

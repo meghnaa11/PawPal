@@ -44,12 +44,22 @@ router.route('/myapp').get(async (req, res) => {
  try {
   const appointments = await appointmentData.getAllByUserId(req.session.user._id);
   let newapp = [];
+  let reviews = [];
+
+  const reviewsarr = await reviewData.getAllByUserId(req.session.user._id);
+
+  for (let i = 0; i < reviewsarr.length; i++) {
+   const ins = await institutionData.getInstitutionById(reviewsarr[i].institutionID);
+   reviews.push({ review: reviewsarr[i].content, rating: reviewsarr[i].rating, name: ins.name });
+  }
+
   for (let i = 0; i < appointments.length; i++) {
    if (appointments[i].appointment_time < new Date()) {
     continue;
    }
    const institution = await institutionData.getInstitutionById(appointments[i].institutionID);
    const petname = await petData.getPetDetails(appointments[i].petID);
+
    newapp.push({
     id: appointments[i]._id,
     category: appointments[i].category,
@@ -59,18 +69,24 @@ router.route('/myapp').get(async (req, res) => {
     pet: petname.name,
    });
   }
-  res.render('institution/myapp', { appointments: newapp });
+  res.render('institution/myapp', { appointments: newapp, reviews: reviews });
 
  } catch (error) {
   return res.status(400).json({ message: error });
  }
 });
 
+
+
+
 router.route('/:id').get(async (req, res) => {
  if (!req.session.user) {
   return res.redirect("/");
  }
  const userid = req.session.user._id;
+ const insid = req.params.id;
+ const isReview = await reviewData.getReviewByuseridinsid(userid, insid);
+ console.log('isReview', isReview.found);
 
  try {
   let pets = [];
@@ -94,7 +110,7 @@ router.route('/:id').get(async (req, res) => {
 
 
   const institution = await institutionData.getInstitutionById(req.params.id);
-  res.render('institution/insdesc', { institution: institution, pet: pets, userid: userid, reviews: reviews });
+  res.render('institution/insdesc', { institution: institution, pet: pets, userid: userid, reviews: reviews, isReview: !isReview.found });
  } catch (error) {
   return res.status(400).json({ message: error });
  }

@@ -70,6 +70,13 @@ formsub.addEventListener('click', async function (e) {
   return;
 
  }
+ if (!isValidTime(timesub)) {
+  const toastText = document.getElementById('toastText');
+  toastText.innerText = 'Invalid Time!';
+  toastBootstrap.show();
+  return;
+ }
+
 
 
  let momentDate = new Date(date);
@@ -213,8 +220,6 @@ function getCheckedOptions() {
    options.push(checkbox.value);
   }
  });
-
- console.log('Selected options:', options);
  return options;
 }
 
@@ -232,4 +237,9 @@ function testPets() {
 
   return;
  }
+}
+
+function isValidTime(input) {
+ const timearr = ['09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM'];
+ return timearr.includes(input);
 }

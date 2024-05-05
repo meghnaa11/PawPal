@@ -143,7 +143,7 @@ router.route("/postbyID/:id/edit").post(upload, async (req, res) => {
       xss(req.body.type) === "general"
         ? null
         : {
-            location: xss(eq.body.details_location),
+            location: xss(req.body.details_location),
             date: xss(req.body.details_date)
               ? helpers.formatHTMLDate(xss(req.body.details_date))
               : null,

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 const router = Router();
+import xss from 'xss';
 
 
 import { institutionData, petData, userData } from "../data/index.js";
@@ -86,7 +87,6 @@ router.route('/:id').get(async (req, res) => {
  const userid = req.session.user._id;
  const insid = req.params.id;
  const isReview = await reviewData.getReviewByuseridinsid(userid, insid);
- console.log('isReview', isReview.found);
 
  try {
   let pets = [];
@@ -118,8 +118,8 @@ router.route('/:id').get(async (req, res) => {
 
 router.route('/makereview/:insid').post(async (req, res) => {
  const { review, rating } = req.body;
+ review = xss(review);
  const userID = req.session.user._id;
- console.log(review, rating, req.params.insid, userID);
  try {
   await reviewData.create(rating, review, userID, req.params.insid);
   return res.redirect(`/institutionapp/${req.params.insid}`);

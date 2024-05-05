@@ -119,7 +119,14 @@ initTimepicker();
 async function getnewTime() {
  time = [];
  const applist = await axios.get(`/getapp/ins/${insid}`)
+ const applistnuser = await axios.get(`/getapp/user/${userid}`)
  for (const value of applist.data) {
+  const appointment_time = new Date(value.appointment_time);
+  if (appointment_time >= new Date()) {
+   time.push(appointment_time);
+  }
+ }
+ for (const value of applistnuser.data) {
   const appointment_time = new Date(value.appointment_time);
   if (appointment_time >= new Date()) {
    time.push(appointment_time);

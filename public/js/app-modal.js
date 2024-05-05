@@ -40,6 +40,7 @@ myModalEl.addEventListener('hidden.bs.modal', event => {
   flatpickrInstance.clear();
 
  }
+ timePicker.disabled = true;
 
 })
 
@@ -176,6 +177,7 @@ async function initialflatpick() {
   minDate: "today",
 
   onChange: async function (selectedDates, dateStr, instance) {
+   timePicker.disabled = false;
 
    await getnewTime();
 
@@ -219,6 +221,7 @@ function initTimepicker() {
   'maxTime': '4:30pm',
   'timeFormat': 'h:i A'
  });
+ timePicker.value = '';
 
 
 }

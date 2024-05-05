@@ -6,6 +6,7 @@ import { ObjectId } from "mongodb";
 import { users } from "../config/mongoCollections.js";
 import multer from "multer";
 import path from "path";
+import xss from 'xss'
 
 const router = express.Router();
 
@@ -47,7 +48,12 @@ router
     try {
       const pet_info = req.body;
       const petImage = req.file;
-      console.log(petImage);
+
+      pet_info.name = xss(pet_info.name)
+      pet_info.species = xss(pet_info.species)
+      pet_info.breed = xss(pet_info.breed)
+      pet_info.description = xss(pet_info.description)
+
       if (!pet_info || Object.keys(pet_info).length === 0) {
         return res
           .status(400)
@@ -127,7 +133,7 @@ router
         species: current_pet.species,
         breed: current_pet.breed,
         description: current_pet.description,
-        profileImage: current_pet.profileImage.filename
+        
       };
       res.render("pet_update", { petID, pet_current_data });
     } catch (error) {
@@ -139,6 +145,11 @@ router
       const petID = req.params.id;
       const updatedFields = req.body;
       
+      updatedFields.name = xss(updatedFields.name)
+      updatedFields.species = xss(updatedFields.species)
+      updatedFields.breed = xss(updatedFields.breed)
+      updatedFields.description = xss(updatedFields.description)
+
       const pet = await pets();
       const current_pet = await pet.findOne({ _id: new ObjectId(petID) });
 
@@ -156,17 +167,17 @@ router
       }
       res.redirect("/userdashboard");
     }  catch(e) {
-          // const pet = await pets();
-          // const current_pet = await pet.findOne({ _id: new ObjectId(req.params.id) });
-          // const pet_current_data = {
-          //   name: current_pet.name,
-          //   species: current_pet.species,
-          //   breed: current_pet.breed,
-          //   description: current_pet.description,
-          //   profileImage: current_pet.profileImage.filename
-          // };
-          // return res.status(500).render("pet_update", { error:e, pet_current_data });
-          return res.status(500).json({ error: "Internal Server Error" });
+           const pet = await pets();
+           const current_pet = await pet.findOne({ _id: new ObjectId(req.params.id) });
+          const pet_current_data = {
+            name: current_pet.name,
+            species: current_pet.species,
+            breed: current_pet.breed,
+            description: current_pet.description,
+            
+          };
+          return res.status(500).render("pet_update", { error:e, pet_current_data });
+      //    return res.status(500).json({ error: "Internal Server Error" });
     }
   });
 

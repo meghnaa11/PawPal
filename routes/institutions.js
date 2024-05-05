@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { ObjectId } from "mongodb";
 import { institutions } from "../config/mongoCollections.js";
 import multer from 'multer'
+import xss from 'xss'
 
 const router = express.Router();
 
@@ -44,6 +45,14 @@ router
     try {
       const institute_info = req.body;
       const instituteImage = req.file;
+
+      institute_info.name = xss(institute_info.name)
+      institute_info.email = xss(institute_info.email)
+      institute_info.city = xss(institute_info.city)
+      institute_info.address = xss(institute_info.address)
+      // institute_info.hashedPassword = xss(institute_info.hashedPassword)
+      // institute_info.confirmhashedPassword = xss(institute_info.confirmhashedPassword)
+
       if (!institute_info || Object.keys(institute_info).length === 0) {
         return res
           .status(400)
@@ -201,6 +210,15 @@ if (passedInstitutionID !== sessionInstitutionID) {
       }
       const institutionID = req.params.id;
       const updatedFields = req.body;
+
+      updatedFields.name = xss(updatedFields.name)
+      updatedFields.email = xss(updatedFields.email)
+      updatedFields.city = xss(updatedFields.city)
+      updatedFields.address = xss(updatedFields.address)
+      // updatedFields.hashedPassword = xss(updatedFields.hashedPassword)
+      // updatedFields.confirmhashedPassword = xss(updatedFields.confirmhashedPassword)
+
+
       const institution = await institutions();
       const current_institution = await institution.findOne({
         _id: new ObjectId(institutionID),

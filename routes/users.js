@@ -9,7 +9,7 @@ import { ObjectId } from "mongodb";
 import {users} from "../config/mongoCollections.js"
 import { config } from 'process';
 // const __dirname = path.resolve();
-
+import xss from 'xss'
 
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -47,6 +47,13 @@ router
       const user_info = req.body;
       const profileImage = req.file
    
+      user_info.firstName = xss(user_info.firstName)
+      user_info.lastName = xss(user_info.lastName)
+      user_info.email = xss(user_info.email)
+      user_info.city = xss(user_info.city)
+      user_info.age = xss(user_info.age)
+      // user_info.password = xss(user_info.password)
+      // user_info.confirmPassword = xss(user_info.confirmPassword)
 
       if (!user_info || Object.keys(user_info).length === 0) {
         return res
@@ -190,6 +197,15 @@ router.post("/update/:id", upload,async (req, res) => {
 
     const updatedUser = req.body;
     const id = req.params.id;
+
+    updatedUser.firstName = xss(updatedUser.firstName)
+    updatedUser.lastName = xss(updatedUser.lastName)
+    updatedUser.email = xss(updatedUser.email)
+    updatedUser.city = xss(updatedUser.city)
+    updatedUser.age = xss(updatedUser.age)
+    // updatedUser.password = xss(updatedUser.password)
+    // updatedUser.confirmPassword = xss(updatedUser.confirmPassword)
+
     const result = await userData.updateUser(id, updatedUser);
     if (result === null) {
       return res.status(404).json({ error: "User not found" });

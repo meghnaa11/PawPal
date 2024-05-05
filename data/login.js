@@ -5,7 +5,7 @@ const exportedMethods = {
   async userLogin(email, password) {
     console.log("userLogin method called");
     const userData = await users();
-    const user = await userData.findOne({ email: email });
+    const user = await userData.findOne({ email: email.toLowerCase() });
     console.log(user);
 
     if (user && (await bcrypt.compare(password, user.hashedPassword))) {
@@ -18,8 +18,10 @@ const exportedMethods = {
   async institutionLogin(email, password) {
     console.log("institutionLogin method called");
     const institutionData = await institutions();
-    const institution = await institutionData.findOne({ email: email });
-    console.log(institution); 
+    const institution = await institutionData.findOne({
+      email: email.toLowerCase(),
+    });
+    console.log(institution);
 
     if (
       institution &&

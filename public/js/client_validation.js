@@ -97,16 +97,16 @@ if (user_form) {
       event.preventDefault();
     }
 
-    if (parseInt(age) < 0 || parseInt(age) > 120) {
+    if (parseInt(age) < 0 || parseInt(age) > 100) {
       let p = document.createElement("p");
-      p.innerHTML = "Age should be positive and less than 120";
+      p.innerHTML = "Age should be positive and less than 100";
       error_reg.appendChild(p);
       isValidRegistration = false;
       event.preventDefault();
     }
     if (parseInt(age) < 16) {
       let p = document.createElement("p");
-      p.innerHTML = "Age should be less than 16";
+      p.innerHTML = "Age should be greater than 16";
       error_reg.appendChild(p);
       isValidRegistration = false;
       event.preventDefault();
@@ -270,14 +270,14 @@ if (user_form_update) {
 
     if (parseInt(age) < 0 || parseInt(age) > 120) {
       let p = document.createElement("p");
-      p.innerHTML = "Age should be positive and less than 120";
+      p.innerHTML = "Age should be positive and less than 100";
       error_reg_update.appendChild(p);
       isValidRegistration_update = false;
       event.preventDefault();
     }
     if (parseInt(age) < 16) {
       let p = document.createElement("p");
-      p.innerHTML = "Age should be less than 16";
+      p.innerHTML = "Age should be greater than 16";
       error_reg_update.appendChild(p);
       isValidRegistration_update = false;
       event.preventDefault();

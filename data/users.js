@@ -186,7 +186,7 @@ const userDataFunctions = {
       { $set: updatedUserData }
     );
     if (updatedInfo.modifiedCount === 0) {
-      throw "Could not update user successfully";
+      throw "Could not Update Details";
     }
 
     return await this.getUserById(id);

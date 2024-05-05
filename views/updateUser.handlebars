@@ -93,7 +93,11 @@
   <div id="error_reg_update">
   
 </div>
-
+  <div>
+    {{#if error}}
+      <p>{{error}}</p>
+    {{/if}}
+  </div>
    <input type="submit" value="Update" />
 
   {{!-- <label for="password">Password:</label><br />

@@ -219,7 +219,22 @@ if (passedInstitutionID !== sessionInstitutionID) {
       // return res.status(200).json(updatedInstitution);
       return res.redirect("/institutionDashboard");
     } catch (error) {
-      return res.status(500).json({ error: "Internal Server Error" });
+      const id = req.params.id;
+      const institution = await institutions();
+      const current_institution = await institution.findOne({
+        _id: new ObjectId(id),
+      });
+      const institution_current_data = {
+        id: req.params.id,
+        name: current_institution.name,
+        email: current_institution.email,
+        services: current_institution.services,
+        address: current_institution.address,
+        city: current_institution.city,
+        state: current_institution.state,
+      };
+      return res.status(500).render("institution_update", { error:error, institution_current_data });
+      // return res.status(500).json({ error: "Internal Server Error" });
     }
   });
 

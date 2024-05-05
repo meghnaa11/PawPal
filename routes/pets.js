@@ -141,6 +141,7 @@ router
       
       const pet = await pets();
       const current_pet = await pet.findOne({ _id: new ObjectId(petID) });
+
       if (!current_pet) {
         res.send("Pet not found");
       }
@@ -150,11 +151,22 @@ router
         updatedFields
       );
       if (!updatedPet) {
-        res.send("Update Failed");
+         res.send("Update Failed");
+       // res.status(500).render("pet_update", { error:e, pet_current_data });
       }
       res.redirect("/userdashboard");
-    }  catch {
-      return res.status(500).json({ error: "Internal Server Error" });
+    }  catch(e) {
+          // const pet = await pets();
+          // const current_pet = await pet.findOne({ _id: new ObjectId(req.params.id) });
+          // const pet_current_data = {
+          //   name: current_pet.name,
+          //   species: current_pet.species,
+          //   breed: current_pet.breed,
+          //   description: current_pet.description,
+          //   profileImage: current_pet.profileImage.filename
+          // };
+          // return res.status(500).render("pet_update", { error:e, pet_current_data });
+          return res.status(500).json({ error: "Internal Server Error" });
     }
   });
 

@@ -196,7 +196,10 @@ router.post("/update/:id", upload,async (req, res) => {
     }
     res.redirect("/userDashboard");
   } catch (e) {
-    res.status(500).json({ error: e.toString() });
+    const id = req.params.id;
+    const user = await userData.getUserById(id);
+    return res.status(500).render("updateUser", { error:e, user });
+    //res.status(500).json({ error: e.toString() });
   }
 });
 
@@ -207,6 +210,7 @@ router.get("/update/:id", async (req, res) => {
     }
     const id = req.params.id;
     const user = await userData.getUserById(id);
+
     res.render("updateUser", { user });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
@@ -224,7 +228,6 @@ router.route("/update/image/:id").post(upload_update, async (req, res) => {
     if(!user){
       res.status(404).json({ error: e.toString() });
     }
-    console.log(user)
     const user_collection = await users()
     const updated_image = await user_collection.updateOne(
       { _id: new ObjectId(id) },  

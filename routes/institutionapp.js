@@ -117,7 +117,7 @@ router.route('/:id').get(async (req, res) => {
 });
 
 router.route('/makereview/:insid').post(async (req, res) => {
- const { review, rating } = req.body;
+ let { review, rating } = req.body;
  review = xss(review);
  const userID = req.session.user._id;
  try {

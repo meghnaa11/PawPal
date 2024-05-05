@@ -43,7 +43,7 @@ router.route('/makeapp/:insid').post(async (req, res) => {
   const insid = req.params.insid;
   const user = await userData.getUserById(userid);
 
-  const { category, appointmentTime, desc, petid } = req.body;
+  let { category, appointmentTime, desc, petid } = req.body;
   desc = xss(desc);
   const newAppointment = await appointmentData.create(category, appointmentTime, desc, insid, userid, petid);
   appointmentData.sendEmail(user.email, user.firstName, new Date(appointmentTime).toLocaleDateString(), new Date(appointmentTime).toLocaleTimeString(), category);

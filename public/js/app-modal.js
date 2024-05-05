@@ -107,7 +107,11 @@ formsub.addEventListener('click', async function (e) {
  mymodal.hide();
 
  toastBootstrap.show();
- window.location.href = '/institutionapp/myapp';
+
+ setTimeout(function () {
+  window.location.href = '/institutionapp/myapp';
+ }, 1000);
+
 
 
 

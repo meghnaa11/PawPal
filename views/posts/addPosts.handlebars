@@ -3,7 +3,7 @@
 
 <form id="add-post" method="POST" action="/posts/add" enctype="multipart/form-data">
   <label for="type">Type:</label>
-  <select id="type" name="type" value="{{postFields.type}}">
+  <select id="type" name="type">
     <option value="general">General</option>
     <option value="lost">Lost</option>
     <option value="found">Found</option>
@@ -12,7 +12,7 @@
   <label for="title">Title</label>
   <input type="text" class="form-control" name="title" id="title" value="{{postFields.title}}"/>
   <label for="content">Content</label>
-  <textarea class="form-control" id="content" name="content" value="{{postFields.content}}"></textarea>
+  <textarea class="form-control" id="content" name="content" >{{postFields.content}}</textarea>
   <label for="image">Upload Image</label>
   <input type="file" class="form-control-file" name="image" id="image" accept="image/*"/>
   <div id="additionalFields" style="display: none;">
@@ -23,7 +23,7 @@
       id="details_date"
       name="details_date"
       value="{{postFields.lostfoundDetails.date}}"
-       min="2024-01-01" max=""
+       min="2024-01-01" max="2030-01-01"
     />
     <label for="details_location">Location</label>
     <input
@@ -76,7 +76,6 @@
   </div>
   <div class="modal-footer">
     <a
-      type="button"
       class="btn btn-secondary"
       href="/posts/general"
     >Close</a>

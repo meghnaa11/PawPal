@@ -31,20 +31,17 @@
             class="btn btn-secondary btn-group"
             href="/posts/myposts"
             role="button"
-            aria-disabled="true"
           >My Posts</a>
           <a
             class="btn btn-secondary btn-group"
             href="/posts/add"
             role="button"
-            aria-disabled="true"
             style="margin-left: 5px"
           >Add Post</a>
           <a
             class="btn btn-secondary btn-group"
             href="/posts/search"
             role="button"
-            aria-disabled="true"
             style="margin-left: 5px"
           >Search</a>
         </div>
@@ -62,7 +59,7 @@
               <small>{{updatedtime}}</small>
             </div>
             <p class="mb-1 mt-2">{{content}}</p>
-            <p><img src="../../public/assets/posts/{{image.filename}}" style="max-width: 200px; max-height: 200px;" onerror='this.style.display = "none"'></p>
+            <p><img src="../../public/assets/posts/{{image.filename}}" style="max-width: 200px; max-height: 200px;"  alt="..." onerror='this.style.display = "none"'></p>
             <cite>~{{firstName}} {{lastName}}</cite>
           </a>
         </div>

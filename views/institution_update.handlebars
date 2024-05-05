@@ -6,7 +6,7 @@
   name="institute_form_update"
   id="institute_form_update"
 >
-  <label for="name">Name:</label><br />
+  <label for="institute_name">Name:</label><br />
   <input
     type="text"
     id="institute_name"
@@ -14,7 +14,7 @@
     value="{{institution_current_data.name}}"
   /><br /><br />
 
-  <label for="email">Email:</label><br />
+  <label for="institute_email">Email:</label><br />
   <input
     type="email"
     id="institute_email"
@@ -28,7 +28,6 @@
     id="services"
     name="services[]"
     multiple
-    value="{{institution_current_data.services}}"
   >
     <option value="Grooming Services">Grooming Services</option>
     <option value="Training and Behavior Modification">Training and Behavior
@@ -47,7 +46,7 @@
     value="{{institution_current_data.address}}"
   /><br /><br />
 
-  <label for="city">City:</label><br />
+  <label for="institute_city">City:</label><br />
   <input
     type="text"
     id="institute_city"
@@ -55,11 +54,10 @@
     value="{{institution_current_data.city}}"
   /><br /><br />
 
-  <label for="state">State</label>
+  <label for="institute_state">State</label>
   <select
     id="institute_state"
     name="state"
-    value="{{institution_current_data.state}}"
   >
     <option value="AL">Alabama</option>
     <option value="AK">Alaska</option>

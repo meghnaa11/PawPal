@@ -27,8 +27,9 @@
       <p class="card-text">{{post.content}}</p>
       <p class="card-text" id="type" style="display: none;">Type : {{post.type}}</p>
       <p><img
-        src="../../{{post.image.path}}"
+        src="/public/assets/posts/{{post.image.filename}}"
         style="max-width: 200px; max-height: 200px;"
+        alt="..."
         onerror='this.style.display = "none"'
       /></p>
       <div id="additionalFields" style="display: none;">
@@ -51,11 +52,9 @@
   {{#each comment}}
         <li class="list-group-item">
           <div class="commenter-profile">
-            <img src="/{{user.profileImage.path}}" width="50" height="50">
-            <small>
+            <img src="/public/assets/users/{{user.profileImage.filename}}" alt="..." width="50" height="50">
               <div class="commenter-name"> {{user.firstName}} {{user.lastName}} </div>  {{#if isUsersComment }} 
               <button data-id="{{_id}}" class="btn btn-sm btn-link comment-edit-btn">edit comment</button> | <a data-id="{{_id}}" class="btn btn-sm btn-link comment-delete-btn">delete comment</a> {{/if }}
-            </small>
           </div>
           <div class="commenter-comment">
             <div class="comment-content">

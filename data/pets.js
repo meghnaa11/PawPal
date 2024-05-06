@@ -152,6 +152,19 @@ const petDataFunctions = {
             throw 'Failed to delete'
         }
         return deleted_pet;
+    },
+
+    async getAllPetsOfUser(userId){
+        const petCollection = await pets()
+        const petList = await petCollection.find({userID: userId}).toArray();
+        console.log(petList)
+        petList.forEach(element => {
+            element._id = element._id.toString();
+            element.userID = element.userID.toString();
+    
+        }); 
+        return petList;
     }
+
 }
 export default petDataFunctions;

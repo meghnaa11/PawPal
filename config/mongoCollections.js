@@ -21,5 +21,6 @@ export const posts = getCollectionFn("posts");
 export const comments = getCollectionFn("comments");
 export const pets = getCollectionFn("pets");
 export const reviews = getCollectionFn("reviews");
+export const journal = getCollectionFn("journal");
 
 

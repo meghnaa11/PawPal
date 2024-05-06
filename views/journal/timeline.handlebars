@@ -1,0 +1,79 @@
+{{>appdep}}
+{{>nav}}
+
+<div class="container">
+    <div class="status-container">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Create Journal Entry</h5>
+                </div>
+                <div class="card-body">
+                    <form id="journalStatusForm">
+                        <div class="form-group">
+                            <textarea class="form-control" name="content" placeholder="What Did Your Pet do Today?" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-file journal-image-upload">
+                                <input type="file" class="custom-file-input" name="image" id="customFile">
+                                <label class="custom-file-label" for="customFile">Add Image To Journal (optional)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="pet" required>
+                                <option value="" disabled selected>Select your pet</option>
+                                {{#each pets}}
+                                    <option value="{{_id}}">{{ name }}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Journal TImeline-->
+
+<div class="container">
+    <div class="timeline-container">
+        {{#each journalEntries}}
+        <div class="row">
+            <div class="col-md-12 timeline-dot">
+                <div class="social-timelines p-relative">
+                    <div class="row timeline-right p-t-35">
+                        <div class="col-2 col-sm-2 col-xl-1">
+                            <div class="social-timelines-left">
+                                <img class="img-radius timeline-icon" src="/{{ pet.profileImage.path }}"
+                                    alt="">
+                            </div>
+                        </div>
+                        <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
+                            <div class="card">
+                                <div class="card-block post-timelines">
+                                    <div class="d-flex">
+                                        <div class="chat-header f-w-600">{{ pet.name }}</div>
+                                        <button class="btn btn-sm btn-outline-danger float-right delete-btn delete-journal-btn" data-id="{{ _id }}">X</button>
+                                    </div>
+                                    <div class="social-time text-muted">{{ updatedtime }}</div>
+                                </div>
+                                {{#if hasImage}}
+                                <img src="/{{ image.path }}" class="img-fluid width-100"
+                                    alt="">
+                                {{/if}}
+                                <div class="card-block">
+                                    <div class="timeline-details">
+                                        <p class="text-muted">{{ content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{!-- <div class="f-30 text-muted text-center">2014</div> --}}
+    </div>
+</div>
+<script src="/public/js/journal.js"></script>

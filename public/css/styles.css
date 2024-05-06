@@ -386,9 +386,6 @@ background: url(https://bootdey.com/img/Content/bg1.jpg) no-repeat;
     padding-top: 6px;
 }
 
-.timeline-details p {
-    padding-top: 10px;
-}
 
 .timeline-details .chat-header,
 .post-timelines .chat-header {
@@ -455,7 +452,7 @@ ul#profile-lightgallery {
 }
 
 .card .card-block {
-    padding: 25px;
+    padding: 15px;
 }
 
 .social-follower {

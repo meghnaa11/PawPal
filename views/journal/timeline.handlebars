@@ -57,15 +57,16 @@
                                     </div>
                                     <div class="social-time text-muted">{{ updatedtime }}</div>
                                 </div>
-                                {{#if hasImage}}
-                                <img src="/{{ image.path }}" class="img-fluid width-100"
-                                    alt="">
-                                {{/if}}
                                 <div class="card-block">
                                     <div class="timeline-details">
                                         <p class="text-muted">{{ content }}</p>
                                     </div>
                                 </div>
+
+                                {{#if hasImage}}
+                                <img src="/{{ image.path }}" class="img-fluid width-100"
+                                    alt="">
+                                {{/if}}
                             </div>
                         </div>
                     </div>

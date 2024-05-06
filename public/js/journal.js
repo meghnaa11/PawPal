@@ -18,12 +18,12 @@ $(document).ready(function(){
                                         <div class="chat-header f-w-600">${entry.pet.name}</div>
                                         <div class="social-time text-muted">Now</div>
                                     </div>
-                                    ${entry.hasImage ? `<img src="/${entry.image}" class="img-fluid width-100" alt="">` : ''}
                                     <div class="card-block">
                                         <div class="timeline-details">
                                             <p class="text-muted">${entry.content}</p>
                                         </div>
                                     </div>
+                                    ${entry.hasImage ? `<img src="/${entry.image}" class="img-fluid width-100" alt="">` : ''}
                                 </div>
                             </div>
                         </div>
@@ -60,6 +60,7 @@ $(document).ready(function(){
                 // Handle success response
                 console.log(response);
                 appendJournalEntryToTimeline(response)
+                $('#journalStatusForm')[0].reset()
             },
             error: function(xhr, status, error) {
                 // Handle error response

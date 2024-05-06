@@ -19,7 +19,7 @@ let formsub = document.getElementById('appsub');
 const reviewform = document.getElementById('reviewform');
 reviewform.addEventListener('submit', async function (e) {
  e.preventDefault();
- const review = document.getElementById('review').value;
+ const review = document.getElementById('review').value.trim();
  const rating = document.getElementById('rating').value;
 
  if (!review || !rating) {
@@ -29,7 +29,7 @@ reviewform.addEventListener('submit', async function (e) {
   return;
  }
  reviewform.submit();
- toastBootstrap.show();
+ // toastBootstrap.show();
 });
 
 
@@ -60,7 +60,7 @@ formsub.addEventListener('click', async function (e) {
  });
 
  const petid = document.getElementById('petSelect').value;
- const desc = document.getElementById('floatingTextarea2').value;
+ const desc = document.getElementById('floatingTextarea2').value.trim();
  let date = document.getElementById('date').value;
 
  let timesub = document.getElementById('timepicker').value;

@@ -156,7 +156,7 @@ export const getAllByUserId = async (id) => {
   const appointmentCollection = await appointments();
   const applist = await appointmentCollection.find({ userID: id }).sort({
     appointment_time: 1
-  }).toArray();;
+  }).toArray();
 
   return applist;
 };
@@ -232,3 +232,22 @@ export const remove = async (id) => {
 
   return { deleted: true };
 };
+
+
+export const getAllbyPetId = async (id) => {
+  if (!id) {
+    throw "id not supplied";
+  }
+  if (typeof id !== "string") {
+    throw "id not a string";
+  }
+  if (id.trim().length === 0) {
+    throw "id cannot be empty";
+  }
+  if (!ObjectId.isValid(id)) throw "Invalid id";
+
+  const appointmentCollection = await appointments();
+  const applist = await appointmentCollection.find({ petID: id }).toArray();
+
+  return applist;
+}

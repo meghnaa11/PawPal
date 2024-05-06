@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="/public/css/loginstyles.css" />
+
+<form
+  action="/pets/update/{{petID}}"
+  method="POST"
+  name="pet_form_update"
+  id="pet_form_update"
+ 
+>
+
+  <label for="name">Name:</label><br />
+  <input
+    type="text"
+    id="name"
+    name="name"
+    value="{{pet_current_data.name}}"
+  /><br /><br />
+
+  <label for="species">Species:</label><br />
+  <input
+    type="text"
+    id="species"
+    name="species"
+    value="{{pet_current_data.species}}"
+  /><br /><br />
+
+  <label for="breed">Breed:</label><br />
+  <input
+    type="text"
+    id="breed"
+    name="breed"
+    value="{{pet_current_data.breed}}"
+  /><br /><br />
+
+  <label for="description">Description:</label><br />
+  <textarea
+    id="description"
+    name="description"
+    rows="4"
+    cols="50"
+    
+  >{{pet_current_data.description}}</textarea><br /><br />
+
+  <div id="error_pet_update">
+
+  </div>
+  <div>
+    {{#if error}}
+      <p>{{error}}</p>
+    {{/if}}
+  </div>
+  <input type="submit" value="Submit" />
+
+</form>
+<a href="/userDashboard" class="button">Back</a>
+
+<script src="/public/js/client_validation.js"></script>

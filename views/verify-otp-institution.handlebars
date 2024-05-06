@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="/public/css/loginstyles.css" />
+<div class="container">
+  <h1>Institution OTP Verification</h1>
+  {{#if message}}
+    <p>{{message}}</p>
+  {{/if}}
+  <form
+    action="/forgotPassword/verify-otp-institution"
+    method="POST"
+    id="otp-form"
+  >
+    <input type="hidden" name="email" value="{{email}}" />
+    <label for="otp">Enter your OTP:</label>
+    <input type="text" id="otp" name="otp"  />
+    <input type="submit" value="Submit" />
+  </form>
+  <div class="otp-error">
+  </div>
+
+  <script src="/public/js/client_validation.js"></script>
+</div>

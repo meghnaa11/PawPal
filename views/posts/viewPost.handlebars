@@ -1,0 +1,102 @@
+{{> appdep}}
+{{> nav}}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      Post Details
+      {{#if isUsersPost}}
+        <div class="btn-group" role="group" aria-label="Post Actions">
+        <a
+            class="btn btn-secondary btn-group"
+            href="/posts/postbyID/{{post._id}}/edit"
+            role="button"
+          >Edit</a>
+          <form
+            action="/posts/postbyID/{{post._id}}"
+            method="post"
+            onsubmit="return confirm('Are you sure you want to delete this post?')"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-danger" style="margin-left: 5px">Delete</button>
+          </form>
+        </div>
+      {{/if}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{post.title}}</h5>
+      <p class="card-text">{{post.content}}</p>
+      <p class="card-text" id="type" style="display: none;">Type : {{post.type}}</p>
+      <p><img
+        src="/public/assets/posts/{{post.image.filename}}"
+        style="max-width: 200px; max-height: 200px;"
+        alt="..."
+        onerror='this.style.display = "none"'
+      /></p>
+      <div id="additionalFields" style="display: none;">
+        <p class="mb-1">Location : {{post.lostfoundDetails.location}}</p>
+            <p class="mb-1">Date : {{post.lostfoundDetails.date}}</p>
+            <p class="mb-1">Contact : {{post.lostfoundDetails.contact_info}}</p>
+            <p class="mb-1">Species :
+              {{post.lostfoundDetails.pet_details.species}}</p>
+            <p class="mb-1">Breed : {{post.lostfoundDetails.pet_details.breed}}</p>
+      </div>
+      <cite class="card-text">~{{post.firstName}} {{post.lastName}}</cite>
+    </div>
+  </div>
+  <div class="card mt-3">
+      <div class="card-header">
+        Comments
+      </div>
+      <ul class="list-group list-group-flush comment-list">
+
+  {{#each comment}}
+        <li class="list-group-item">
+          <div class="commenter-profile">
+            <img src="/public/assets/users/{{user.profileImage.filename}}" alt="..." width="50" height="50">
+              <div class="commenter-name"> {{user.firstName}} {{user.lastName}} </div>  {{#if isUsersComment }} 
+              <button data-id="{{_id}}" class="btn btn-sm btn-link comment-edit-btn">edit comment</button> | <a data-id="{{_id}}" class="btn btn-sm btn-link comment-delete-btn">delete comment</a> {{/if }}
+          </div>
+          <div class="commenter-comment">
+            <div class="comment-content">
+              <p>{{content}}</p>
+            </div>
+            <div class="comment-edit-form" style="display: none;">
+              <textarea class="form-control comment-edit-textarea" style="margin-bottom: 10px;">{{content}}</textarea>
+              <button type="button" class="btn btn-primary btn-sm comment-submit-btn">Submit</button>
+              <button type="button" class="btn btn-sm btn-link comment-cancel-btn" style="color: red;">Cancel</button>
+            </div>
+          </div>
+        </li>
+      
+  {{/each}}
+
+  </ul>
+    </div>
+  <!-- Add Comment Form -->
+  <div class="card mt-3">
+    <div class="card-header">
+      Add Comment
+    </div>
+    <div class="card-body">
+      <form id="addCommentForm">
+        <div class="form-group">
+          <label for="comment">Your Comment:</label>
+          <textarea class="form-control" id="comment" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submitComment">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/public/js/comments.js"></script>
+
+<script>
+  $(document).ready(function () {  
+    var typeText = $('#type').text().trim(); 
+    var postType = typeText.replace('Type : ', '');
+    if (postType=== 'lost' || postType === 'found') {
+  $('#additionalFields').show(); } 
+  else { $('#additionalFields').hide(); } }
+  );
+</script> 
+ <link rel="stylesheet" href="../../public/css/posts.css">

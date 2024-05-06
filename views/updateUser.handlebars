@@ -2,36 +2,21 @@
 <h1>Update User</h1>
 <form action="/users/update/{{user._id}}" method="POST" name="user_form_update" id="user_form_update">
   <label for="firstName">First Name:</label><br />
-  <input
-    type="text"
-    id="firstName"
-    name="firstName"
-    value="{{user.firstName}}"
-  /><br />
+  <input type="text" id="firstName" name="firstName" value="{{user.firstName}}" /><br />
   <label for="lastName">Last Name:</label><br />
-  <input
-    type="text"
-    id="lastName"
-    name="lastName"
-    value="{{user.lastName}}"
-  /><br />
+  <input type="text" id="lastName" name="lastName" value="{{user.lastName}}" /><br />
   <label for="email">Email:</label><br />
-  <input
-    type="email"
-    id="email"
-    name="email"
-    value="{{user.email}}"
-    readonly
-  /><br />
-  <label for="gender">Gender:</label><br />
-  <select id="gender" name="gender" value="{{user.gender}}" >
+  <input type="email" id="email" name="email" value="{{user.email}}" readonly /><br />
+  <label for="gender">Gender: (Current :{{user.gender}} )</label><br />
+  <select id="gender" name="gender">
+    <option value="">--Please choose an option--</option>
     <option value="male">Male</option>
     <option value="female">Female</option>
     <option value="other">Other</option>
-  </select><br />
+  </select>
+  <br />
   <label for="city">City:</label><br />
-  <input type="text" id="city" name="city" value="{{user.city}}"  /><br
-  />
+  <input type="text" id="city" name="city" value="{{user.city}}" /><br />
 
   <label for="state">State</label><br>
   <select id="state" name="state">
@@ -87,30 +72,23 @@
     <option value="WY">Wyoming</option>
   </select><br />
   <label for="age">Age:</label><br />
-  <input type="number" id="age" name="age" value="{{user.age}}"  /><br
-  />
+  <input type="number" id="age" name="age" value="{{user.age}}" /><br />
 
   <div id="error_reg_update">
-  
-</div>
+
+  </div>
   <div>
     {{#if error}}
-      <p>{{error}}</p>
+    <p>{{error}}</p>
     {{/if}}
   </div>
-   <input type="submit" value="Update" />
+  <input type="submit" value="Update" />
 
   {{!-- <label for="password">Password:</label><br />
-  <input
-    type="password"
-    id="password"
-    name="password"
-    value="{{user.password}}"
-    
-  /><br />
+  <input type="password" id="password" name="password" value="{{user.password}}" /><br />
   <br /> --}}
   {{!-- <form action="/users/update/{{user._id}}" method="POST">
-   
+
   </form> --}}
 </form>
 <a href="/userDashboard" class="button">Back</a>

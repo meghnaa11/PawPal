@@ -30,7 +30,8 @@ $(document).ready(function() {
       //console.log(commentText);
 
       if(commentText.trim() == ''){
-        alert('Comment cannot ce empty!');
+        // alert('Comment cannot ce empty!');
+        displayError('Comment cannot be empty')
         $('#submitComment').prop('disabled', false);
 
         return

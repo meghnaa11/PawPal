@@ -44,7 +44,7 @@
                     <div class="row timeline-right p-t-35">
                         <div class="col-2 col-sm-2 col-xl-1">
                             <div class="social-timelines-left">
-                                <img class="img-radius timeline-icon" src="/{{ pet.profileImage.path }}"
+                                <img class="img-radius timeline-icon" src="/public/assets/pets/{{pet.profileImage.filename}}"
                                     alt="{{pet.name}}'s picture">
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                 </div>
 
                                 {{#if hasImage}}
-                                <img src="/{{ image.path }}" class="img-fluid width-100"
+                                <img src="/public/assets/journal/{{image.filename}}" class="img-fluid width-100"
                                     alt="{{content}}">
                                 {{/if}}
                             </div>

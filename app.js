@@ -4,7 +4,7 @@ import configRoutesFunction from "./routes/index.js";
 import exphbs from "express-handlebars";
 import session from "express-session";
 import cors from "cors";
-import { postMiddleware } from "./postsmiddleware.js";
+import { postMiddleware } from "./postsMiddleware.js";
 
 const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   if (req.body && req.body._method) {

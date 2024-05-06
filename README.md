@@ -1,10 +1,8 @@
 # PawPal
 
-Web Dev Project
+PawPal is a web platform for pet owners and institutions to connect, manage pet details, and facilitate pet adoption through user-friendly features like authentication, pet management, appointment scheduling, and journaling.
 
-demo link: http://172.203.162.111:9123/
-
-PawPal is a web application developed as part of the CS546 course at Stevens Institute of Technology. It provides a platform for pet owners and pet institutions to interact, manage pet details, and facilitate pet adoption.
+It is a web application developed as part of the CS546 course at Stevens Institute of Technology. It provides a platform for pet owners and pet institutions to interact, manage pet details, and facilitate pet adoption.
 
 ## Getting Started
 

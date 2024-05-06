@@ -142,7 +142,7 @@ const deleteUserComments = async (userId) => {
 
     const commentCollection = await comments();
     const deletedCommentsInfo = await commentCollection.deleteMany({userId: new ObjectId(userId)});
-    if(deletedCommentsInfo.deletedCount === 0) throw `No comments found with user ID: ${userId}`;
+    //if(deletedCommentsInfo.deletedCount === 0) throw `No comments found with user ID: ${userId}`;
 
     return deletedCommentsInfo.deletedCount;
 }

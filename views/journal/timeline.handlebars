@@ -10,12 +10,12 @@
                 <div class="card-body">
                     <form id="journalStatusForm">
                         <div class="form-group">
-                            <textarea class="form-control" name="content" placeholder="What did your pet do today?" rows="3"></textarea>
+                            <textarea class="form-control" name="content" placeholder="What Did Your Pet do Today?" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                             <div class="custom-file journal-image-upload">
                                 <input type="file" class="custom-file-input" name="image" id="customFile">
-                                <label class="custom-file-label" for="customFile">Add image to journal (optional)</label>
+                                <label class="custom-file-label" for="customFile">Add Image To Journal (optional)</label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -45,7 +45,7 @@
                         <div class="col-2 col-sm-2 col-xl-1">
                             <div class="social-timelines-left">
                                 <img class="img-radius timeline-icon" src="/{{ pet.profileImage.path }}"
-                                    alt="">
+                                    alt="{{pet.name}}'s picture">
                             </div>
                         </div>
                         <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
@@ -65,7 +65,7 @@
 
                                 {{#if hasImage}}
                                 <img src="/{{ image.path }}" class="img-fluid width-100"
-                                    alt="">
+                                    alt="{{content}}">
                                 {{/if}}
                             </div>
                         </div>

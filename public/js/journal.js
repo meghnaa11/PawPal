@@ -9,7 +9,7 @@ $(document).ready(function(){
                         <div class="row timeline-right p-t-35">
                             <div class="col-2 col-sm-2 col-xl-1">
                                 <div class="social-timelines-left">
-                                    <img class="img-radius timeline-icon" src="/${entry.pet.profileImage.path}" alt="">
+                                    <img class="img-radius timeline-icon" src="/${entry.pet.profileImage.path}" alt="${entry.pet.name}'s picture">
                                 </div>
                             </div>
                             <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
@@ -23,7 +23,7 @@ $(document).ready(function(){
                                             <p class="text-muted">${entry.content}</p>
                                         </div>
                                     </div>
-                                    ${entry.hasImage ? `<img src="/${entry.image}" class="img-fluid width-100" alt="">` : ''}
+                                    ${entry.hasImage ? `<img src="/${entry.image}" class="img-fluid width-100" alt="${entry.content}">` : ''}
                                 </div>
                             </div>
                         </div>

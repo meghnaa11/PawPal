@@ -43,6 +43,9 @@ Make sure these packages are installed as part of your setup process. You can us
 2. Install dependencies: Navigate to the project directory and use `npm install` to install the necessary packages for the project.
 3. Seed the database: Use `npm run seed` to seed.
 4. Start the server: Use `npm start` to start the server.
+5. The password for all users and institutions in the seed file is User@123
+One Sample email for User  -  meghna123@gmail.com
+One Sample email for Institution - institution1@gmail.com
 
 ## Usage
 

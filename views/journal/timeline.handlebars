@@ -68,8 +68,10 @@
                             </div>
 
                             {{#if hasImage}}
-                            <img src="/public/assets/journal/{{image.filename}}" class="img-fluid width-100"
+                            <div style="text-align: center;">
+                            <img src="/public/assets/journal/{{image.filename}}" style="height: 60%; width:60%; border: 10px solid black;"
                                 alt="{{content}}">
+                               </div>
                             {{/if}}
                         </div>
                     </div>

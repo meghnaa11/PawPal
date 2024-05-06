@@ -99,8 +99,6 @@ router.post("/verify-otp", async (req, res) => {
   const email = req.body.email;
   const otp = req.body.otp;
 
-  console.log(email, otp);
-
   const userCollection = await users();
   const user = await userCollection.findOne({ email: email });
 

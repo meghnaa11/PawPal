@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { createPost } from "./data/posts.js";
 import { ObjectId } from "mongodb";
 
+
+// Password for all institutions and users is  User@123
 const seedDatabase = async () => {
   const db = await dbConnection();
   const usersCollection = db.collection("users");

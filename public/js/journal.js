@@ -1,38 +1,44 @@
 $(document).ready(function(){
 
+
+    //Citation: https://stackoverflow.com/questions/3043775/how-to-escape-html
+    function escapeHtml(html) {
+        const div = document.createElement('div');
+        div.textContent = html;
+        return div.innerHTML;
+    }
+
     function appendJournalEntryToTimeline(entry) {
-        // Create a template string with the HTML structure
+        entry.content = escapeHtml(entry.content)
         const template = `
-            <div class="row">
-                <div class="col-md-12 timeline-dot">
-                    <div class="social-timelines p-relative">
-                        <div class="row timeline-right p-t-35">
-                            <div class="col-2 col-sm-2 col-xl-1">
-                                <div class="social-timelines-left">
-                                    <img class="img-radius timeline-icon" src="/${entry.pet.profileImage.path}" alt="${entry.pet.name}'s picture">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row timeline-right p-t-35">
+                    <div class="col-2 col-sm-2 col-xl-1">
+                    <img class="img-radius timeline-icon" src="/${entry.pet.profileImage.path}" alt="${entry.pet.name}'s picture">
+                    </div>
+                    <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
+                        <div class="card">
+                            <div class="card-block post-timelines">
+                                <div class="d-flex">
+                                <div class="chat-header f-w-600">${entry.pet.name}</div>
+                                <button class="btn btn-sm btn-outline-danger float-right delete-btn delete-journal-btn" data-id="${entry._id}">X</button>
+                                </div>
+                                <div class="social-time text-muted">Now</div>
+                                </div>
+                            <div class="card-block">
+                                <div class="timeline-details">
+                                <p class="text-muted">${entry.content}</p>
                                 </div>
                             </div>
-                            <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
-                                <div class="card">
-                                    <div class="card-block post-timelines">
-                                        <div class="chat-header f-w-600">${entry.pet.name}</div>
-                                        <div class="social-time text-muted">Now</div>
-                                    </div>
-                                    <div class="card-block">
-                                        <div class="timeline-details">
-                                            <p class="text-muted">${entry.content}</p>
-                                        </div>
-                                    </div>
-                                    ${entry.hasImage ? `<img src="/${entry.image}" class="img-fluid width-100" alt="${entry.content}">` : ''}
-                                </div>
-                            </div>
+                            ${entry.hasImage ? `<img src="/${entry.image}" class="img-fluid width-100" alt="${entry.content}">` : ''}
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         `;
     
-        // Append the template to the top of the timeline-container div
         $('.timeline-container').prepend(template);
     }
     
@@ -54,16 +60,14 @@ $(document).ready(function(){
             url: '/journal/newentry',
             type: 'POST',
             data: formData,
-            contentType: false, // Prevent jQuery from adding a Content-Type header
-            processData: false, // Prevent jQuery from processing the data
+            contentType: false, 
+            processData: false, 
             success: function(response) {
-                // Handle success response
                 console.log(response);
                 appendJournalEntryToTimeline(response)
                 $('#journalStatusForm')[0].reset()
             },
             error: function(xhr, status, error) {
-                // Handle error response
                 console.error('Error:', error);
                 let jsonResponse;
               try {
@@ -79,7 +83,7 @@ $(document).ready(function(){
 
     })
 
-    $('.delete-journal-btn').click(function() {
+    $('.timeline-container').on('click','.delete-journal-btn', function() {
         const journalId = $(this).data('id');
 
         $.ajax({

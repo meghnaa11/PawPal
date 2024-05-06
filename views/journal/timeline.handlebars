@@ -26,7 +26,11 @@
                                 {{/each}}
                             </select>
                         </div>
+                        {{#if hasPets}}
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        {{else}}
+                        <button type="submit" class="btn btn-primary" disabled>Submit</button> <span class="pet-error">Please add a pet before journaling: <a href='/userDashboard'>add a pet</a></span>
+                        {{/if}}
                     </form>
                 </div>
             </div>
@@ -35,39 +39,38 @@
 
     <!--  Journal TImeline-->
 
+<!-- Citation: https://www.bootdey.com/snippets/view/bs4-beta-profile-and-timeline#html -->
+<!-- HTML feed for timeline for journal inspired by above website -->
+
 <div class="container">
     <div class="timeline-container">
         {{#each journalEntries}}
         <div class="row">
-            <div class="col-md-12 timeline-dot">
-                <div class="social-timelines p-relative">
-                    <div class="row timeline-right p-t-35">
-                        <div class="col-2 col-sm-2 col-xl-1">
-                            <div class="social-timelines-left">
-                                <img class="img-radius timeline-icon" src="/public/assets/pets/{{pet.profileImage.filename}}"
-                                    alt="{{pet.name}}'s picture">
+            <div class="col-md-12">
+                <div class="row timeline-right p-t-35">
+                    <div class="col-2 col-sm-2 col-xl-1">
+                        <img class="img-radius timeline-icon" src="/public/assets/pets/{{pet.profileImage.filename}}"
+                            alt="{{pet.name}}'s picture">
+                    </div>
+                    <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
+                        <div class="card">
+                            <div class="card-block post-timelines">
+                                <div class="d-flex">
+                                    <div class="chat-header f-w-600">{{ pet.name }}</div>
+                                    <button class="btn btn-sm btn-outline-danger float-right delete-btn delete-journal-btn" data-id="{{ _id }}">X</button>
+                                </div>
+                                <div class="social-time text-muted">{{ updatedtime }}</div>
                             </div>
-                        </div>
-                        <div class="col-10 col-sm-10 col-xl-11 p-l-5 p-b-35">
-                            <div class="card">
-                                <div class="card-block post-timelines">
-                                    <div class="d-flex">
-                                        <div class="chat-header f-w-600">{{ pet.name }}</div>
-                                        <button class="btn btn-sm btn-outline-danger float-right delete-btn delete-journal-btn" data-id="{{ _id }}">X</button>
-                                    </div>
-                                    <div class="social-time text-muted">{{ updatedtime }}</div>
+                            <div class="card-block">
+                                <div class="timeline-details">
+                                    <p class="text-muted">{{ content }}</p>
                                 </div>
-                                <div class="card-block">
-                                    <div class="timeline-details">
-                                        <p class="text-muted">{{ content }}</p>
-                                    </div>
-                                </div>
+                            </div>
 
-                                {{#if hasImage}}
-                                <img src="/public/assets/journal/{{image.filename}}" class="img-fluid width-100"
-                                    alt="{{content}}">
-                                {{/if}}
-                            </div>
+                            {{#if hasImage}}
+                            <img src="/public/assets/journal/{{image.filename}}" class="img-fluid width-100"
+                                alt="{{content}}">
+                            {{/if}}
                         </div>
                     </div>
                 </div>

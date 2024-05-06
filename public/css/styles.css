@@ -10,13 +10,13 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-right: 10px; /* Add margin to separate image from text */
+    margin-right: 10px;
 }
 
 .commenter-name {
     font-weight: bold;
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    margin: 0; 
+    padding: 0;
     margin-left: 10px;
 }
 
@@ -109,6 +109,8 @@
     margin-left: auto;
 }
 
+/* Citation: https://www.bootdey.com/snippets/view/bs4-beta-profile-and-timeline#html */
+/* CSS for journal inspired by above website */
 
 .timeline-container{
     padding: 100px;
@@ -171,6 +173,10 @@
     font-family: FontAwesome;
 }
 
+/* .pet-error{
+    color: red;
+} */
+
 .timeline-icon {
     height: 45px;
     width: 45px;
@@ -179,65 +185,10 @@
     border: 4px #fff solid;
 }
 
-/* .social-timelines-left:after {
-    height: 3px;
-    width: 25%;
-    position: absolute;
-    background: #cccccc;
-    top: 20px;
-    content: "";
-    right: 0;
-    z-index: 0;
-}
-
-.social-timelines:before {
-    position: absolute;
-    content: ' ';
-    width: 3px;
-    background: #cccccc;
-    left: 4%;
-    z-index: 0;
-    height: 100%;
-    top: 0;
-} */
-
-/* .timeline-dot:after,
-.timeline-dot:before {
-    content: "";
-    position: absolute;
-    height: 9px;
-    width: 9px;
-    background-color: #cccccc;
-    left: 3.8%;
-    border-radius: 100%;
-} */
-
 .timeline-details .chat-header,
 .post-timelines .chat-header {
     font-size: 15px;
 }
-
-/* .social-timelines:before {
-    position: absolute;
-    content: ' ';
-    width: 3px;
-    background: #cccccc;
-    left: 4%;
-    z-index: 0;
-    height: 100%;
-    top: 0;
-}
-
-.timeline-dot:after,
-.timeline-dot:before {
-    content: "";
-    position: absolute;
-    height: 9px;
-    width: 9px;
-    background-color: #cccccc;
-    left: 3.8%;
-    border-radius: 100%;
-} */
 
 .social-timeline .btn i {
     margin-right: 0;

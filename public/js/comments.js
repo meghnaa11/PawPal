@@ -10,6 +10,13 @@ $(document).ready(function() {
       commentErrorDiv.html('')
     }
 
+    //Citation: https://stackoverflow.com/questions/3043775/how-to-escape-html
+    function escapeHtml(html) {
+      const div = document.createElement('div');
+      div.textContent = html;
+      return div.innerHTML;
+  }
+
     $('#addCommentForm').submit(function(event) {
       event.preventDefault(); 
       
@@ -51,6 +58,8 @@ $(document).ready(function() {
           //console.log(response);
 
           resetErrorDiv()
+
+          response.comment = escapeHtml(response.comment)
           
           const commentHTML = `
           <li class="list-group-item">

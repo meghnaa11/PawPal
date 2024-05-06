@@ -25,6 +25,17 @@ Additionally, the following Node.js packages are required for the project:
 - **express-handlebars**: A templating engine used to render views in Express.
 - **express-session**: Enables session management, allowing you to maintain user sessions between HTTP requests.
 - **mongodb**: Provides the MongoDB client for interacting with the MongoDB database.
+- **@elasticemail/elasticemail-client**: Email client for sending emails.
+- **@material/snackbar**: Material design snackbar for UI feedback.
+- **axios**: HTTP client for making requests.
+- **bootstrap**: Front-end framework for styling.
+- **cors**: Middleware to enable Cross-Origin Resource Sharing.
+- **fs**: Node.js file system module.
+- **moment**: Library for handling dates and times.
+- **multer**: Middleware for handling file uploads.
+- **otp-generator**: Library for generating one-time passwords (OTPs).
+- **sanitize-html**: Library for sanitizing HTML input.
+- **xss**: Library for preventing Cross-Site Scripting (XSS) attacks.
 
 Make sure these packages are installed as part of your setup process. You can use `npm install` to install all the required dependencies as defined in the project's `package.json`.
 

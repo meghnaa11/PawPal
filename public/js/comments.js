@@ -1,4 +1,15 @@
-$(document).ready(function() {
+$(document).ready(function() { 
+
+    let commentErrorDiv = $('#comment-error-div')
+
+    function displayError(error){
+      commentErrorDiv.html('<p>' + error + '</p>')
+    }
+
+    function resetErrorDiv(){
+      commentErrorDiv.html('')
+    }
+
     $('#addCommentForm').submit(function(event) {
       event.preventDefault(); 
       
@@ -37,6 +48,8 @@ $(document).ready(function() {
           $('#submitComment').prop('disabled', false);
 
           //console.log(response);
+
+          resetErrorDiv()
           
           const commentHTML = `
           <li class="list-group-item">
@@ -72,7 +85,8 @@ $(document).ready(function() {
                   return;
               }
 
-            alert(jsonResponse.message);
+            // alert(jsonResponse.message);
+            displayError(jsonResponse.message)
           $('#submitComment').prop('disabled', false);
         }
       });
@@ -96,7 +110,7 @@ $(document).ready(function() {
             contentType: 'application/json', 
             success: function(response) {
               console.log('Comment deleted successfully:', response);
-
+              resetErrorDiv()
               listItemToRemove.remove();
             },
             error: function(xhr, status, error) {
@@ -108,7 +122,8 @@ $(document).ready(function() {
                   return;
               }
 
-              alert(jsonResponse.message);
+              // alert(jsonResponse.message);
+              displayError(jsonResponse.message)
               // console.error('Failed to delete comment:', error);
             }
           });
@@ -138,7 +153,7 @@ $(document).ready(function() {
         data: JSON.stringify(data), 
         success: function(response) {
             console.log('Comment updated successfully:', response);
-            
+            resetErrorDiv()
             clickedElement.closest('.list-group-item').find('.comment-edit-form').hide();
             clickedElement.closest('.list-group-item').find('.comment-content').show();
 
@@ -156,7 +171,8 @@ $(document).ready(function() {
                   return;
               }
 
-              alert(jsonResponse.message);
+              // alert(jsonResponse.message);
+              displayError(jsonResponse.message)
             // console.error('Failed to update comment:', error);
         }
         });

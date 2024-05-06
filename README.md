@@ -66,7 +66,7 @@ Once the server is running, navigate to `http://localhost:3000` in your web brow
 - Login Type Selection: Users can choose the type of login (user or institution) they want to proceed with.
 - Session Management: The application maintains user sessions, ensuring a seamless user experience.
 - Error Handling: The application handles errors effectively, ensuring that users are informed when an error occurs (e.g., error retrieving pets).
-
+- Journaling: A digital scrapbook to capture a user's pets' memories, complete with personalized notes and optional photo uploads.
 ## Acknowledgments
 
 - This project was developed as part of Group 39 of CS546 at Stevens Institute of Technology.

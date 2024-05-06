@@ -110,7 +110,7 @@ const petDataFunctions = {
         const pet = await pets()
         const view_current_pet = await pet.findOne({ _id: new ObjectId(pet_id) })
         if (!view_current_pet) {
-            res.send("Pet not found")
+           throw "Pet not found"
         }
         const display_pet_data = {
             id: pet_id,

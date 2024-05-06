@@ -169,14 +169,14 @@ router
     }  catch(e) {
            const pet = await pets();
            const current_pet = await pet.findOne({ _id: new ObjectId(req.params.id) });
-          const pet_current_data = {
+           const pet_current_data = {
             name: current_pet.name,
             species: current_pet.species,
             breed: current_pet.breed,
             description: current_pet.description,
             
           };
-          return res.status(500).render("pet_update", { error:e, pet_current_data });
+          return res.status(500).render("pet_update", { error:e, pet_current_data ,petID:req.params.id });
       //    return res.status(500).json({ error: "Internal Server Error" });
     }
   });

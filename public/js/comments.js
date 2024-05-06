@@ -55,7 +55,7 @@ $(document).ready(function() {
           const commentHTML = `
           <li class="list-group-item">
           <div class="commenter-profile">
-            <img src="/${response.profileImg}" width="50" height="50">
+            <img src="/${response.profileImg}" width="50" height="50" alt="${response.author}'s profile picture">
             <small>
               <div class="commenter-name">${response.author} </div> 
               <button data-id="${response.commentId}" class="btn btn-sm btn-link comment-edit-btn">edit comment</button> | <a data-id="${response.commentId}" class="btn btn-sm btn-link comment-delete-btn">delete comment</a> 

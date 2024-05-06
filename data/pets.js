@@ -2,6 +2,7 @@ import { pets } from '../config/mongoCollections.js'
 import { ObjectId } from 'mongodb';
 import { users } from '../config/mongoCollections.js'
 import * as appoinmentData from './appointments.js'
+import { journalData } from './index.js';
 
 const petDataFunctions = {
     async addPets(name, species, breed, description, petImage, userID) {
@@ -160,6 +161,7 @@ const petDataFunctions = {
         if (!deleted_pet) {
             throw 'Failed to delete'
         }
+        await journalData.deletePetsJournal(pet_id);
         return deleted_pet;
     },
 

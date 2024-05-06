@@ -102,4 +102,16 @@ const createJournalEntry = async (journalObj) => {
     return true;
   }
 
-  export default {createJournalEntry, getAllUserJournalEntries, getJournalFromId, deleteJournalEntry}
+  const deletePetsJournal = async (petId) => {
+    if(!petId) throw "Pet ID needs to be provided";
+    petId = validators.checkId(petId);
+
+    const jounralCollection = await journal();
+    const deletedJournalInfo = await jounralCollection.deleteMany({pet: petId});
+    // if(deletedCommentsInfo.deletedCount === 0) throw `No comments found with post ID: ${postId}`;
+
+    return deletedJournalInfo.deletedCount;
+
+}
+
+  export default {createJournalEntry, getAllUserJournalEntries, getJournalFromId, deleteJournalEntry, deletePetsJournal}

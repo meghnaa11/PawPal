@@ -170,6 +170,24 @@ export const getCurrentDateTime = () => {
   return `${month}/${day}/${year}@${hours}:${minutes}:${seconds}`;
 };
 
+export const formatTimeAgo = (dateTime) => {
+  const now = new Date();
+  const targetTime = new Date(dateTime);
+
+  const diffMs = now - targetTime;
+  const diffMinutes = Math.round(diffMs / (1000 * 60));
+  const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+
+  if (diffMinutes < 60) {
+      return `${diffMinutes} ${diffMinutes === 1 ? 'minute' : 'minutes'} ago`;
+  } else if (diffHours < 24) {
+      return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`;
+  } else {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return targetTime.toLocaleDateString('en-US', options);
+  }
+}
+
 export function formatHTMLDate(dateString) {
   const [year, month, day] = dateString.split("-");
   return `${month}/${day}/${year}`;

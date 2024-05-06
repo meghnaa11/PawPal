@@ -1,4 +1,15 @@
-$(document).ready(function() {
+$(document).ready(function() { 
+
+    let commentErrorDiv = $('#comment-error-div')
+
+    function displayError(error){
+      commentErrorDiv.html('<p>' + error + '</p>')
+    }
+
+    function resetErrorDiv(){
+      commentErrorDiv.html('')
+    }
+
     $('#addCommentForm').submit(function(event) {
       event.preventDefault(); 
       
@@ -19,7 +30,8 @@ $(document).ready(function() {
       //console.log(commentText);
 
       if(commentText.trim() == ''){
-        alert('Comment cannot ce empty!');
+        // alert('Comment cannot ce empty!');
+        displayError('Comment cannot be empty')
         $('#submitComment').prop('disabled', false);
 
         return
@@ -37,11 +49,13 @@ $(document).ready(function() {
           $('#submitComment').prop('disabled', false);
 
           //console.log(response);
+
+          resetErrorDiv()
           
           const commentHTML = `
           <li class="list-group-item">
           <div class="commenter-profile">
-            <img src="/${response.profileImg}" width="50" height="50">
+            <img src="/${response.profileImg}" width="50" height="50" alt="${response.author}'s profile picture">
             <small>
               <div class="commenter-name">${response.author} </div> 
               <button data-id="${response.commentId}" class="btn btn-sm btn-link comment-edit-btn">edit comment</button> | <a data-id="${response.commentId}" class="btn btn-sm btn-link comment-delete-btn">delete comment</a> 
@@ -72,7 +86,8 @@ $(document).ready(function() {
                   return;
               }
 
-            alert(jsonResponse.message);
+            // alert(jsonResponse.message);
+            displayError(jsonResponse.message)
           $('#submitComment').prop('disabled', false);
         }
       });
@@ -96,7 +111,7 @@ $(document).ready(function() {
             contentType: 'application/json', 
             success: function(response) {
               console.log('Comment deleted successfully:', response);
-
+              resetErrorDiv()
               listItemToRemove.remove();
             },
             error: function(xhr, status, error) {
@@ -108,7 +123,8 @@ $(document).ready(function() {
                   return;
               }
 
-              alert(jsonResponse.message);
+              // alert(jsonResponse.message);
+              displayError(jsonResponse.message)
               // console.error('Failed to delete comment:', error);
             }
           });
@@ -138,7 +154,7 @@ $(document).ready(function() {
         data: JSON.stringify(data), 
         success: function(response) {
             console.log('Comment updated successfully:', response);
-            
+            resetErrorDiv()
             clickedElement.closest('.list-group-item').find('.comment-edit-form').hide();
             clickedElement.closest('.list-group-item').find('.comment-content').show();
 
@@ -156,7 +172,8 @@ $(document).ready(function() {
                   return;
               }
 
-              alert(jsonResponse.message);
+              // alert(jsonResponse.message);
+              displayError(jsonResponse.message)
             // console.error('Failed to update comment:', error);
         }
         });

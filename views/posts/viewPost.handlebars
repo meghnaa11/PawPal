@@ -52,9 +52,11 @@
   {{#each comment}}
         <li class="list-group-item">
           <div class="commenter-profile">
-            <img src="/public/assets/users/{{user.profileImage.filename}}" alt="..." width="50" height="50">
+            <img src="/public/assets/users/{{user.profileImage.filename}}" alt="{{user.firstName}} {{user.lastName}}'s profile picture" width="50" height="50">
+            <small>
               <div class="commenter-name"> {{user.firstName}} {{user.lastName}} </div>  {{#if isUsersComment }} 
               <button data-id="{{_id}}" class="btn btn-sm btn-link comment-edit-btn">edit comment</button> | <a data-id="{{_id}}" class="btn btn-sm btn-link comment-delete-btn">delete comment</a> {{/if }}
+            </small>
           </div>
           <div class="commenter-comment">
             <div class="comment-content">
@@ -83,7 +85,14 @@
           <label for="comment">Your Comment:</label>
           <textarea class="form-control" id="comment" rows="3"></textarea>
         </div>
+        <div class="d-flex">
         <button type="submit" class="btn btn-primary" id="submitComment">Submit</button>
+            
+          <div class="comment-error" id="comment-error-div">
+            {{!-- <p>Sample Error</p> --}}
+          </div>
+
+        </div>
       </form>
     </div>
   </div>

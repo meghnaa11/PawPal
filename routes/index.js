@@ -5,6 +5,8 @@ import loginRoutes from "./login.js";
 import appointmentRoutes from "./appointments.js";
 import postRoutes from "./posts.js";
 import commentRoutes from "./comments.js";
+import journalRoutes from "./journal.js";
+
 import institutionappRoutes from "./institutionapp.js";
 import { institutionData } from "../data/index.js";
 import forgotPasswordRoutes from "./forgot-password.js";
@@ -18,6 +20,8 @@ const constructorMethod = (app) => {
   app.use("/", loginRoutes);
   app.use("/users", userRoutes);
   app.use("/institutionapp", institutionappRoutes);
+  app.use("/journal", journalRoutes);
+
   app.use("/forgotPassword", forgotPasswordRoutes);
 
   app.get("/home", async (req, res) => {

@@ -84,6 +84,8 @@ router.route('/newentry').post(sanitizeMiddleware, upload, async (req, res) => {
         j.image = ''
       }
 
+      j.content = helpers.sanitizeData(j.content)
+
       delete j.userID //removing userId to ensure sensitive data is not passed
 
       return res.status(200).json(j)
@@ -124,8 +126,12 @@ router.route('/timeline').get(async (req, res) => {
    const userId = req.session.user._id
   //  console.log(userId)
     const pets = await petData.getAllPetsOfUser(userId)
+    let hasPets = true
+    if (pets.length == 0){
+      hasPets = false
+    }
     const journalEntries = await journalData.getAllUserJournalEntries(userId)
-    res.render('journal/timeline', {pets: pets, journalEntries: journalEntries})
+    res.render('journal/timeline', {pets: pets, journalEntries: journalEntries, hasPets: hasPets})
 })
 
 export default router

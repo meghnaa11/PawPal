@@ -32,7 +32,7 @@ Make sure these packages are installed as part of your setup process. You can us
 
 1. Clone the repository: Use `git clone https://github.com/Akshat2634/PawPal.git` to clone the repository to your local machine.
 2. Install dependencies: Navigate to the project directory and use `npm install` to install the necessary packages for the project.
-3. Seed the database: Use `npm seed` to seed.
+3. Seed the database: Use `npm run seed` to seed.
 4. Start the server: Use `npm start` to start the server.
 
 ## Usage

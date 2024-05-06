@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb";
 import * as appointmentData from "../data/appointments.js";
 import * as reviewData from "../data/reviews.js";
 import moment from "moment";
+import xss from 'xss'
 
 const router = Router();
 import { loginData, userData, institutionData } from "../data/index.js";
@@ -113,8 +114,9 @@ router.get("/institutionLogin", async (req, res) => {
 
 router.post("/user", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
     // console.log(email, password);
+    email = xss(email)
     const user = await loginData.userLogin(email, password);
     console.log(user);
     if (user) {
@@ -138,23 +140,24 @@ router.get("/logout", async (req, res) => {
 
 router.post("/institution", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
     // console.log(email, password);
+    email = xss(email)                
     const institution = await loginData.institutionLogin(email, password);
     console.log(institution);
     if (institution) {
       req.session.institution = {
-        name: institution.name,
-        email: institution.email,
-        _id: institution._id,
+        name: institution.name,   
+        email: institution.email,         
+        _id: institution._id,     
       };
       return res.redirect("/institutionDashboard");
     } else {
       return res.status(401).render("institutionLogin", { error: "Invalid Email or Password" });
     }
-  } catch (e) {
+  } catch (e) {   
     return res.status(500).json({ message: e });
   }
 });
 
-export default router;
+export default router;    

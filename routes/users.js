@@ -257,22 +257,22 @@ router.route("/update/image/:id").post(upload_update, async (req, res) => {
   }
 });
 
-  router.route("/delete/:id").get(async (req,res) => {
-    const user_id = req.params.id;
-    console.log(user_id)
-    if (!user_id) {
-      res.send("No User ID");
-    }
-    const isValidObjectuserId = ObjectId.isValid(user_id);
-    if (!isValidObjectuserId) {
-      res.send("Invalid Object ID");
-    }
-    const delete_user = await userData.deleteUser(user_id);
-    if (!delete_user) {
-      res.send("Couldnot Delete user");
-    }
-    res.redirect("/userLogin");
+  // router.route("/delete/:id").get(async (req,res) => {
+  //   const user_id = req.params.id;
+  //   console.log(user_id)
+  //   if (!user_id) {
+  //     res.send("No User ID");
+  //   }
+  //   const isValidObjectuserId = ObjectId.isValid(user_id);
+  //   if (!isValidObjectuserId) {
+  //     res.send("Invalid Object ID");
+  //   }
+  //   const delete_user = await userData.deleteUser(user_id);
+  //   if (!delete_user) {
+  //     res.send("Couldnot Delete user");
+  //   }
+  //   res.redirect("/userLogin");
 
-  })
+  // })
 export default router;
           

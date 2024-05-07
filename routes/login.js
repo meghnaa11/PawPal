@@ -118,7 +118,6 @@ router.post("/user", async (req, res) => {
     // console.log(email, password);
     email = xss(email)
     const user = await loginData.userLogin(email, password);
-    console.log(user);
     if (user) {
       req.session.user = {
         email: user.email,
@@ -144,7 +143,6 @@ router.post("/institution", async (req, res) => {
     // console.log(email, password);
     email = xss(email)                
     const institution = await loginData.institutionLogin(email, password);
-    console.log(institution);
     if (institution) {
       req.session.institution = {
         name: institution.name,   
